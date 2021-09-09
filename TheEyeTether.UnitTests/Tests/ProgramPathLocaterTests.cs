@@ -9,11 +9,15 @@ namespace TheEyeTether.UnitTests
     public class ProgramPathLocaterTests
     {
         [Fact]
-        public void LocateProgramPath_ReturnsString_WhenCalled()
+        public void LocateProgramPath_ReturnsString_WhenProgramExists()
         {
-            var programName = string.Empty;
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {});
-            var drivesGetter = new DrivesGetterStub(new List<string>());
+            var programName = "test.exe";
+            var programPath = @"C:\test.exe";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { programPath, new MockFileData(string.Empty) }
+            });
+            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
 
             var result = ProgramPathLocater.LocateProgramPath(programName, fileSystem, drivesGetter);
             
