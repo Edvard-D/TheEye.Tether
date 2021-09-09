@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
+using System.Runtime.InteropServices;
 using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Types
 {
     public static class ProgramPathLocater
     {
+        private const string WindowsProgramEnding = ".exe";
+
+
         private static Dictionary<string, string> _savedProgramPathPairs = new Dictionary<string, string>();
 
 
@@ -16,7 +20,8 @@ namespace TheEyeTether.Types
         public static string LocateProgramPath(
                 string programName,
                 IFileSystem fileSystem,
-                IDrivesGetter drivesGetter)
+                IDrivesGetter drivesGetter,
+                IOSPlatformChecker osPlatformChecker)
         {
             if(_savedProgramPathPairs.ContainsKey(programName) == true
                     && fileSystem.File.Exists(_savedProgramPathPairs[programName]) == true)
@@ -24,7 +29,13 @@ namespace TheEyeTether.Types
                 return _savedProgramPathPairs[programName];
             }
 
-            var searchPattern = "*" + programName;
+            var ending = string.Empty;
+            if(osPlatformChecker.IsOSPlatform(OSPlatform.Windows))
+            {
+                ending = WindowsProgramEnding;
+            }
+
+            var searchPattern = "*" + programName + ending;
             var files = new List<string>();
 
             foreach(DriveInfo driveInfo in drivesGetter.GetDrives())
