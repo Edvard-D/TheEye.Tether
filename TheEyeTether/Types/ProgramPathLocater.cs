@@ -8,6 +8,7 @@ namespace TheEyeTether.Types
 {
     public static class ProgramPathLocater
     {
+        private const string MacOSProgramEnding = ".app";
         private const string WindowsProgramEnding = ".exe";
 
 
@@ -33,6 +34,10 @@ namespace TheEyeTether.Types
             if(osPlatformChecker.IsOSPlatform(OSPlatform.Windows))
             {
                 ending = WindowsProgramEnding;
+            }
+            else if(osPlatformChecker.IsOSPlatform(OSPlatform.OSX))
+            {
+                ending = MacOSProgramEnding;
             }
 
             var searchPattern = "*" + programName + ending;
