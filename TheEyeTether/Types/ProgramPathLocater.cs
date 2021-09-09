@@ -17,7 +17,9 @@ namespace TheEyeTether.Types
 
         public static Dictionary<string, string> SavedProgramPathPairs { get { return _savedProgramPathPairs;  } }
 
-
+        
+        /// It's recommended to pass programName without a file ending as this will add the appropriate one
+        /// based on the operating system being used.
         public static string LocateProgramPath(
                 string programName,
                 IFileSystem fileSystem,
