@@ -34,5 +34,22 @@ namespace TheEyeTether.UnitTests
 
             Assert.Equal(2, results.Length);
         }
+
+        [Fact]
+        public void AggregateFilePaths_DoesNotReturnFilePaths_WhenFileNameDoesNotMatch()
+        {
+            var correctFileName = "test1.txt";
+            var incorrectFileName = "test2.txt";
+            var searchDirectoryPath = @"C:Test\SearchDirectory\";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { searchDirectoryPath + incorrectFileName, new MockFileData(string.Empty) }
+            });
+
+            var results = FilePathAggregator.AggregateFilePaths(correctFileName, searchDirectoryPath,
+                    fileSystem);
+
+            Assert.Equal(0, results.Length);
+        }
     }
 }
