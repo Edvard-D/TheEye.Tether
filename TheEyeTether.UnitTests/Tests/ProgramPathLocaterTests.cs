@@ -40,8 +40,8 @@ namespace TheEyeTether.UnitTests
         public void LocateProgramPath_ReturnsPreviouslySavedPath_WhenPreviouslySavedPathStillExists()
         {
             var programName = "test.exe";
-            var correctProgramPath = @"C:\test.exe";
-            var incorrectProgramPath = @"C:\Users\Test\test.exe";
+            var correctProgramPath = @"C:\test1.exe";
+            var incorrectProgramPath = @"C:\test2.exe";
             ProgramPathLocater.SavedProgramPathPairs[programName] = correctProgramPath;
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
