@@ -22,7 +22,8 @@ namespace TheEyeTether.Types
                 string programName,
                 IFileSystem fileSystem,
                 IDrivesGetter drivesGetter,
-                IOSPlatformChecker osPlatformChecker)
+                IOSPlatformChecker osPlatformChecker,
+                string defaultPath = null)
         {
             if(_savedProgramPathPairs.ContainsKey(programName) == true
                     && fileSystem.File.Exists(_savedProgramPathPairs[programName]) == true)
@@ -32,20 +33,9 @@ namespace TheEyeTether.Types
 
             var ending = GetAppropriateFileEnding(programName, osPlatformChecker);
             var searchPattern = "*" + programName + ending;
-            var files = new List<string>();
+            var files = LocateFiles(searchPattern, defaultPath, fileSystem, drivesGetter);
 
-            foreach(DriveInfo driveInfo in drivesGetter.GetDrives())
-            {
-                files.AddRange(fileSystem.Directory.GetFiles(driveInfo.Name, searchPattern,
-                        SearchOption.AllDirectories));
-                
-                if(files.Count > 0)
-                {
-                    break;
-                }
-            }
-
-            if(files.Count == 0)
+            if(files.Length == 0)
             {
                 return null;
             }
@@ -76,6 +66,35 @@ namespace TheEyeTether.Types
             }
 
             return ending;
+        }
+
+        private static string[] LocateFiles(
+                string searchPattern,
+                string defaultPath,
+                IFileSystem fileSystem,
+                IDrivesGetter drivesGetter)
+        {
+            if(defaultPath != null)
+            {
+                var files = fileSystem.Directory.GetFiles(defaultPath, searchPattern);
+
+                if(files.Length > 0)
+                {
+                    return files;
+                }
+            }
+
+            foreach(DriveInfo driveInfo in drivesGetter.GetDrives())
+            {
+                var files = fileSystem.Directory.GetFiles(driveInfo.Name, searchPattern, SearchOption.AllDirectories);
+                
+                if(files.Length > 0)
+                {
+                    return files;
+                }
+            }
+
+            return new string[0];
         }
     }
 }

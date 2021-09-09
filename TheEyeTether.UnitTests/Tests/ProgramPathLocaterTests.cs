@@ -189,5 +189,26 @@ namespace TheEyeTether.UnitTests
 
             Assert.Equal(programPath, result);
         }
+
+        [Fact]
+        public void LocateProgramPath_ChecksDefaultPathFirst_WhenDefaultPathIsPassed()
+        {
+            var programName = "test.exe";
+            var correctProgramDirectory = @"C:\Users\Test1\";
+            var correctProgramPath = correctProgramDirectory + programName;
+            var incorrectProgramPath = @"C:\Users\Test2\test.exe";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { incorrectProgramPath, new MockFileData(string.Empty) },
+                { correctProgramPath, new MockFileData(string.Empty) }
+            });
+            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
+            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+
+            var result = ProgramPathLocater.LocateProgramPath(programName, fileSystem, drivesGetter,
+                    osPlatformChecker, correctProgramDirectory);
+
+            Assert.Equal(result, correctProgramPath);
+        }
     }
 }
