@@ -38,6 +38,11 @@ namespace TheEyeTether.Types
                 }
             }
 
+            if(files.Count == 0)
+            {
+                return null;
+            }
+
             var programPath = files[0];
             _savedProgramPathPairs[programName] = programPath;
 

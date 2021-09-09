@@ -25,6 +25,18 @@ namespace TheEyeTether.UnitTests
         }
 
         [Fact]
+        public void LocateProgramPath_ReturnsNull_WhenProgramDoesNotExist()
+        {
+            var programName = "test.exe";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {});
+            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
+
+            var result = ProgramPathLocater.LocateProgramPath(programName, fileSystem, drivesGetter);
+
+            Assert.Null(result);
+        }
+
+        [Fact]
         public void LocateProgramPath_ReturnsProgramPath_WhenPassedValidProgramName()
         {
             var programName = "test.exe";
