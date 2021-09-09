@@ -7,11 +7,23 @@ namespace TheEyeTether.Types
 {
     public static class ProgramPathLocater
     {
+        private static Dictionary<string, string> _savedProgramPathPairs = new Dictionary<string, string>();
+
+
+        public static Dictionary<string, string> SavedProgramPathPairs { get { return _savedProgramPathPairs;  } }
+
+
         public static string LocateProgramPath(
                 string programName,
                 IFileSystem fileSystem,
                 IDrivesGetter drivesGetter)
         {
+            if(_savedProgramPathPairs.ContainsKey(programName) == true
+                    && fileSystem.File.Exists(_savedProgramPathPairs[programName]) == true)
+            {
+                return _savedProgramPathPairs[programName];
+            }
+
             var searchPattern = "*" + programName;
             var files = new List<string>();
 
