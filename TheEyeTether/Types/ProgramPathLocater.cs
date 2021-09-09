@@ -22,6 +22,7 @@ namespace TheEyeTether.Types
         /// based on the operating system being used.
         public static string LocateProgramPath(
                 string programName,
+                string requiredDirectories,
                 IFileSystem fileSystem,
                 IDrivesGetter drivesGetter,
                 IOSPlatformChecker osPlatformChecker,
@@ -34,7 +35,7 @@ namespace TheEyeTether.Types
             }
 
             var ending = GetAppropriateFileEnding(programName, osPlatformChecker);
-            var searchPattern = "*" + programName + ending;
+            var searchPattern = "*" + requiredDirectories + programName + ending;
             var files = LocateFiles(searchPattern, defaultPath, fileSystem, drivesGetter);
 
             if(files.Length == 0)
