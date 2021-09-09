@@ -30,16 +30,7 @@ namespace TheEyeTether.Types
                 return _savedProgramPathPairs[programName];
             }
 
-            var ending = string.Empty;
-            if(osPlatformChecker.IsOSPlatform(OSPlatform.Windows))
-            {
-                ending = WindowsProgramEnding;
-            }
-            else if(osPlatformChecker.IsOSPlatform(OSPlatform.OSX))
-            {
-                ending = MacOSProgramEnding;
-            }
-
+            var ending = GetAppropriateFileEnding(programName, osPlatformChecker);
             var searchPattern = "*" + programName + ending;
             var files = new List<string>();
 
@@ -63,6 +54,28 @@ namespace TheEyeTether.Types
             _savedProgramPathPairs[programName] = programPath;
 
             return programPath;
+        }
+
+        private static string GetAppropriateFileEnding(
+                string programName,
+                IOSPlatformChecker osPlatformChecker)
+        {
+            var ending = string.Empty;
+            if(osPlatformChecker.IsOSPlatform(OSPlatform.Windows))
+            {
+                ending = WindowsProgramEnding;
+            }
+            else if(osPlatformChecker.IsOSPlatform(OSPlatform.OSX))
+            {
+                ending = MacOSProgramEnding;
+            }
+
+            if(programName.Contains(ending))
+            {
+                return string.Empty;
+            }
+
+            return ending;
         }
     }
 }

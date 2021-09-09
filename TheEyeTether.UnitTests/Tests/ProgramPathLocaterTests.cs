@@ -153,5 +153,41 @@ namespace TheEyeTether.UnitTests
 
             Assert.Equal(programPath, result);
         }
+
+        [Fact]
+        public void LocateProgramPath_DoesNotAddExeToProgramName_WhenCalledOnWindowsAndProgramNameDoesHaveExe()
+        {
+            var programName = "test.exe";
+            var programPath = @"C:\test.exe";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { programPath, new MockFileData(string.Empty) }
+            });
+            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
+            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+
+            var result = ProgramPathLocater.LocateProgramPath(programName, fileSystem, drivesGetter,
+                    osPlatformChecker);
+
+            Assert.Equal(programPath, result);
+        }
+
+        [Fact]
+        public void LocateProgramPath_DoesNotAddAppToProgramName_WhenCalledOnMacOSAndProgramNameDoesHaveApp()
+        {
+            var programName = "test.app";
+            var programPath = @"C:\test.app";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { programPath, new MockFileData(string.Empty) }
+            });
+            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
+            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.OSX);
+
+            var result = ProgramPathLocater.LocateProgramPath(programName, fileSystem, drivesGetter,
+                    osPlatformChecker);
+
+            Assert.Equal(programPath, result);
+        }
     }
 }
