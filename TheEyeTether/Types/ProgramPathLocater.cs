@@ -38,7 +38,10 @@ namespace TheEyeTether.Types
                 }
             }
 
-            return files[0];
+            var programPath = files[0];
+            _savedProgramPathPairs[programName] = programPath;
+
+            return programPath;
         }
     }
 }

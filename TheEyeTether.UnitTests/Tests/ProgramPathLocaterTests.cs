@@ -72,5 +72,21 @@ namespace TheEyeTether.UnitTests
 
             Assert.Equal(correctProgramPath, result);
         }
+
+        [Fact]
+        public void LocateProgramPath_SavesProgramPathPair_WhenLocated()
+        {
+            var programName = "test.exe";
+            var programPath = @"C:\test.exe";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { programPath, new MockFileData(string.Empty) }
+            });
+            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
+
+            var result = ProgramPathLocater.LocateProgramPath(programName, fileSystem, drivesGetter);
+
+            Assert.Contains(programName, ProgramPathLocater.SavedProgramPathPairs.Keys);
+        }
     }
 }
