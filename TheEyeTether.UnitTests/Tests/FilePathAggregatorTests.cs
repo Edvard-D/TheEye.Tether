@@ -20,7 +20,7 @@ namespace TheEyeTether.UnitTests
         }
 
         [Fact]
-        public void AggregateFilePaths_ReturnsFilePathsWithMatchingFileName_WhenFilesExist()
+        public void AggregateFilePaths_ReturnsFilePaths_WhenFileNameMatches()
         {
             var fileName = "test.txt";
             var searchDirectoryPath = @"C:\Test\SearchDirectory\";
