@@ -14,7 +14,8 @@ namespace TheEyeTether.Types
         public static void Execute(
                 IFileSystem fileSystem,
                 IDrivesGetter drivesGetter,
-                IOSPlatformChecker osPlatformChecker)
+                IOSPlatformChecker osPlatformChecker,
+                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
         {
             var programPath = ProgramPathLocater.LocateProgramPath(ProgramName, RequiredDirectories,
                     fileSystem, drivesGetter, osPlatformChecker);
@@ -30,9 +31,23 @@ namespace TheEyeTether.Types
 
             foreach(string filePath in filePaths)
             {
-                var newFilePath = @"C:\test.txt";
-                fileSystem.File.Create(newFilePath);
+                var outputFilePath = CreateOutputFilePath(filePath, fileSystem,
+                        currentDomainBaseDirectoryGetter);
+                fileSystem.File.Create(outputFilePath);
             }
+        }
+
+        private static string CreateOutputFilePath(
+                string inputFilePath,
+                IFileSystem fileSystem,
+                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
+        {
+            var outputFilePath = currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory();
+            outputFilePath += "test.txt";
+
+            fileSystem.Directory.CreateDirectory(outputFilePath);
+
+            return outputFilePath;
         }
     }
 }
