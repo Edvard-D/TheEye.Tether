@@ -140,12 +140,12 @@ namespace TheEyeTether.UnitTests
         public void LocateProgramPath_AddsAppToProgramName_WhenCalledOnMacOSAndProgramNameDoesNotHaveApp()
         {
             var programName = "test";
-            var programPath = @"Applications\test.app";
+            var programPath = @"C:\test.app";
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"Applications\" });
+            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
             var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.OSX);
 
             var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
@@ -176,12 +176,12 @@ namespace TheEyeTether.UnitTests
         public void LocateProgramPath_DoesNotAddAppToProgramName_WhenCalledOnMacOSAndProgramNameDoesHaveApp()
         {
             var programName = "test.app";
-            var programPath = @"Applications\test.app";
+            var programPath = @"C:\test.app";
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"Applications\" });
+            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
             var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.OSX);
 
             var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
