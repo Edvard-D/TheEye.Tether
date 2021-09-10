@@ -141,7 +141,8 @@ namespace TheEyeTether.UnitTests
 
         [Theory]
         [InlineData(@"TheEyeTether")]
-        public void Execute_CreatesNewFileWithCorrectElements_WhenThereIsPendingData(string requiredValue)
+        [InlineData(@"AccountName")]
+        public void Execute_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
@@ -168,6 +169,7 @@ namespace TheEyeTether.UnitTests
 
         [Theory]
         [InlineData(@"C:\TheEyeTether\")]
+        [InlineData(@"C:\TheEyeTether\AccountName\")]
         public void Execute_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
