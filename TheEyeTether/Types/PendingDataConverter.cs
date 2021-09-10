@@ -10,7 +10,8 @@ namespace TheEyeTether.Types
         private const int AccountNameElementOffset = 5;
         private const string FileName = "TheEyeRecorder.lua";
         private const string ProgramName = "Wow";
-        private const string RequiredDirectories = @"WorldOfWarcraft\_retail_\";        
+        private const string RequiredDirectories = @"WorldOfWarcraft\_retail_\";
+        private const int ServerNameElementOffset = 4;
 
 
         public static void Execute(
@@ -52,6 +53,7 @@ namespace TheEyeTether.Types
                 "Data",
                 "Snapshots",
                 inputFilePathElements[inputFilePathElements.Length - AccountNameElementOffset],
+                inputFilePathElements[inputFilePathElements.Length - ServerNameElementOffset],
                 "test.txt"
             };
 
