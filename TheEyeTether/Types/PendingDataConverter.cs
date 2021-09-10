@@ -1,3 +1,4 @@
+using System.IO;
 using System.IO.Abstractions;
 using TheEyeTether.Helpers;
 using TheEyeTether.Interfaces;
@@ -42,11 +43,15 @@ namespace TheEyeTether.Types
                 IFileSystem fileSystem,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
         {
-            var outputFilePath = currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory();
-            outputFilePath += "test.txt";
+            var outputFilePathParts = new string[]
+            {
+                currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory(),
+                "test.txt"
+            };
 
+            var outputFilePath = Path.Combine(outputFilePathParts);
             fileSystem.Directory.CreateDirectory(outputFilePath);
-
+            
             return outputFilePath;
         }
     }
