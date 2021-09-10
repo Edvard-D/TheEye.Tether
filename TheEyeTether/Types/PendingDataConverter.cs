@@ -15,7 +15,7 @@ namespace TheEyeTether.Types
         private const int ServerNameElementOffset = 4;
 
 
-        public static void Execute(
+        public static void Convert(
                 IFileSystem fileSystem,
                 IDrivesGetter drivesGetter,
                 IOSPlatformChecker osPlatformChecker,

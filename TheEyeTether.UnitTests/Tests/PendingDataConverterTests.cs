@@ -17,7 +17,7 @@ namespace TheEyeTether.UnitTests
 
 
         [Fact]
-        public void Execute_CreatesFiles_WhenThereIsPendingData()
+        public void Convert_CreatesFiles_WhenThereIsPendingData()
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
@@ -32,7 +32,7 @@ namespace TheEyeTether.UnitTests
             var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
             var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
+            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
                     currentDomainBaseDirectoryGetter);
 
             var allFiles = fileSystemMock.AllFiles as string[];
@@ -40,7 +40,7 @@ namespace TheEyeTether.UnitTests
         }
         
         [Fact]
-        public void Execute_DoesNotThrowError_WhenProgramCannotBeFound()
+        public void Convert_DoesNotThrowError_WhenProgramCannotBeFound()
         {
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
             var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>() {});
@@ -48,12 +48,12 @@ namespace TheEyeTether.UnitTests
             var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
             var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
+            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
                     currentDomainBaseDirectoryGetter);
         }
 
         [Fact]
-        public void Execute_RemovesFileEndingFromProgramName_WhenCalledOnWindows()
+        public void Convert_RemovesFileEndingFromProgramName_WhenCalledOnWindows()
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
@@ -65,12 +65,12 @@ namespace TheEyeTether.UnitTests
             var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
             var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
+            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
                     currentDomainBaseDirectoryGetter);
         }
 
         [Fact]
-        public void Execute_RemovesFileEndingFromProgramName_WhenCalledOnMacOS()
+        public void Convert_RemovesFileEndingFromProgramName_WhenCalledOnMacOS()
         {
             var programPath = @"C:\Applications\WorldOfWarcraft\_retail_\Wow.app";
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
@@ -82,12 +82,12 @@ namespace TheEyeTether.UnitTests
             var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.OSX);
             var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
+            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
                     currentDomainBaseDirectoryGetter);
         }
         
         [Fact]
-        public void Execute_CreatesNewFileWithCurrentDomainBaseDirectoryInPath_WhenThereIsPendingData()
+        public void Convert_CreatesNewFileWithCurrentDomainBaseDirectoryInPath_WhenThereIsPendingData()
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
@@ -103,7 +103,7 @@ namespace TheEyeTether.UnitTests
             var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
             var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
+            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
                     currentDomainBaseDirectoryGetter);
 
             var files = fileSystemMock.AllFiles as string[];
@@ -120,7 +120,7 @@ namespace TheEyeTether.UnitTests
         [InlineData(AccountName)]
         [InlineData(ServerName)]
         [InlineData(CharacterName)]
-        public void Execute_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
+        public void Convert_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
@@ -135,7 +135,7 @@ namespace TheEyeTether.UnitTests
             var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
             var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
+            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
                     currentDomainBaseDirectoryGetter);
             
             var files = fileSystemMock.AllFiles as string[];
@@ -153,7 +153,7 @@ namespace TheEyeTether.UnitTests
         [InlineData(@"C:\TheEyeTether\Data\Snapshots\" + AccountName + @"\"+ ServerName)]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots\" + AccountName + @"\"+ ServerName + @"\"
                 + CharacterName)]
-        public void Execute_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
+        public void Convert_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
@@ -168,7 +168,7 @@ namespace TheEyeTether.UnitTests
             var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
             var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
+            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
                     currentDomainBaseDirectoryGetter);
             
             var directories = fileSystemMock.AllDirectories as string[];
