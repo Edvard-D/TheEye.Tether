@@ -1,6 +1,6 @@
 namespace TheEyeTether.Types
 {
-    public class PendingDataReader
+    public class LuaTableReader
     {
     }
 }

@@ -1,6 +1,6 @@
 namespace TheEyeTether.UnitTests
 {
-    public class PendingDataReaderTests
+    public class LuaTableReaderTests
     {
     }
 }
