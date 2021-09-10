@@ -11,11 +11,17 @@ namespace TheEyeTether.UnitTests
 {
     public class PendingDataConverterTests
     {
+        private const string AccountName = "VARTIB";
+        private const string CharacterName = "Alaror";
+        private const string ServerName = "Moonguard";
+
+
         [Fact]
         public void Execute_CreatesFiles_WhenThereIsPendingData()
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-            var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
+            var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+                    AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
             var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
@@ -84,11 +90,8 @@ namespace TheEyeTether.UnitTests
         public void Execute_CreatesNewFileWithCurrentDomainBaseDirectoryInPath_WhenThereIsPendingData()
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-            var accountName = "AccountName";
-            var serverName = "ServerName";
-            var characterName = "CharacterName";
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
-                    accountName, serverName, characterName);
+                    AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
             var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
@@ -114,9 +117,9 @@ namespace TheEyeTether.UnitTests
         [InlineData(@"TheEyeTether")]
         [InlineData(@"Data")]
         [InlineData(@"Snapshots")]
-        [InlineData(@"AccountName")]
-        [InlineData(@"ServerName")]
-        [InlineData(@"CharacterName")]
+        [InlineData(AccountName)]
+        [InlineData(ServerName)]
+        [InlineData(CharacterName)]
         public void Execute_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
@@ -146,9 +149,10 @@ namespace TheEyeTether.UnitTests
         [InlineData(@"C:\TheEyeTether")]
         [InlineData(@"C:\TheEyeTether\Data")]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots")]
-        [InlineData(@"C:\TheEyeTether\Data\Snapshots\AccountName")]
-        [InlineData(@"C:\TheEyeTether\Data\Snapshots\AccountName\ServerName")]
-        [InlineData(@"C:\TheEyeTether\Data\Snapshots\AccountName\ServerName\CharacterName")]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\" + AccountName)]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\" + AccountName + @"\"+ ServerName)]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\" + AccountName + @"\"+ ServerName + @"\"
+                + CharacterName)]
         public void Execute_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
