@@ -110,35 +110,6 @@ namespace TheEyeTether.UnitTests
             Assert.Contains(currentDomainBaseDirectory, createdFilePath);
         }
 
-        [Fact]
-        public void Execute_CreatesNewFileWithAccountNameInPath_WhenThereIsPendingData()
-        {
-            var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-            var accountName = "AccountName";
-            var serverName = "ServerName";
-            var characterName = "CharacterName";
-            var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
-                    accountName, serverName, characterName);
-            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
-            {
-                { programPath, new MockFileData(string.Empty) },
-                { pendingDataFilePath, new MockFileData(string.Empty) },
-            });
-            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
-            var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
-
-            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
-                    currentDomainBaseDirectoryGetter);
-
-            var files = fileSystemMock.AllFiles as string[];
-            var createdFilePath = files.ToList()
-                    .Where(f => f != programPath && f != pendingDataFilePath)
-                    .First();
-            Assert.Contains(accountName, createdFilePath);
-        }
-
         [Theory]
         [InlineData(@"TheEyeTether")]
         [InlineData(@"Data")]
