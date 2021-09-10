@@ -49,7 +49,7 @@ namespace TheEyeTether.Types
                 string programName,
                 IOSPlatformChecker osPlatformChecker)
         {
-            var ending = OSVersionHelpers.GetProgramEnding(osPlatformChecker);
+            var ending = OSPlatformHelpers.GetProgramEnding(osPlatformChecker);
 
             if(programName.Contains(ending))
             {

@@ -14,7 +14,7 @@ namespace TheEyeTether.UnitTests
 
             try
             {
-                var result = OSVersionHelpers.GetProgramEnding(osPlatformChecker);
+                var result = OSPlatformHelpers.GetProgramEnding(osPlatformChecker);
             }
             catch(System.Exception ex)
             {
@@ -28,7 +28,7 @@ namespace TheEyeTether.UnitTests
             var expectedEnding = ".exe";
             var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
 
-            var result = OSVersionHelpers.GetProgramEnding(osPlatformChecker);
+            var result = OSPlatformHelpers.GetProgramEnding(osPlatformChecker);
 
             Assert.Equal(expectedEnding, result);
         }
@@ -39,7 +39,7 @@ namespace TheEyeTether.UnitTests
             var expectedEnding = ".app";
             var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.OSX);
 
-            var result = OSVersionHelpers.GetProgramEnding(osPlatformChecker);
+            var result = OSPlatformHelpers.GetProgramEnding(osPlatformChecker);
 
             Assert.Equal(expectedEnding, result);
         }

@@ -3,7 +3,7 @@ using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Helpers
 {
-    public static class OSVersionHelpers
+    public static class OSPlatformHelpers
     {
         private const string MacOSProgramEnding = ".app";
         private const string WindowsProgramEnding = ".exe";
