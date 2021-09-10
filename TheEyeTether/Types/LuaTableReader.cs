@@ -1,6 +1,6 @@
 namespace TheEyeTether.Types
 {
-    public class LuaTableReader
+    public static class LuaTableReader
     {
     }
 }
