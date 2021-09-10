@@ -21,12 +21,23 @@ namespace TheEyeTether.UnitTests
                 Assert.IsType<System.NotImplementedException>(ex);
             }
         }
-
+        
         [Fact]
         public void GetProgramEnding_ReturnsExe_WhenCalledOnWindows()
         {
             var expectedEnding = ".exe";
             var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+
+            var result = OSVersionHelpers.GetProgramEnding(osPlatformChecker);
+
+            Assert.Equal(expectedEnding, result);
+        }
+
+        [Fact]
+        public void GetProgramEnding_ReturnsApp_WhenCalledOnMacOS()
+        {
+            var expectedEnding = ".app";
+            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.OSX);
 
             var result = OSVersionHelpers.GetProgramEnding(osPlatformChecker);
 
