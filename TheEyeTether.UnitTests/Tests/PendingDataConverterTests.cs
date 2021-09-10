@@ -38,5 +38,33 @@ namespace TheEyeTether.UnitTests
 
             PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub);
         }
+
+        [Fact]
+        public void Execute_RemovesFileEndingFromProgramName_WhenCalledOnWindows()
+        {
+            var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
+            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { programPath, new MockFileData(string.Empty) }
+            });
+            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
+            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
+
+            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub);
+        }
+
+        [Fact]
+        public void Execute_RemovesFileEndingFromProgramName_WhenCalledOnMacOS()
+        {
+            var programPath = @"C:\Applications\WorldOfWarcraft\_retail_\Wow.app";
+            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { programPath, new MockFileData(string.Empty) }
+            });
+            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
+            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.OSX);
+
+            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub);
+        }
     }
 }

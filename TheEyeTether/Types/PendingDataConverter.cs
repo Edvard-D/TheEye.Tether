@@ -1,4 +1,5 @@
 using System.IO.Abstractions;
+using TheEyeTether.Helpers;
 using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Types
@@ -22,8 +23,9 @@ namespace TheEyeTether.Types
             {
                 return;
             }
-
-            var searchDirectoryPath = programPath.Replace(ProgramName + ".exe", string.Empty);
+            
+            var programEnding = OSPlatformHelpers.GetProgramEnding(osPlatformChecker);
+            var searchDirectoryPath = programPath.Replace(ProgramName + programEnding, string.Empty);
             var filePaths = FilePathAggregator.AggregateFilePaths(FileName, searchDirectoryPath, fileSystem);
 
             foreach(string filePath in filePaths)
