@@ -28,5 +28,15 @@ namespace TheEyeTether.UnitTests
             var allFiles = fileSystemMock.AllFiles as string[];
             Assert.Equal(3, allFiles.Length);
         }
+        
+        [Fact]
+        public void Execute_DoesNotThrowError_WhenProgramCannotBeFound()
+        {
+            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>() {});
+            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
+            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
+
+            PendingDataConverter.Execute(fileSystemMock, drivesGetterStub, osPlatformCheckerStub);
+        }
     }
 }

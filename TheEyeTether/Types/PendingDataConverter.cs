@@ -17,6 +17,12 @@ namespace TheEyeTether.Types
         {
             var programPath = ProgramPathLocater.LocateProgramPath(ProgramName, RequiredDirectories,
                     fileSystem, drivesGetter, osPlatformChecker);
+
+            if(programPath == null)
+            {
+                return;
+            }
+
             var searchDirectoryPath = programPath.Replace(ProgramName + ".exe", string.Empty);
             var filePaths = FilePathAggregator.AggregateFilePaths(FileName, searchDirectoryPath, fileSystem);
 
