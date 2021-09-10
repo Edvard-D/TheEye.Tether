@@ -7,6 +7,7 @@ namespace TheEyeTether.Types
 {
     public static class PendingDataConverter
     {
+        private const int AccountNameElementOffset = 5;
         private const string FileName = "TheEyeRecorder.lua";
         private const string ProgramName = "Wow";
         private const string RequiredDirectories = @"WorldOfWarcraft\_retail_\";        
@@ -43,11 +44,14 @@ namespace TheEyeTether.Types
                 IFileSystem fileSystem,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
         {
+            var inputFilePathElements = inputFilePath.Split(@"/\".ToCharArray());
+
             var outputFilePathParts = new string[]
             {
                 currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory(),
                 "Data",
                 "Snapshots",
+                inputFilePathElements[inputFilePathElements.Length - AccountNameElementOffset],
                 "test.txt"
             };
 
