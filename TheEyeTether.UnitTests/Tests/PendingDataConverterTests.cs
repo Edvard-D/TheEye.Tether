@@ -145,6 +145,7 @@ namespace TheEyeTether.UnitTests
         [InlineData(@"Snapshots")]
         [InlineData(@"AccountName")]
         [InlineData(@"ServerName")]
+        [InlineData(@"CharacterName")]
         public void Execute_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
@@ -176,6 +177,7 @@ namespace TheEyeTether.UnitTests
         [InlineData(@"C:\TheEyeTether\Data\Snapshots")]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots\AccountName")]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots\AccountName\ServerName")]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\AccountName\ServerName\CharacterName")]
         public void Execute_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
