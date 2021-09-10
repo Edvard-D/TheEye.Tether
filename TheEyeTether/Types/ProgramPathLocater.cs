@@ -1,17 +1,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
-using System.Runtime.InteropServices;
 using TheEyeTether.Interfaces;
+using TheEyeTether.Helpers;
 
 namespace TheEyeTether.Types
 {
     public static class ProgramPathLocater
     {
-        private const string MacOSProgramEnding = ".app";
-        private const string WindowsProgramEnding = ".exe";
-
-
         private static Dictionary<string, string> _savedProgramPathPairs = new Dictionary<string, string>();
 
 
@@ -53,15 +49,7 @@ namespace TheEyeTether.Types
                 string programName,
                 IOSPlatformChecker osPlatformChecker)
         {
-            var ending = string.Empty;
-            if(osPlatformChecker.IsOSPlatform(OSPlatform.Windows))
-            {
-                ending = WindowsProgramEnding;
-            }
-            else if(osPlatformChecker.IsOSPlatform(OSPlatform.OSX))
-            {
-                ending = MacOSProgramEnding;
-            }
+            var ending = OSVersionHelpers.GetProgramEnding(osPlatformChecker);
 
             if(programName.Contains(ending))
             {
