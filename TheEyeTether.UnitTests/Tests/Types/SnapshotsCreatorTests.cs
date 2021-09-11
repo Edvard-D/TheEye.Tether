@@ -7,7 +7,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
     public class SnapshotsCreatorTests
     {
         [Fact]
-        public void Create_ReturnsDictOfListsOfSnapshots_WhenPassedValidLuaTableAndSnapshoTypes()
+        public void Create_ReturnsDictionaryOfListsOfSnapshots_WhenPassedValidLuaTableAndSnapshoTypes()
         {
             var luaTable = new Dictionary<object, object>();
             var snapshotTypes = new SnapshotType[1];
