@@ -10,7 +10,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Create_ReturnsDictOfListsOfSnapshots_WhenPassedValidLuaTableAndSnapshoTypes()
         {
             var luaTable = new Dictionary<object, object>();
-            var snapshotTypes = new string[1];
+            var snapshotTypes = new SnapshotType[1];
 
             var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
 
@@ -21,7 +21,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Create_ReturnsNull_WhenPassedNullLuaTable()
         {
             Dictionary<object, object> luaTable = null;
-            var snapshotTypes = new string[1];
+            var snapshotTypes = new SnapshotType[1];
 
             var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
 
@@ -32,7 +32,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Create_ReturnsNull_WhenPassedNullSnapshotTypes()
         {
             var luaTable = new Dictionary<object, object>();
-            string[] snapshotTypes = null;
+            SnapshotType[] snapshotTypes = null;
 
             var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
 

@@ -6,7 +6,7 @@ namespace TheEyeTether.Types
     {
         public static Dictionary<SnapshotType, List<Snapshot>> Create(
                 Dictionary<object, object> luaTable,
-                string[] snapshotTypes)
+                SnapshotType[] snapshotTypes)
         {
             if(luaTable == null || snapshotTypes == null)
             {
