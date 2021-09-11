@@ -16,7 +16,14 @@ namespace TheEyeTether.Types
             var snapshots = new Dictionary<SnapshotType, List<Snapshot>>();
             foreach(SnapshotType snapshotType in snapshotTypes)
             {
-                snapshots[snapshotType] = new List<Snapshot>();
+                var snapshotTypeSnapshots = new List<Snapshot>();
+                snapshots[snapshotType] = snapshotTypeSnapshots;
+
+                var snapshotTypeLuaTable = luaTable[snapshotType.Name] as float[];
+                foreach(float timestamp in snapshotTypeLuaTable)
+                {
+                    snapshotTypeSnapshots.Add(new Snapshot(timestamp));
+                }
             }
 
             return snapshots;

@@ -57,5 +57,25 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Equal(snapshotTypes.Length, result.Keys.Count);
         }
+
+        [Theory]
+        [InlineData(1f)]
+        [InlineData(1f, 2f)]
+        [InlineData(1f, 2f, 3f, 4f, 5f)]
+        public void Create_ReturnsASnapshotForEachEntryOfASnapshotType_WhenPassedALuaTableWithEntriesForASnapshotType(
+                params float[] timestamps)
+        {
+            var snapshotTypeName = "test";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotTypeName, timestamps }
+            };
+            var snapshotTypes = new SnapshotType[] { new SnapshotType(snapshotTypeName) };
+
+            var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
+
+            var snapshots = result[snapshotTypes[0]] as List<Snapshot>;
+            Assert.Equal(timestamps.Length, snapshots.Count);
+        }
     }
 }
