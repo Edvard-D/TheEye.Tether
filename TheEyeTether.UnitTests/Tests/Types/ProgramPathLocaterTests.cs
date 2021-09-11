@@ -5,7 +5,7 @@ using TheEyeTether.Types;
 using TheEyeTether.UnitTests.Stubs;
 using Xunit;
 
-namespace TheEyeTether.UnitTests
+namespace TheEyeTether.UnitTests.Tests.Types
 {
     public class ProgramPathLocaterTests
     {

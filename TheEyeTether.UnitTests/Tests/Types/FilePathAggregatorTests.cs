@@ -3,7 +3,7 @@ using System.IO.Abstractions.TestingHelpers;
 using TheEyeTether.Types;
 using Xunit;
 
-namespace TheEyeTether.UnitTests
+namespace TheEyeTether.UnitTests.Tests.Types
 {
     public class FilePathAggregatorTests
     {

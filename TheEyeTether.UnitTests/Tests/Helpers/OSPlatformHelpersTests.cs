@@ -3,7 +3,7 @@ using TheEyeTether.Helpers;
 using TheEyeTether.UnitTests.Stubs;
 using Xunit;
 
-namespace TheEyeTether.UnitTests
+namespace TheEyeTether.UnitTests.Tests.Helpers
 {
     public class OSVersionHelpersTests
     {

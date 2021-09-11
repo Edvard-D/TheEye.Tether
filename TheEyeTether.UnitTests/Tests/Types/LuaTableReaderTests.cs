@@ -3,7 +3,7 @@ using TheEyeTether.Types;
 using TheEyeTether.UnitTests.Mocks;
 using Xunit;
 
-namespace TheEyeTether.UnitTests
+namespace TheEyeTether.UnitTests.Tests.Types
 {
     public class LuaTableReaderTests
     {
