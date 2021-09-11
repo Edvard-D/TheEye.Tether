@@ -14,15 +14,15 @@ namespace TheEyeTether.UnitTests
         {
             var programName = "test.exe";
             var programPath = @"C:\test.exe";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
             
             Assert.IsType<string>(result);
         }
@@ -31,12 +31,12 @@ namespace TheEyeTether.UnitTests
         public void LocateProgramPath_ReturnsNull_WhenProgramDoesNotExist()
         {
             var programName = "test.exe";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {});
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> {});
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Null(result);
         }
@@ -46,15 +46,15 @@ namespace TheEyeTether.UnitTests
         {
             var programName = "test.exe";
             var programPath = @"C:\test.exe";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Equal(programPath, result);
         }
@@ -66,16 +66,16 @@ namespace TheEyeTether.UnitTests
             var correctProgramPath = @"C:\test1.exe";
             var incorrectProgramPath = @"C:\test2.exe";
             ProgramPathLocater.SavedProgramPathPairs[programName] = correctProgramPath;
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { incorrectProgramPath, new MockFileData(string.Empty) },
                 { correctProgramPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Equal(correctProgramPath, result);
         }
@@ -87,15 +87,15 @@ namespace TheEyeTether.UnitTests
             var correctProgramPath = @"C:\Users\Test\test.exe";
             var incorrectProgramPath = @"C:\test.exe";
             ProgramPathLocater.SavedProgramPathPairs[programName] = incorrectProgramPath;
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { correctProgramPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Equal(correctProgramPath, result);
         }
@@ -105,15 +105,15 @@ namespace TheEyeTether.UnitTests
         {
             var programName = "test.exe";
             var programPath = @"C:\test.exe";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Contains(programName, ProgramPathLocater.SavedProgramPathPairs.Keys);
         }
@@ -123,15 +123,15 @@ namespace TheEyeTether.UnitTests
         {
             var programName = "test";
             var programPath = @"C:\test.exe";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Equal(programPath, result);
         }
@@ -141,15 +141,15 @@ namespace TheEyeTether.UnitTests
         {
             var programName = "test";
             var programPath = @"C:\test.app";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.OSX);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.OSX);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Equal(programPath, result);
         }
@@ -159,15 +159,15 @@ namespace TheEyeTether.UnitTests
         {
             var programName = "test.exe";
             var programPath = @"C:\test.exe";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Equal(programPath, result);
         }
@@ -177,15 +177,15 @@ namespace TheEyeTether.UnitTests
         {
             var programName = "test.app";
             var programPath = @"C:\test.app";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.OSX);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.OSX);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Equal(programPath, result);
         }
@@ -197,16 +197,16 @@ namespace TheEyeTether.UnitTests
             var correctProgramDirectory = @"C:\Users\Test1\";
             var correctProgramPath = correctProgramDirectory + programName;
             var incorrectProgramPath = @"C:\Users\Test2\test.exe";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { incorrectProgramPath, new MockFileData(string.Empty) },
                 { correctProgramPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty, fileSystem, drivesGetter,
-                    osPlatformChecker, correctProgramDirectory);
+            var result = ProgramPathLocater.LocateProgramPath(programName, string.Empty,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker, correctProgramDirectory);
 
             Assert.Equal(result, correctProgramPath);
         }
@@ -218,16 +218,16 @@ namespace TheEyeTether.UnitTests
             var correctProgramDirectory = @"Users\Test1\";
             var correctProgramPath = @"C:\" + correctProgramDirectory + programName;
             var incorrectProgramPath = @"C:\Users\Test2\test.exe";
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { incorrectProgramPath, new MockFileData(string.Empty) },
                 { correctProgramPath, new MockFileData(string.Empty) }
             });
-            var drivesGetter = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = ProgramPathLocater.LocateProgramPath(programName, correctProgramDirectory, fileSystem,
-                    drivesGetter, osPlatformChecker);
+            var result = ProgramPathLocater.LocateProgramPath(programName, correctProgramDirectory,
+                    mockFileSystem, stubDrivesGetter, stubOSPlatformChecker);
 
             Assert.Equal(result, correctProgramPath);
         }

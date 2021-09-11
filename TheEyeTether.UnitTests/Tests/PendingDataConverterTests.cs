@@ -23,19 +23,19 @@ namespace TheEyeTether.UnitTests
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
                 { pendingDataFilePath, new MockFileData(string.Empty) }
             });
-            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
-            var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
-                    currentDomainBaseDirectoryGetter);
+            PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
+                    stubCurrentDomainBaseDirectoryGetter);
 
-            var allFiles = fileSystemMock.AllFiles as string[];
+            var allFiles = mockFileSystem.AllFiles as string[];
             Assert.Equal(3, allFiles.Length);
         }
         
@@ -43,13 +43,13 @@ namespace TheEyeTether.UnitTests
         public void Convert_DoesNotThrowError_WhenProgramCannotBeFound()
         {
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>() {});
-            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
-            var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>() {});
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
-                    currentDomainBaseDirectoryGetter);
+            PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
+                    stubCurrentDomainBaseDirectoryGetter);
         }
 
         [Fact]
@@ -57,16 +57,16 @@ namespace TheEyeTether.UnitTests
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
-            var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubDivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
-                    currentDomainBaseDirectoryGetter);
+            PendingDataConverter.Convert(mockFileSystem, stubDivesGetter, stubOSPlatformChecker,
+                    stubCurrentDomainBaseDirectoryGetter);
         }
 
         [Fact]
@@ -74,16 +74,16 @@ namespace TheEyeTether.UnitTests
         {
             var programPath = @"C:\Applications\WorldOfWarcraft\_retail_\Wow.app";
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) }
             });
-            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.OSX);
-            var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.OSX);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
-                    currentDomainBaseDirectoryGetter);
+            PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
+                    stubCurrentDomainBaseDirectoryGetter);
         }
         
         [Fact]
@@ -93,20 +93,20 @@ namespace TheEyeTether.UnitTests
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
                 { pendingDataFilePath, new MockFileData(string.Empty) },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
-            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
-            var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
-                    currentDomainBaseDirectoryGetter);
+            PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
+                    stubCurrentDomainBaseDirectoryGetter);
 
-            var files = fileSystemMock.AllFiles as string[];
+            var files = mockFileSystem.AllFiles as string[];
             var createdFilePath = files.ToList()
                     .Where(f => f != programPath && f != pendingDataFilePath && f != currentDomainBaseDirectory)
                     .First();
@@ -125,20 +125,20 @@ namespace TheEyeTether.UnitTests
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
                 { pendingDataFilePath, new MockFileData(string.Empty) },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
-            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
-            var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
-                    currentDomainBaseDirectoryGetter);
+            PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
+                    stubCurrentDomainBaseDirectoryGetter);
             
-            var files = fileSystemMock.AllFiles as string[];
+            var files = mockFileSystem.AllFiles as string[];
             var createdFilePath = files.ToList()
                     .Where(f => f != programPath && f != pendingDataFilePath)
                     .First();
@@ -158,20 +158,20 @@ namespace TheEyeTether.UnitTests
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var fileSystemMock = new MockFileSystem(new Dictionary<string, MockFileData>()
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
                 { pendingDataFilePath, new MockFileData(string.Empty) },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
-            var drivesGetterStub = new DrivesGetterStub(new List<string>() { @"C:\" });
-            var osPlatformCheckerStub = new OSPlatformCheckerStub(OSPlatform.Windows);
-            var currentDomainBaseDirectoryGetter = new CurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
 
-            PendingDataConverter.Convert(fileSystemMock, drivesGetterStub, osPlatformCheckerStub,
-                    currentDomainBaseDirectoryGetter);
+            PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
+                    stubCurrentDomainBaseDirectoryGetter);
             
-            var directories = fileSystemMock.AllDirectories as string[];
+            var directories = mockFileSystem.AllDirectories as string[];
             Assert.Contains(requiredValue, directories);
         }
     }

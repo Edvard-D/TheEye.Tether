@@ -3,12 +3,12 @@ using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.UnitTests.Stubs
 {
-    public class OSPlatformCheckerStub : IOSPlatformChecker
+    public class StubOSPlatformChecker : IOSPlatformChecker
     {
         private OSPlatform _currentOSPlatform;
 
 
-        public OSPlatformCheckerStub(OSPlatform currentOSPlatform)
+        public StubOSPlatformChecker(OSPlatform currentOSPlatform)
         {
             _currentOSPlatform = currentOSPlatform;
         }

@@ -4,12 +4,12 @@ using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.UnitTests.Stubs
 {
-    public class DrivesGetterStub : IDrivesGetter
+    public class StubDrivesGetter : IDrivesGetter
     {
         private List<DriveInfo> _drives;
 
         
-        public DrivesGetterStub(List<string> driveNames)
+        public StubDrivesGetter(List<string> driveNames)
         {
             var drives = new List<DriveInfo>();
 

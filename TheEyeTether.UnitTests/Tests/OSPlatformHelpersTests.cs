@@ -10,11 +10,11 @@ namespace TheEyeTether.UnitTests
         [Fact]
         public void GetProgramEnding_ThrowsNotImplementedException_WhenCalledOnLinux()
         {
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Linux);
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Linux);
 
             try
             {
-                var result = OSPlatformHelpers.GetProgramEnding(osPlatformChecker);
+                var result = OSPlatformHelpers.GetProgramEnding(stubOSPlatformChecker);
             }
             catch(System.Exception ex)
             {
@@ -26,9 +26,9 @@ namespace TheEyeTether.UnitTests
         public void GetProgramEnding_ReturnsExe_WhenCalledOnWindows()
         {
             var expectedEnding = ".exe";
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.Windows);
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 
-            var result = OSPlatformHelpers.GetProgramEnding(osPlatformChecker);
+            var result = OSPlatformHelpers.GetProgramEnding(stubOSPlatformChecker);
 
             Assert.Equal(expectedEnding, result);
         }
@@ -37,9 +37,9 @@ namespace TheEyeTether.UnitTests
         public void GetProgramEnding_ReturnsApp_WhenCalledOnMacOS()
         {
             var expectedEnding = ".app";
-            var osPlatformChecker = new OSPlatformCheckerStub(OSPlatform.OSX);
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.OSX);
 
-            var result = OSPlatformHelpers.GetProgramEnding(osPlatformChecker);
+            var result = OSPlatformHelpers.GetProgramEnding(stubOSPlatformChecker);
 
             Assert.Equal(expectedEnding, result);
         }
