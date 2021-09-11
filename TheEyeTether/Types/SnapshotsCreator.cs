@@ -13,7 +13,13 @@ namespace TheEyeTether.Types
                 return null;
             }
 
-            return new Dictionary<SnapshotType, List<Snapshot>>();
+            var snapshots = new Dictionary<SnapshotType, List<Snapshot>>();
+            foreach(SnapshotType snapshotType in snapshotTypes)
+            {
+                snapshots[snapshotType] = new List<Snapshot>();
+            }
+
+            return snapshots;
         }
     }
 }
