@@ -39,6 +39,11 @@ namespace TheEyeTether.UnitTests.Mocks
         }
 
 
+        public bool DoesFileExist(string filePath)
+        {
+            return _files.ContainsKey(filePath);
+        }
+
         public object[] DoFile(string filePath)
         {
             File.WriteAllText(_tempFilePath, _files[filePath], Encoding.ASCII);

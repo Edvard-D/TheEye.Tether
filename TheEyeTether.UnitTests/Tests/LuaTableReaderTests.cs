@@ -37,5 +37,17 @@ namespace TheEyeTether.UnitTests
 
             Assert.Null(result);
         }
+
+        [Fact]
+        public void Read_ReturnsNull_WhenFileDoesNotExist()
+        {
+            var filePath = "test.lua";
+            var tableName = "test";
+            var mockLua = new MockLua("TheEyeTether", new Dictionary<string, string>());
+            
+            var result = LuaTableReader.Read(filePath, tableName, mockLua);
+
+            Assert.Null(result);
+        }
     }
 }

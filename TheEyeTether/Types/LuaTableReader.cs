@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Types
@@ -10,6 +11,11 @@ namespace TheEyeTether.Types
                 string tableName,
                 ILua lua)
         {
+            if(!lua.DoesFileExist(filePath))
+            {
+                return null;
+            }
+
             lua.DoFile(filePath);
             var luaTable = lua.GetTable(tableName);
             
