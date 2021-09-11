@@ -4,14 +4,14 @@ using Xunit;
 
 namespace TheEyeTether.UnitTests.Tests.Types
 {
-    public class SnapshotCreatorTests
+    public class SnapshotsCreatorTests
     {
         [Fact]
         public void Create_ReturnsListOfSnapshots_WhenPassedValidLuaTableData()
         {
             var luaTable = new Dictionary<object, object>();
 
-            var result = SnapshotCreator.Create(luaTable);
+            var result = SnapshotsCreator.Create(luaTable);
 
             Assert.IsType<List<Snapshot>>(result);
         }
@@ -21,7 +21,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             Dictionary<object, object> luaTable = null;
 
-            var result = SnapshotCreator.Create(luaTable);
+            var result = SnapshotsCreator.Create(luaTable);
 
             Assert.Null(result);
         }

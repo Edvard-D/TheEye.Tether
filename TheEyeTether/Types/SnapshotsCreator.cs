@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TheEyeTether.Types
 {
-    public static class SnapshotCreator
+    public static class SnapshotsCreator
     {
         public static List<Snapshot> Create(Dictionary<object, object> luaTable)
         {
