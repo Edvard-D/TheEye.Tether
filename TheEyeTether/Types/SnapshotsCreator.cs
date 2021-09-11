@@ -4,7 +4,7 @@ namespace TheEyeTether.Types
 {
     public static class SnapshotsCreator
     {
-        public static List<Snapshot> Create(
+        public static Dictionary<SnapshotType, List<Snapshot>> Create(
                 Dictionary<object, object> luaTable,
                 string[] snapshotTypes)
         {
@@ -13,7 +13,7 @@ namespace TheEyeTether.Types
                 return null;
             }
 
-            return new List<Snapshot>();
+            return new Dictionary<SnapshotType, List<Snapshot>>();
         }
     }
 }
