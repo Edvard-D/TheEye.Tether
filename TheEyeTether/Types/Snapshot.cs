@@ -10,6 +10,10 @@ namespace TheEyeTether.Types
 
         
         public List<DataPoint> DataPoints { get { return _dataPoints; } }
+        public string TableName { get { return _tableName; } }
+        public float Timestamp { get { return _timestamp; } }
+
+
         public Snapshot(string tableName, float timestamp)
         {
             _dataPoints = new List<DataPoint>();
