@@ -6,6 +6,11 @@ namespace TheEyeTether.Types
     {
         public static List<Snapshot> Create(Dictionary<object, object> luaTable)
         {
+            if(luaTable == null)
+            {
+                return null;
+            }
+
             return new List<Snapshot>();
         }
     }
