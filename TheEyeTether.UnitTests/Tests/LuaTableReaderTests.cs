@@ -22,5 +22,20 @@ namespace TheEyeTether.UnitTests
 
             Assert.IsType<Dictionary<object, object>>(result);
         }
+
+        [Fact]
+        public void Read_ReturnsNull_WhenValidDataDoesNotExist()
+        {
+            var filePath = "test.lua";
+            var tableName = "test";
+            var mockLua = new MockLua("TheEyeTether", new Dictionary<string, string>()
+            {
+                { filePath, string.Empty }
+            });
+
+            var result = LuaTableReader.Read(filePath, tableName, mockLua);
+
+            Assert.Null(result);
+        }
     }
 }

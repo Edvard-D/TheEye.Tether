@@ -11,8 +11,14 @@ namespace TheEyeTether.Types
                 ILua lua)
         {
             lua.DoFile(filePath);
+            var luaTable = lua.GetTable(tableName);
+            
+            if(luaTable == null)
+            {
+                return null;
+            }
 
-            return lua.GetTableDict(lua.GetTable(tableName));
+            return lua.GetTableDict(luaTable);
         }
     }
 }
