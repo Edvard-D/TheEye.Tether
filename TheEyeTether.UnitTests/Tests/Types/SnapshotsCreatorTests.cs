@@ -39,6 +39,27 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Null(result);
         }
+        
+        [Fact]
+        public void Create_ThrowsInvalidOperationException_WhenSnapshotTypeHasNoDataPointTypeNames()
+        {
+            var snapshotTypeName = "test1";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotTypeName, new Dictionary<object, object>() { { 1, 1f } } }
+            };
+            var snapshotTypes = new SnapshotType[1] { new SnapshotType(snapshotTypeName, new string[0]) };
+
+            try
+            {
+                var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
+        }
 
         [Theory]
         [InlineData("test")]
@@ -47,13 +68,18 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Create_CreatesADictionaryEntryForEachSnapshotType_WhenSnapshotTypesArePassedAndHaveValidData(
                 params string[] snapshotTypeNames)
         {
-            var luaTable = new Dictionary<object, object>();
+            var dataPointTypeName = "testDataPoint";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
+            };
             var snapshotTypes = new SnapshotType[snapshotTypeNames.Length];
             for(int i = 0; i < snapshotTypeNames.Length; i++)
             {
                 var subTable = new Dictionary<object, object>() { { 1, 1f } };
                 luaTable[snapshotTypeNames[i]] = subTable;
-                snapshotTypes[i] = new SnapshotType(snapshotTypeNames[i], new string[0]);
+                snapshotTypes[i] = new SnapshotType(snapshotTypeNames[i],
+                        new string[1] { dataPointTypeName });
             }
 
             var result = SnapshotsCreator.Create(luaTable, snapshotTypes);

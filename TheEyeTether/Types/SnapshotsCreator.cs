@@ -19,6 +19,13 @@ namespace TheEyeTether.Types
 
             foreach(SnapshotType snapshotType in snapshotTypes)
             {
+                if(snapshotType.DataPointTypeNames.Count() == 0)
+                {
+                    throw new System.InvalidOperationException(string.Format(
+                            "SnapshotType {0} does not have any DataPointTypeNames assigned.",
+                            snapshotType.Name));
+                }
+
                 if(!luaTable.ContainsKey(snapshotType.Name))
                 {
                     continue;
