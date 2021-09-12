@@ -19,7 +19,7 @@ namespace TheEyeTether.Types
 
             foreach(SnapshotType snapshotType in snapshotTypes)
             {
-                if(!luaTable.ContainsKey(snapshotType))
+                if(!luaTable.ContainsKey(snapshotType.Name))
                 {
                     continue;
                 }
