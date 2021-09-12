@@ -67,6 +67,11 @@ namespace TheEyeTether.Types
                 
                 foreach(string dataPointTypeName in snapshotType.DataPointTypeNames)
                 {
+                    if(!fullTable.ContainsKey(dataPointTypeName))
+                    {
+                        continue;
+                    }
+
                     var dataPointTable = fullTable[dataPointTypeName] as Dictionary<object, object>;
                     var dataPoints = ConvertTableToDataPoints(dataPointTable, dataPointTypeName);
                     var dataPoint = dataPoints

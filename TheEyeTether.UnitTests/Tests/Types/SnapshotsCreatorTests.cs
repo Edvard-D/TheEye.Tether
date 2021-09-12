@@ -177,6 +177,28 @@ namespace TheEyeTether.UnitTests.Tests.Types
             Assert.Equal(1, matchingDataPoints.Count);
         }
 
+        [Fact]
+        public void Create_DoesNotAddEntryOfDataPointType_WhenDataPointTypeIsInSnapshotTypeButNoDataForItExists()
+        {
+            var snapshotTypeName = "test1";
+            var dataPointTypeName = "test2";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotTypeName, new Dictionary<object, object>() { { 1, 1f } } },
+            };
+            var snapshotTypes = new SnapshotType[]
+            {
+                new SnapshotType(snapshotTypeName, new string[] { dataPointTypeName })
+            };
+
+            var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
+
+            var matchingDataPoints = result[snapshotTypes[0]][0].DataPoints
+                    .Where(dp => dp.Type == dataPointTypeName)
+                    .ToList();
+            Assert.Equal(0, matchingDataPoints.Count);
+        }
+
         [Theory]
         [InlineData(1f, 2f, 3f)]
         [InlineData(1f, 1.5f, 3f)]
