@@ -44,13 +44,15 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData("test")]
         [InlineData("test1, test2")]
         [InlineData("test1, test2, test3, test4, test5")]
-        public void Create_ReturnsADictionaryEntryForEachSnapshotType_WhenSnapshotTypesArePassed(
+        public void Create_CreatesADictionaryEntryForEachSnapshotType_WhenSnapshotTypesArePassedAndHaveValidData(
                 params string[] snapshotTypeNames)
         {
             var luaTable = new Dictionary<object, object>();
             var snapshotTypes = new SnapshotType[snapshotTypeNames.Length];
             for(int i = 0; i < snapshotTypeNames.Length; i++)
             {
+                var subTable = new Dictionary<object, object>() { { 1, 1f } };
+                luaTable[snapshotTypeNames[i]] = subTable;
                 snapshotTypes[i] = new SnapshotType(snapshotTypeNames[i], new string[0]);
             }
 
