@@ -20,10 +20,5 @@ namespace TheEyeTether.Types
             _tableName = tableName;
             _timestamp = timestamp;
         }
-
-        public void AddDataPoint(DataPoint dataPoint)
-        {
-            _dataPoints.Add(dataPoint);
-        }
     }
 }

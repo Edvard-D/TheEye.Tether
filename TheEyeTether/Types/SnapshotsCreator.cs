@@ -81,7 +81,7 @@ namespace TheEyeTether.Types
 
                     if(dataPoint != default(DataPoint))
                     {
-                        snapshot.AddDataPoint(dataPoint);
+                        snapshot.DataPoints.Add(dataPoint);
                     }
                 }
 
