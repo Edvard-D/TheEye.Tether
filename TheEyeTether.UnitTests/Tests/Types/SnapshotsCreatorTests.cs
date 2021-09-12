@@ -204,7 +204,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
 
             var matchingDataPoints = result[snapshotTypes[0]][0].DataPoints
-                    .Where(dp => dp.Type == dataPointTypeName)
+                    .Where(dp => dp.TypeName == dataPointTypeName)
                     .ToList();
             Assert.Equal(1, matchingDataPoints.Count);
         }
@@ -228,7 +228,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
 
             var matchingDataPoints = result[snapshotTypes[0]][0].DataPoints
-                    .Where(dp => dp.Type == dataPointTypeName)
+                    .Where(dp => dp.TypeName == dataPointTypeName)
                     .ToList();
             Assert.Equal(1, matchingDataPoints.Count);
         }
@@ -281,7 +281,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     .Where(dpt => dpt <= snapshotTimeStamp)
                     .Max();
             var matchingDataPoint = result[snapshotTypes[0]][0].DataPoints
-                    .Where(dp => dp.Type == dataPointTypeName)
+                    .Where(dp => dp.TypeName == dataPointTypeName)
                     .First();
             Assert.Equal(correctTimeStamp, matchingDataPoint.Timestamp);
         }
