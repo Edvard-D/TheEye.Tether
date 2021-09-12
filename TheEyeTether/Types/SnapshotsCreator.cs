@@ -95,6 +95,12 @@ namespace TheEyeTether.Types
 
                     dataPoints.Add(new DataPoint(type, name, (float)keyValuePair.Value));
                 }
+                /// Value is a table
+                else
+                {
+                    dataPoints.AddRange(ConvertTableToDataPoints(subTable, type,
+                            (string)keyValuePair.Key));
+                }
             }
 
             return dataPoints;

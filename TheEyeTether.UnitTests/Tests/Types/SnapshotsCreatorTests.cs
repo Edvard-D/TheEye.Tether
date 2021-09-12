@@ -138,5 +138,29 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     .ToList();
             Assert.Equal(1, matchingDataPoints.Count);
         }
+
+        [Fact]
+        public void Create_AddsEntriesOfDataPointTypesToTheSnapshot_WhenEntriesForADataPointTypeAreNested()
+        {
+            var snapshotTypeName = "test1";
+            var dataPointTypeName = "test2";
+            var subTable = new Dictionary<object, object>() { { 1, 1f } };
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotTypeName, new Dictionary<object, object>() { { 1, 1f } } },
+                { dataPointTypeName, new Dictionary<object, object>() { { "test", subTable } } }
+            };
+            var snapshotTypes = new SnapshotType[]
+            {
+                new SnapshotType(snapshotTypeName, new string[] { dataPointTypeName })
+            };
+
+            var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
+
+            var matchingDataPoints = result[snapshotTypes[0]][0].DataPoints
+                    .Where(dp => dp.Type == dataPointTypeName)
+                    .ToList();
+            Assert.Equal(1, matchingDataPoints.Count);
+        }
     }
 }
