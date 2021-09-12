@@ -24,13 +24,30 @@ namespace TheEyeTether.Types
 
         private static List<DataPoint> ConvertTableToDataPoints(
                 Dictionary<object, object> table,
-                string type)
+                string type,
+                string name = null)
         {
             var dataPoints = new List<DataPoint>();
 
             foreach(KeyValuePair<object, object> keyValuePair in table)
             {
-                dataPoints.Add(new DataPoint(type, type, (float)keyValuePair.Value));
+                /// Value is a timestamp
+                if(keyValuePair.Value.GetType() == typeof(float))
+                {
+                    if(name == null)
+                    {
+                        name = type;
+                    }
+
+                    dataPoints.Add(new DataPoint(type, name, (float)keyValuePair.Value));
+                }
+                /// Value is a table
+                else
+                {
+                    var subTable = keyValuePair.Value as Dictionary<object, object>;
+                    dataPoints.AddRange(ConvertTableToDataPoints(subTable, type,
+                            (string)keyValuePair.Key));
+                }
             }
 
             return dataPoints;

@@ -81,5 +81,29 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Equal(timestamps.Length, result[tableName].Count);
         }
+
+        [Theory]
+        [InlineData(1f)]
+        [InlineData(1f, 2f)]
+        [InlineData(1f, 2f, 3f, 4f, 5f)]
+        public void Create_ReturnsADataPointForEachDataEntry_WhenEntriesAreNested(
+                params float[] timestamps)
+        {
+            var subTable = new Dictionary<object, object>();
+            for(int i = 0; i < timestamps.Length; i++)
+            {
+                subTable[i + 1] = timestamps[i];
+            }
+            var tableName = "test1";
+            var subTableName = "test2";
+            var luatable = new Dictionary<object, object>()
+            {
+                { tableName, new Dictionary<object, object>() { { subTableName, subTable } } }
+            };
+
+            var result = DataPointsCreator.Create(luatable);
+
+            Assert.Equal(timestamps.Length, result[tableName].Count);
+        }
     }
 }
