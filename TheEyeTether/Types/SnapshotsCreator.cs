@@ -68,6 +68,11 @@ namespace TheEyeTether.Types
                             .Where(dp => dp.Timestamp <= snapshot.Timestamp)
                             .MaxBy(dp => dp.Timestamp)
                             .FirstOrDefault();
+
+                    if(dataPoint != default(DataPoint))
+                    {
+                        snapshot.AddDataPoint(dataPoint);
+                    }
                 }
 
                 snapshots.Add(snapshot);
