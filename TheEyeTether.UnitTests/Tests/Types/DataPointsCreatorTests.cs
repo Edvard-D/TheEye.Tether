@@ -105,5 +105,64 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Equal(timestamps.Length, result[tableName].Count);
         }
+
+        [Fact]
+        public void Create_AssignsTopLevelTableKeyAsDataPointType_WhenPassedValidLuaTable()
+        {
+            var tableName = "test";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { tableName, new Dictionary<object, object>() { { 1, 1f } } }
+            };
+
+            var result = DataPointsCreator.Create(luaTable);
+
+            Assert.Equal(tableName, result[tableName][0].Type);
+        }
+
+        [Fact]
+        public void Create_AssignsTopLevelTableKeyAsDataPointName_WhenEntiresAreNotNested()
+        {
+            var tableName = "test";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { tableName, new Dictionary<object, object>() { { 1, 1f } } }
+            };
+
+            var result = DataPointsCreator.Create(luaTable);
+
+            Assert.Equal(tableName, result[tableName][0].Name);
+        }
+
+        [Fact]
+        public void Create_AssignsSubTableKeyAsDataPointName_WhenEntriesAreNested()
+        {
+            var tableName = "test1";
+            var subTableName = "test2";
+            var subTable = new Dictionary<object, object>() { { 1, 1f } };
+            var luaTable = new Dictionary<object, object>()
+            {
+                { tableName, new Dictionary<object, object>() { { subTableName, subTable } } }
+            };
+
+            var result = DataPointsCreator.Create(luaTable);
+
+            Assert.Equal(subTableName, result[tableName][0].Name);
+        }
+
+        [Fact]
+        public void Create_AssignsDataEntryValueAsDataPointTimestamp_WhenPassedValidLuaTable()
+        {
+            var tableName = "test";
+            var timestamp = 1f;
+            var luaTable = new Dictionary<object, object>()
+            {
+                { tableName, new Dictionary<object, object>() { { 1, timestamp } } }
+            };
+
+            var result = DataPointsCreator.Create(luaTable);
+
+            Assert.Equal(timestamp, result[tableName][0].Timestamp);
+        }
     }
 }
