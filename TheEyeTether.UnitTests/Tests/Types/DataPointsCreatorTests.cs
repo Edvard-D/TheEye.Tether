@@ -44,5 +44,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Equal(tableNames.Length, result.Keys.Count);
         }
+
+        [Fact]
+        public void Create_UsesInputTableKeysAsOutputDictionaryKeys_WhenPassedValidLuaTable()
+        {
+            var tableName = "test";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { tableName, new Dictionary<object, object>() { { 1, 1f } } }
+            };
+
+            var result = DataPointsCreator.Create(luaTable);
+
+            Assert.Contains(tableName, result.Keys);
+        }
     }
 }
