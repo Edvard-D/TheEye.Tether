@@ -21,14 +21,15 @@ namespace TheEyeTether.Types
             {
                 List<Snapshot> snapshotTypeSnapshots;
                 var snapshotTypeLuaTable = luaTable[snapshotType.Name] as Dictionary<object, object>;
+                var snapshotTypeLuaTableValues = new List<object>(snapshotTypeLuaTable.Values);
 
-                /// Value is a timestamp
-                if(snapshotTypeLuaTable.ContainsKey(0))
+                /// Value is a timestamp table
+                if(snapshotTypeLuaTableValues[0].GetType() == typeof(float))
                 {
                     snapshotTypeSnapshots = CreateSnapshotsForSubTable(snapshotType, luaTable,
                             snapshotType.Name, snapshotTypeLuaTable);
                 }
-                /// Value is a table
+                /// Value is a sub table
                 else
                 {
                     snapshotTypeSnapshots = new List<Snapshot>();
@@ -82,10 +83,10 @@ namespace TheEyeTether.Types
 
             foreach(KeyValuePair<object, object> keyValuePair in table)
             {
-                var value = keyValuePair.Value as Dictionary<object, object>;
+                var subTable = keyValuePair.Value as Dictionary<object, object>;
 
                 /// Value is a timestamp
-                if(value == null)
+                if(keyValuePair.Value.GetType() == typeof(float))
                 {
                     if(name == null)
                     {
