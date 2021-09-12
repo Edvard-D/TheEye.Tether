@@ -47,6 +47,11 @@ namespace TheEyeTether.Types
                     }
                 }
 
+                if(snapshotTypeSnapshots.Count == 0)
+                {
+                    continue;
+                }
+
                 snapshots[snapshotType] = snapshotTypeSnapshots;
             }
 
@@ -83,6 +88,11 @@ namespace TheEyeTether.Types
                     {
                         snapshot.DataPoints.Add(dataPoint);
                     }
+                }
+
+                if(snapshot.DataPoints.Count == 0)
+                {
+                    continue;
                 }
 
                 snapshots.Add(snapshot);
