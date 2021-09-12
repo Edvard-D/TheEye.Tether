@@ -60,6 +60,18 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Equal(snapshotTypes.Length, result.Keys.Count);
         }
+        
+        [Fact]
+        public void Create_DoesNotCreateADictionaryEntryForASnapshotType_WhenSnapshotTypeExistsButLuaTableDoesNotHaveDataForIt()
+        {
+            var snapshotTypeName = "test";
+            var luaTable = new Dictionary<object, object>();
+            var snapshotTypes = new SnapshotType[] { new SnapshotType(snapshotTypeName, new string[0]) };
+
+            var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
+
+            Assert.Equal(0, result.Keys.Count);
+        }
 
         [Theory]
         [InlineData(1f)]

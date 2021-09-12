@@ -19,6 +19,11 @@ namespace TheEyeTether.Types
 
             foreach(SnapshotType snapshotType in snapshotTypes)
             {
+                if(!luaTable.ContainsKey(snapshotType))
+                {
+                    continue;
+                }
+
                 List<Snapshot> snapshotTypeSnapshots;
                 var snapshotTypeLuaTable = luaTable[snapshotType.Name] as Dictionary<object, object>;
                 var snapshotTypeLuaTableValues = new List<object>(snapshotTypeLuaTable.Values);
