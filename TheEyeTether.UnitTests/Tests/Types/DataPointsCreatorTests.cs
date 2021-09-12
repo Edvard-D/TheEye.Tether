@@ -18,5 +18,13 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.IsType<Dictionary<string, List<DataPoint>>>(result);
         }
+
+        [Fact]
+        public void Create_ReturnsNull_WhenPassedNullLuaTable()
+        {
+            var result = DataPointsCreator.Create(null);
+
+            Assert.Null(result);
+        }
     }
 }
