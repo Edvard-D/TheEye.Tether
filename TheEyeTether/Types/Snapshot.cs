@@ -4,21 +4,43 @@ namespace TheEyeTether.Types
 {
     public struct Snapshot
     {
+        private DataPoint _dataPoint;
         private List<DataPoint> _dataPoints;
-        private string _tableName;
-        private float _timestamp;
 
         
+        public DataPoint DataPoint { get { return _dataPoint; } }
         public List<DataPoint> DataPoints { get { return _dataPoints; } }
-        public string TableName { get { return _tableName; } }
-        public float Timestamp { get { return _timestamp; } }
 
 
-        public Snapshot(string tableName, float timestamp)
+        public Snapshot(DataPoint dataPoint)
         {
+            _dataPoint = dataPoint;
             _dataPoints = new List<DataPoint>();
-            _tableName = tableName;
-            _timestamp = timestamp;
+        }
+
+        public override bool Equals(object obj)
+        {            
+            return obj is Snapshot && Equals((Snapshot)obj);
+        }
+        public bool Equals(Snapshot snapshot)
+        {
+            return snapshot._dataPoint == _dataPoint
+                    && snapshot._dataPoints == _dataPoints;
+        }
+
+        public override int GetHashCode()
+        {
+            return System.HashCode.Combine(_dataPoint, _dataPoints);
+        }
+
+        public static bool operator ==(Snapshot snapshot1, Snapshot snapshot2)
+        {
+            return snapshot1.Equals(snapshot2);
+        }
+
+        public static bool operator !=(Snapshot snapshot1, Snapshot snapshot2)
+        {
+            return !snapshot1.Equals(snapshot2);
         }
     }
 }

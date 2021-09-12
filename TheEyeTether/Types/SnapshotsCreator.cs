@@ -16,6 +16,7 @@ namespace TheEyeTether.Types
             }
 
             var snapshots = new Dictionary<SnapshotType, List<Snapshot>>();
+            var dataPoints = DataPointsCreator.Create(luaTable);
 
             foreach(SnapshotType snapshotType in snapshotTypes)
             {
@@ -26,32 +27,25 @@ namespace TheEyeTether.Types
                             snapshotType.Name));
                 }
 
-                if(!luaTable.ContainsKey(snapshotType.Name))
+                if(!dataPoints.ContainsKey(snapshotType.Name))
                 {
                     continue;
                 }
 
-                List<Snapshot> snapshotTypeSnapshots;
+                var snapshotTypeSnapshots = new List<Snapshot>();
                 var snapshotTypeLuaTable = luaTable[snapshotType.Name] as Dictionary<object, object>;
                 var snapshotTypeLuaTableValues = new List<object>(snapshotTypeLuaTable.Values);
 
-                /// Value is a timestamp table
-                if(snapshotTypeLuaTableValues[0].GetType() == typeof(float))
+                foreach(DataPoint dataPoint in dataPoints[snapshotType.Name])
                 {
-                    snapshotTypeSnapshots = CreateSnapshotsForSubTable(snapshotType, luaTable,
-                            snapshotType.Name, snapshotTypeLuaTable);
-                }
-                /// Value is a sub table
-                else
-                {
-                    snapshotTypeSnapshots = new List<Snapshot>();
-                    
-                    foreach(KeyValuePair<object, object> keyValuePair in snapshotTypeLuaTable)
+                    var snapshot = CreateSnapshot(snapshotType, dataPoint, dataPoints);
+
+                    if(snapshot == default(Snapshot))
                     {
-                        snapshotTypeSnapshots.AddRange(CreateSnapshotsForSubTable(snapshotType,
-                                luaTable, (string)keyValuePair.Key,
-                                keyValuePair.Value as Dictionary<object, object>));
+                        continue;
                     }
+
+                    snapshotTypeSnapshots.Add(snapshot);
                 }
 
                 if(snapshotTypeSnapshots.Count == 0)
@@ -64,80 +58,38 @@ namespace TheEyeTether.Types
 
             return snapshots;
         }
-
-        private static List<Snapshot> CreateSnapshotsForSubTable(
+        
+        private static Snapshot CreateSnapshot(
                 SnapshotType snapshotType,
-                Dictionary<object, object> fullTable,
-                string tableName,
-                Dictionary<object, object> subTable)
+                DataPoint snapshotDataPoint,
+                Dictionary<string, List<DataPoint>> dataPoints)
         {
-            var snapshots = new List<Snapshot>();
-
-            foreach(KeyValuePair<object, object> keyValuePair in subTable)
+            var snapshot = new Snapshot(snapshotDataPoint);
+            
+            foreach(string dataPointTypeName in snapshotType.DataPointTypeNames)
             {
-                var snapshot = new Snapshot(tableName, (float)keyValuePair.Value);
-                
-                foreach(string dataPointTypeName in snapshotType.DataPointTypeNames)
-                {
-                    if(!fullTable.ContainsKey(dataPointTypeName))
-                    {
-                        continue;
-                    }
-
-                    var dataPointTable = fullTable[dataPointTypeName] as Dictionary<object, object>;
-                    var dataPoints = ConvertTableToDataPoints(dataPointTable, dataPointTypeName);
-                    var dataPoint = dataPoints
-                            .Where(dp => dp.Timestamp <= snapshot.Timestamp)
-                            .MaxBy(dp => dp.Timestamp)
-                            .FirstOrDefault();
-
-                    if(dataPoint != default(DataPoint))
-                    {
-                        snapshot.DataPoints.Add(dataPoint);
-                    }
-                }
-
-                if(snapshot.DataPoints.Count == 0)
+                if(!dataPoints.ContainsKey(dataPointTypeName))
                 {
                     continue;
                 }
 
-                snapshots.Add(snapshot);
+                var dataPoint = dataPoints[dataPointTypeName]
+                        .Where(dp => dp.Timestamp <= snapshotDataPoint.Timestamp)
+                        .MaxBy(dp => dp.Timestamp)
+                        .FirstOrDefault();
+
+                if(dataPoint != default(DataPoint))
+                {
+                    snapshot.DataPoints.Add(dataPoint);
+                }
             }
 
-            return snapshots;
-        }
-
-        private static List<DataPoint> ConvertTableToDataPoints(
-                Dictionary<object, object> table,
-                string type,
-                string name = null)
-        {
-            var dataPoints = new List<DataPoint>();
-
-            foreach(KeyValuePair<object, object> keyValuePair in table)
+            if(snapshot.DataPoints.Count == 0)
             {
-                var subTable = keyValuePair.Value as Dictionary<object, object>;
-
-                /// Value is a timestamp
-                if(keyValuePair.Value.GetType() == typeof(float))
-                {
-                    if(name == null)
-                    {
-                        name = type;
-                    }
-
-                    dataPoints.Add(new DataPoint(type, name, (float)keyValuePair.Value));
-                }
-                /// Value is a table
-                else
-                {
-                    dataPoints.AddRange(ConvertTableToDataPoints(subTable, type,
-                            (string)keyValuePair.Key));
-                }
+                return default(Snapshot);
             }
 
-            return dataPoints;
+            return snapshot;
         }
     }
 }
