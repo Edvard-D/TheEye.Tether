@@ -123,6 +123,24 @@ namespace TheEyeTether.UnitTests.Tests.Types
             Assert.Equal(0, result.Keys.Count);
         }
 
+        [Fact]
+        public void Create_UsesInputSnapshotTypeAsOutputDictionaryKey_WhenPassedValidLuaTable()
+        {
+            var snapshotTypeName = "test1";
+            var dataPointTypeName = "test2";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotTypeName, new Dictionary<object, object>() { { 1, 1f } } },
+                { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
+            };
+            var snapshotType =  new SnapshotType(snapshotTypeName, new string[] { dataPointTypeName });
+            var snapshotTypes = new SnapshotType[] { snapshotType };
+
+            var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
+
+            Assert.Contains(snapshotType, result.Keys);
+        }
+
         [Theory]
         [InlineData(1f)]
         [InlineData(1f, 2f)]
