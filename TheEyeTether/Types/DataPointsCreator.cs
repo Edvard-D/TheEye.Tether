@@ -10,8 +10,12 @@ namespace TheEyeTether.Types
             {
                 return null;
             }
-
+            
             var dataPoints = new Dictionary<string, List<DataPoint>>();
+            foreach(KeyValuePair<object, object> keyValuePair in luaTable)
+            {
+                dataPoints[(string)keyValuePair.Key] = new List<DataPoint>();
+            }
 
             return dataPoints;
         }

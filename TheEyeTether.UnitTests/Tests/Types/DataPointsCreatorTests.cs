@@ -26,5 +26,23 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Null(result);
         }
+
+        [Theory]
+        [InlineData("test1")]
+        [InlineData("test1", "test2")]
+        [InlineData("test1", "test2", "test3", "test4", "test5")]
+        public void Create_CreatesADictionaryEntryForEachFirstLevelSubTable_WhenPassedValidLuaTable(
+                params string[] tableNames)
+        {
+            var luaTable = new Dictionary<object, object>();
+            foreach(string tableName in tableNames)
+            {
+                luaTable[tableName] = new Dictionary<object, object>() { { 1, 1f } };
+            }
+
+            var result = DataPointsCreator.Create(luaTable);
+
+            Assert.Equal(tableNames.Length, result.Keys.Count);
+        }
     }
 }
