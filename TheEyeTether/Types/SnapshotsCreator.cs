@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using MoreLinq;
 
 namespace TheEyeTether.Types
 {
@@ -14,28 +16,28 @@ namespace TheEyeTether.Types
             }
 
             var snapshots = new Dictionary<SnapshotType, List<Snapshot>>();
+
             foreach(SnapshotType snapshotType in snapshotTypes)
             {
                 List<Snapshot> snapshotTypeSnapshots;
+                var snapshotTypeLuaTable = luaTable[snapshotType.Name] as Dictionary<object, object>;
 
-                /// Table entries can either be table of floats or a table of tables. If this can
-                /// be cast as object[] we know to handle it as a table of floats, otherwise we'll
-                /// handle it as table of tables.
-                if(luaTable[snapshotType.Name] as object[] != null)
+                /// Value is a timestamp
+                if(snapshotTypeLuaTable.ContainsKey(0))
                 {
-                    var snapshotTypeLuaTable = luaTable[snapshotType.Name] as object[];
-                    snapshotTypeSnapshots = CreateSnapshotsFromTable(snapshotType.Name,
-                            snapshotTypeLuaTable);
+                    snapshotTypeSnapshots = CreateSnapshotsForSubTable(snapshotType, luaTable,
+                            snapshotType.Name, snapshotTypeLuaTable);
                 }
+                /// Value is a table
                 else
                 {
                     snapshotTypeSnapshots = new List<Snapshot>();
-                    var snapshotTypeLuaTable = luaTable[snapshotType.Name] as Dictionary<object, object>;
-
-                    foreach(KeyValuePair<object, object> element in snapshotTypeLuaTable)
+                    
+                    foreach(KeyValuePair<object, object> keyValuePair in snapshotTypeLuaTable)
                     {
-                        snapshotTypeSnapshots.AddRange(CreateSnapshotsFromTable((string)element.Key,
-                                element.Value as object[]));
+                        snapshotTypeSnapshots.AddRange(CreateSnapshotsForSubTable(snapshotType,
+                                luaTable, (string)keyValuePair.Key,
+                                keyValuePair.Value as Dictionary<object, object>));
                     }
                 }
 
@@ -45,18 +47,56 @@ namespace TheEyeTether.Types
             return snapshots;
         }
 
-        private static List<Snapshot> CreateSnapshotsFromTable(
+        private static List<Snapshot> CreateSnapshotsForSubTable(
+                SnapshotType snapshotType,
+                Dictionary<object, object> fullTable,
                 string tableName,
-                object[] table)
+                Dictionary<object, object> subTable)
         {
             var snapshots = new List<Snapshot>();
 
-            foreach(float timestamp in table)
+            foreach(KeyValuePair<object, object> keyValuePair in subTable)
             {
-                snapshots.Add(new Snapshot(tableName, timestamp));
+                var snapshot = new Snapshot(tableName, (float)keyValuePair.Value);
+                
+                foreach(string dataPointTypeName in snapshotType.DataPointTypeNames)
+                {
+                    var dataPointTable = fullTable[dataPointTypeName] as Dictionary<object, object>;
+                    var dataPoints = ConvertTableToDataPoints(dataPointTable, dataPointTypeName);
+
+                    snapshot.AddDataPoint(dataPoints[0]);
+                }
+
+                snapshots.Add(snapshot);
             }
 
             return snapshots;
+        }
+
+        private static List<DataPoint> ConvertTableToDataPoints(
+                Dictionary<object, object> table,
+                string type,
+                string name = null)
+        {
+            var dataPoints = new List<DataPoint>();
+
+            foreach(KeyValuePair<object, object> keyValuePair in table)
+            {
+                var value = keyValuePair.Value as Dictionary<object, object>;
+
+                /// Value is a timestamp
+                if(value == null)
+                {
+                    if(name == null)
+                    {
+                        name = type;
+                    }
+
+                    dataPoints.Add(new DataPoint(type, name, (float)keyValuePair.Value));
+                }
+            }
+
+            return dataPoints;
         }
     }
 }

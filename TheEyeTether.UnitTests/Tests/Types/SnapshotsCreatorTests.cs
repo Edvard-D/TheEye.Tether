@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TheEyeTether.Types;
 using Xunit;
 
@@ -66,9 +67,14 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 params object[] timestamps)
         {
             var snapshotTypeName = "test";
+            var subTableTimestamps = new Dictionary<object, object>();
+            for(int i = 0; i < timestamps.Length; i++)
+            {
+                subTableTimestamps[i] = (float)timestamps[i];
+            }
             var luaTable = new Dictionary<object, object>()
             {
-                { snapshotTypeName, timestamps }
+                { snapshotTypeName, subTableTimestamps }
             };
             var snapshotTypes = new SnapshotType[] { new SnapshotType(snapshotTypeName, new string[0]) };
 
@@ -90,7 +96,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var subTables = new Dictionary<object, object>();
             for(int i = 0; i < subTableNames.Length; i++)
             {
-                var subTableTimestamps = new object[entriesPerSubTable];
+                var subTableTimestamps = new Dictionary<object, object>();
                 for(int j = 0; j < entriesPerSubTable; j++)
                 {
                     subTableTimestamps[j] = (float)(i + 1) + (j + 1);
@@ -108,6 +114,29 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var snapshots = result[snapshotTypes[0]] as List<Snapshot>;
             Assert.Equal(subTableNames.Length * entriesPerSubTable, snapshots.Count);
+        }
+
+        [Fact]
+        public void Create_AddsEntriesOfDataPointTypesToTheSnapshot_WhenEntriesForADataPointTypeAreNotNested()
+        {
+            var snapshotTypeName = "test1";
+            var dataPointTypeName = "test2";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotTypeName, new Dictionary<object, object>() { { 0, 1f } } },
+                { dataPointTypeName, new Dictionary<object, object>() { { 0, 1f } } }
+            };
+            var snapshotTypes = new SnapshotType[]
+            {
+                new SnapshotType(snapshotTypeName, new string[] { dataPointTypeName })
+            };
+
+            var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
+
+            var matchingDataPoints = result[snapshotTypes[0]][0].DataPoints
+                    .Where(dp => dp.Type == dataPointTypeName)
+                    .ToList();
+            Assert.Equal(1, matchingDataPoints.Count);
         }
     }
 }
