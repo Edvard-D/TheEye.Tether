@@ -24,8 +24,8 @@ namespace TheEyeTether.Types
 
         private static List<DataPoint> ConvertTableToDataPoints(
                 Dictionary<object, object> table,
-                string type,
-                string name = null)
+                string typeName,
+                string subTypeName = null)
         {
             var dataPoints = new List<DataPoint>();
 
@@ -34,18 +34,18 @@ namespace TheEyeTether.Types
                 /// Value is a timestamp
                 if(keyValuePair.Value.GetType() == typeof(float))
                 {
-                    if(name == null)
+                    if(subTypeName == null)
                     {
-                        name = type;
+                        subTypeName = typeName;
                     }
 
-                    dataPoints.Add(new DataPoint(type, name, (float)keyValuePair.Value));
+                    dataPoints.Add(new DataPoint(typeName, subTypeName, (float)keyValuePair.Value));
                 }
                 /// Value is a table
                 else
                 {
                     var subTable = keyValuePair.Value as Dictionary<object, object>;
-                    dataPoints.AddRange(ConvertTableToDataPoints(subTable, type,
+                    dataPoints.AddRange(ConvertTableToDataPoints(subTable, typeName,
                             (string)keyValuePair.Key));
                 }
             }
