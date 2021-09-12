@@ -2,21 +2,21 @@ namespace TheEyeTether.Types
 {
     public struct DataPoint
     {
-        private string _name;
+        private string _subTypeName;
         private float _timestamp;
-        private string _type;
+        private string _typeName;
 
 
-        public string Name { get { return _name; } }
+        public string SubTypeName { get { return _subTypeName; } }
         public float Timestamp { get { return _timestamp; } }
-        public string Type { get { return _type; } }
+        public string TypeName { get { return _typeName; } }
 
 
         public DataPoint(string type, string name, float timestamp)
         {
-            _name = name;
+            _subTypeName = name;
             _timestamp = timestamp;
-            _type = type;
+            _typeName = type;
         }
 
         public override bool Equals(object obj)
@@ -25,14 +25,14 @@ namespace TheEyeTether.Types
         }
         public bool Equals(DataPoint dataPoint)
         {
-            return dataPoint._name == _name
+            return dataPoint._subTypeName == _subTypeName
                     && dataPoint._timestamp == _timestamp
-                    && dataPoint._type == _type;
+                    && dataPoint._typeName == _typeName;
         }
 
         public override int GetHashCode()
         {
-            return System.HashCode.Combine(_name, _timestamp, _type);
+            return System.HashCode.Combine(_subTypeName, _timestamp, _typeName);
         }
 
         public static bool operator ==(DataPoint dataPoint1, DataPoint dataPoint2)

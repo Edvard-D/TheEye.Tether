@@ -107,7 +107,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
-        public void Create_AssignsTopLevelTableKeyAsDataPointType_WhenPassedValidLuaTable()
+        public void Create_AssignsTopLevelTableKeyAsDataPointTypeName_WhenPassedValidLuaTable()
         {
             var tableName = "test";
             var luaTable = new Dictionary<object, object>()
@@ -117,11 +117,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = DataPointsCreator.Create(luaTable);
 
-            Assert.Equal(tableName, result[tableName][0].Type);
+            Assert.Equal(tableName, result[tableName][0].TypeName);
         }
 
         [Fact]
-        public void Create_AssignsTopLevelTableKeyAsDataPointName_WhenEntiresAreNotNested()
+        public void Create_AssignsTopLevelTableKeyAsDataPointSubTypeName_WhenEntiresAreNotNested()
         {
             var tableName = "test";
             var luaTable = new Dictionary<object, object>()
@@ -131,11 +131,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = DataPointsCreator.Create(luaTable);
 
-            Assert.Equal(tableName, result[tableName][0].Name);
+            Assert.Equal(tableName, result[tableName][0].SubTypeName);
         }
 
         [Fact]
-        public void Create_AssignsSubTableKeyAsDataPointName_WhenEntriesAreNested()
+        public void Create_AssignsSubTableKeyAsDataPointSubTypeName_WhenEntriesAreNested()
         {
             var tableName = "test1";
             var subTableName = "test2";
@@ -147,7 +147,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = DataPointsCreator.Create(luaTable);
 
-            Assert.Equal(subTableName, result[tableName][0].Name);
+            Assert.Equal(subTableName, result[tableName][0].SubTypeName);
         }
 
         [Fact]
