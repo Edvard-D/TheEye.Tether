@@ -64,8 +64,10 @@ namespace TheEyeTether.Types
                 {
                     var dataPointTable = fullTable[dataPointTypeName] as Dictionary<object, object>;
                     var dataPoints = ConvertTableToDataPoints(dataPointTable, dataPointTypeName);
-
-                    snapshot.AddDataPoint(dataPoints[0]);
+                    var dataPoint = dataPoints
+                            .Where(dp => dp.Timestamp <= snapshot.Timestamp)
+                            .MaxBy(dp => dp.Timestamp)
+                            .FirstOrDefault();
                 }
 
                 snapshots.Add(snapshot);

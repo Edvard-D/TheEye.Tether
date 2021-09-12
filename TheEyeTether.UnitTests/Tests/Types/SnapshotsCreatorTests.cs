@@ -162,5 +162,41 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     .ToList();
             Assert.Equal(1, matchingDataPoints.Count);
         }
+
+        [Theory]
+        [InlineData(1f, 2f, 3f)]
+        [InlineData(1f, 1.5f, 3f)]
+        [InlineData(1f)]
+        public void Create_AddsDataPointWithHighestTimestampThatIsLessThanEqualToSnapshotTimestamp_WhenDataPointTimestampsAreAllLessThanEqualToSnapshotTimestamp(
+                params float[] dataPointTimestamps)
+        {
+            var snapshotTypeName = "test1";
+            var dataPointTypeName = "test2";
+            var snapshotTimeStamp = 2f;
+            var subTable = new Dictionary<object, object>();
+            for(int i = 0; i < dataPointTimestamps.Length; i++)
+            {
+                subTable[i + 1] = dataPointTimestamps[i];
+            }
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotTypeName, new Dictionary<object, object>() { { 1, snapshotTimeStamp } } },
+                { dataPointTypeName, new Dictionary<object, object>() { { "test", subTable } } }
+            };
+            var snapshotTypes = new SnapshotType[]
+            {
+                new SnapshotType(snapshotTypeName, new string[] { dataPointTypeName })
+            };
+
+            var result = SnapshotsCreator.Create(luaTable, snapshotTypes);
+
+            var correctTimeStamp = dataPointTimestamps.ToList()
+                    .Where(dpt => dpt <= snapshotTimeStamp)
+                    .Max();
+            var matchingDataPoint = result[snapshotTypes[0]][0].DataPoints
+                    .Where(dp => dp.Type == dataPointTypeName)
+                    .First();
+            Assert.Equal(correctTimeStamp, matchingDataPoint.Timestamp);
+        }
     }
 }
