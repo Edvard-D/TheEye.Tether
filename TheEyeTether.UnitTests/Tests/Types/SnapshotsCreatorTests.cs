@@ -99,7 +99,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 var subTableTimestamps = new Dictionary<object, object>();
                 for(int j = 0; j < entriesPerSubTable; j++)
                 {
-                    subTableTimestamps[j] = (float)(i + 1) + (j + 1);
+                    subTableTimestamps[j + 1] = (float)(i + 1) + (j + 1);
                 }
 
                 subTables[subTableNames[i]] = subTableTimestamps;
@@ -123,8 +123,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var dataPointTypeName = "test2";
             var luaTable = new Dictionary<object, object>()
             {
-                { snapshotTypeName, new Dictionary<object, object>() { { 0, 1f } } },
-                { dataPointTypeName, new Dictionary<object, object>() { { 0, 1f } } }
+                { snapshotTypeName, new Dictionary<object, object>() { { 1, 1f } } },
+                { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
             };
             var snapshotTypes = new SnapshotType[]
             {
