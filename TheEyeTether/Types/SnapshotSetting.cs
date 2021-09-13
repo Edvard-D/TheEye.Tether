@@ -1,6 +1,6 @@
 namespace TheEyeTether.Types
 {
-    public struct SnapshotType
+    public struct SnapshotSetting
     {
         private string _name;
         private string[] _dataPointTypeNames;
@@ -10,7 +10,7 @@ namespace TheEyeTether.Types
         public string[] DataPointTypeNames { get { return _dataPointTypeNames; } }
 
 
-        public SnapshotType(
+        public SnapshotSetting(
                 string name,
                 string[] dataPointTypeNames)
         {

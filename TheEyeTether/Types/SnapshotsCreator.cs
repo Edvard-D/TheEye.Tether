@@ -6,67 +6,67 @@ namespace TheEyeTether.Types
 {
     public static class SnapshotsCreator
     {
-        public static Dictionary<SnapshotType, List<Snapshot>> Create(
+        public static Dictionary<SnapshotSetting, List<Snapshot>> Create(
                 Dictionary<object, object> luaTable,
-                SnapshotType[] snapshotTypes)
+                SnapshotSetting[] snapshotSettings)
         {
-            if(luaTable == null || snapshotTypes == null)
+            if(luaTable == null || snapshotSettings == null)
             {
                 return null;
             }
 
-            var snapshots = new Dictionary<SnapshotType, List<Snapshot>>();
+            var snapshots = new Dictionary<SnapshotSetting, List<Snapshot>>();
             var dataPoints = DataPointsCreator.Create(luaTable);
 
-            foreach(SnapshotType snapshotType in snapshotTypes)
+            foreach(SnapshotSetting snapshotSetting in snapshotSettings)
             {
-                if(snapshotType.DataPointTypeNames.Count() == 0)
+                if(snapshotSetting.DataPointTypeNames.Count() == 0)
                 {
                     throw new System.InvalidOperationException(string.Format(
-                            "SnapshotType {0} does not have any DataPointTypeNames assigned.",
-                            snapshotType.Name));
+                            "snapshotSetting {0} does not have any DataPointTypeNames assigned.",
+                            snapshotSetting.Name));
                 }
 
-                if(!dataPoints.ContainsKey(snapshotType.Name))
+                if(!dataPoints.ContainsKey(snapshotSetting.Name))
                 {
                     continue;
                 }
 
-                var snapshotTypeSnapshots = new List<Snapshot>();
-                var snapshotTypeLuaTable = luaTable[snapshotType.Name] as Dictionary<object, object>;
-                var snapshotTypeLuaTableValues = new List<object>(snapshotTypeLuaTable.Values);
+                var snapshotSettingSnapshots = new List<Snapshot>();
+                var snapshotSettingLuaTable = luaTable[snapshotSetting.Name] as Dictionary<object, object>;
+                var snapshotSettingLuaTableValues = new List<object>(snapshotSettingLuaTable.Values);
 
-                foreach(DataPoint dataPoint in dataPoints[snapshotType.Name])
+                foreach(DataPoint dataPoint in dataPoints[snapshotSetting.Name])
                 {
-                    var snapshot = CreateSnapshot(snapshotType, dataPoint, dataPoints);
+                    var snapshot = CreateSnapshot(snapshotSetting, dataPoint, dataPoints);
 
                     if(snapshot == default(Snapshot))
                     {
                         continue;
                     }
 
-                    snapshotTypeSnapshots.Add(snapshot);
+                    snapshotSettingSnapshots.Add(snapshot);
                 }
 
-                if(snapshotTypeSnapshots.Count == 0)
+                if(snapshotSettingSnapshots.Count == 0)
                 {
                     continue;
                 }
 
-                snapshots[snapshotType] = snapshotTypeSnapshots;
+                snapshots[snapshotSetting] = snapshotSettingSnapshots;
             }
 
             return snapshots;
         }
         
         private static Snapshot CreateSnapshot(
-                SnapshotType snapshotType,
+                SnapshotSetting snapshotSetting,
                 DataPoint snapshotDataPoint,
                 Dictionary<string, List<DataPoint>> dataPoints)
         {
             var snapshot = new Snapshot(snapshotDataPoint);
             
-            foreach(string dataPointTypeName in snapshotType.DataPointTypeNames)
+            foreach(string dataPointTypeName in snapshotSetting.DataPointTypeNames)
             {
                 if(!dataPoints.ContainsKey(dataPointTypeName))
                 {
