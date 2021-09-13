@@ -8,7 +8,8 @@ namespace TheEyeTether.Types
     {
         public static Dictionary<SnapshotSetting, List<Snapshot>> Create(
                 Dictionary<object, object> luaTable,
-                SnapshotSetting[] snapshotSettings)
+                SnapshotSetting[] snapshotSettings,
+                Dictionary<string, DataPointSetting> dataPointSettings)
         {
             if(luaTable == null || snapshotSettings == null)
             {
@@ -16,7 +17,7 @@ namespace TheEyeTether.Types
             }
 
             var snapshots = new Dictionary<SnapshotSetting, List<Snapshot>>();
-            var dataPoints = DataPointsCreator.Create(luaTable);
+            var dataPoints = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             foreach(SnapshotSetting snapshotSetting in snapshotSettings)
             {
