@@ -301,7 +301,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var matchingDataPoint = result[snapshotTypes[0]][0].DataPoints
                     .Where(dp => dp.TypeName == dataPointTypeName)
                     .First();
-            Assert.Equal(correctTimeStamp, matchingDataPoint.Timestamp);
+            Assert.Equal(correctTimeStamp, matchingDataPoint.TimestampRange.Start);
         }
 
         [Theory]

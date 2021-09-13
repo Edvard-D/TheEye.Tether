@@ -74,8 +74,8 @@ namespace TheEyeTether.Types
                 }
 
                 var dataPoint = dataPoints[dataPointTypeName]
-                        .Where(dp => dp.Timestamp <= snapshotDataPoint.Timestamp)
-                        .MaxBy(dp => dp.Timestamp)
+                        .Where(dp => dp.TimestampRange.Start <= snapshotDataPoint.TimestampRange.Start)
+                        .MaxBy(dp => dp.TimestampRange.Start)
                         .FirstOrDefault();
 
                 if(dataPoint != default(DataPoint))

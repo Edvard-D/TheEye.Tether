@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TheEyeTether.Types;
 using Xunit;
 
@@ -151,7 +152,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
-        public void Create_AssignsDataEntryValueAsDataPointTimestamp_WhenPassedValidLuaTable()
+        public void Create_AssignsDataEntryValueAsDataPointTimestampRangeStart_WhenPassedValidLuaTable()
         {
             var tableName = "test";
             var timestamp = 1f;
@@ -162,7 +163,66 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = DataPointsCreator.Create(luaTable);
 
-            Assert.Equal(timestamp, result[tableName][0].Timestamp);
+            Assert.Equal(timestamp, result[tableName][0].TimestampRange.Start);
+        }
+
+        [Theory]
+        [InlineData(1f, 2f)]
+        [InlineData(2f, 1f)]
+        [InlineData(1f, 2f, 5f, 4f, 3f)]
+        public void Create_AssignsNextLargestValueAsDataPointTimestampRangeEnd_WhenThereIsALargerTimestamp(
+                params float[] timestamps)
+        {
+            var tableName = "test";
+            var subTable = new Dictionary<object, object>();
+            for(int i = 0; i < timestamps.Length; i++)
+            {
+                subTable[i + 1] = timestamps[i];
+            }
+            var luaTable = new Dictionary<object, object>()
+            {
+                { tableName, subTable }
+            };
+
+            var result = DataPointsCreator.Create(luaTable);
+
+            var sortedTimestamps = timestamps.ToList();
+            sortedTimestamps.Sort();
+            for(int i = 0; i < sortedTimestamps.Count - 1; i++)
+            {
+                var dataPoint = result[tableName]
+                        .Where(dp => dp.TimestampRange.Start == sortedTimestamps[i])
+                        .First();
+                Assert.Equal(sortedTimestamps[i + 1], dataPoint.TimestampRange.End);
+            }
+        }
+
+        [Theory]
+        [InlineData(1f)]
+        [InlineData(1f, 2f)]
+        [InlineData(2f, 1f)]
+        [InlineData(1f, 2f, 5f, 4f, 3f)]
+        public void Create_AssignsMaxValueAsDataPointTimestampRangeEnd_WhenLargestTimestamp(
+                params float[] timestamps)
+        {
+            var tableName = "test";
+            var subTable = new Dictionary<object, object>();
+            for(int i = 0; i < timestamps.Length; i++)
+            {
+                subTable[i + 1] = timestamps[i];
+            }
+            var luaTable = new Dictionary<object, object>()
+            {
+                { tableName, subTable }
+            };
+
+            var result = DataPointsCreator.Create(luaTable);
+
+            var largestTimestamp = timestamps.ToList().Max();
+            var largestTimestampDataPoint = result[tableName]
+                    .Where(dp => dp.TimestampRange.Start == largestTimestamp)
+                    .First();
+            Assert.Equal(float.MaxValue, largestTimestampDataPoint.TimestampRange.End);
         }
     }
 }
