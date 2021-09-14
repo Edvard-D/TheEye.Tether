@@ -334,7 +334,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
-        public void Create_DoesNotAddEntryOfDataPointType_WhenDataPointTypeIsInsnapshotSettingButNoDataForItExists()
+        public void Create_DoesNotAddEntryOfDataPointType_WhenDataPointTypeIsInSnapshotSettingButNoDataForItExists()
         {
             var snapshotSettingName = "test1";
             var dataPointTypeName = "test2";
