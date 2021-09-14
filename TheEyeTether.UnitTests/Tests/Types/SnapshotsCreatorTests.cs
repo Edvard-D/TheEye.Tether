@@ -432,6 +432,44 @@ namespace TheEyeTether.UnitTests.Tests.Types
             Assert.Equal(correctTimeStamp, matchingDataPoint.TimestampRange.Start);
         }
 
+        [Fact]
+        public void Create_AddsMultipleDataPoints_WhenMoreThanOneForADataTypeHasARangeThatTheSnapshotTimestampFallsBetween()
+        {
+            var snapshotSettingName = "test1";
+            var dataPointTypeName = "test2";
+            var trueSubTable = new Dictionary<object, object>() { { 1, 1f } };
+            var falseSubTable = new Dictionary<object, object>() { { 1, 3f } };
+            var snapshotTimeStamp = 2f;
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotSettingName, new Dictionary<object, object>() { { 1, snapshotTimeStamp } } },
+                {
+                    dataPointTypeName, new Dictionary<object, object>()
+                    {
+                        { "test1_true", trueSubTable },
+                        { "test1_false", falseSubTable },
+                        { "test2_true", trueSubTable },
+                        { "test2_false", falseSubTable }
+                    }
+                }
+            };
+            var snapshotSetting = new SnapshotSetting(snapshotSettingName,
+                    new string[] { dataPointTypeName });
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>()
+            {
+                { snapshotSettingName, snapshotSetting }
+            };
+            var dataPointSettings = new Dictionary<string, DataPointSetting>()
+            {
+                { snapshotSettingName, new DataPointSetting() },
+                { dataPointTypeName, new DataPointSetting("false", 1) }
+            };
+
+            var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
+
+            Assert.Equal(2, result[snapshotSetting][0].DataPoints.Count);
+        }
+
         [Theory]
         [InlineData(3f)]
         [InlineData(3f, 4.5f, 5f)]

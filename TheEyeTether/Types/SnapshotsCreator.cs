@@ -82,15 +82,12 @@ namespace TheEyeTether.Types
                     continue;
                 }
 
-                var validDataPoint = dataPoints[dataPointTypeName]
+                var validDataPoints = dataPoints[dataPointTypeName]
                         .Where(dp => dp.TimestampRange.Start <= snapshotDataPoint.TimestampRange.Start
                                 && dp.TimestampRange.End > snapshotDataPoint.TimestampRange.End)
-                        .FirstOrDefault();
+                        .ToList();
 
-                if(validDataPoint != default(DataPoint))
-                {
-                    snapshot.DataPoints.Add(validDataPoint);
-                }
+                snapshot.DataPoints.AddRange(validDataPoints);
             }
 
             if(snapshot.DataPoints.Count == 0)
