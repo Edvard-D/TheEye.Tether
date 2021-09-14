@@ -53,6 +53,7 @@ namespace TheEyeTether.Types
                 currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory(),
                 "Data",
                 "Snapshots",
+                "Specializations",
                 "test.txt"
             };
 
