@@ -23,8 +23,8 @@ namespace TheEyeTether.Types
         /// "example_true" table are used as the TimestampRange.Start value.
         public static Dictionary<string, List<DataPoint>> Create(
                 Dictionary<object, object> luaTable,
-                Dictionary<string, SnapshotSetting> snapshotSettings,
-                Dictionary<string, DataPointSetting> dataPointSettings)
+                Dictionary<string, DataPointSetting> dataPointSettings,
+                Dictionary<string, SnapshotSetting> snapshotSettings = null)
         {
             if(luaTable == null)
             {

@@ -20,7 +20,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.IsType<Dictionary<string, List<DataPoint>>>(result);
         }
@@ -35,7 +35,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             try
             {
-                var result = DataPointsCreator.Create(null, null, dataPointSettings);
+                var result = DataPointsCreator.Create(null, dataPointSettings);
                 Assert.True(false);
             }
             catch(System.Exception ex)
@@ -51,7 +51,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             try
             {
-                var result = DataPointsCreator.Create(luaTable, null, null);
+                var result = DataPointsCreator.Create(luaTable, null);
                 Assert.True(false);
             }
             catch(System.Exception ex)
@@ -75,7 +75,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 dataPointSettings[tableName] = new DataPointSetting();
             }
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Equal(tableNames.Length, result.Keys.Count);
         }
@@ -93,7 +93,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Contains(tableName, result.Keys);
         }
@@ -120,7 +120,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Equal(timestamps.Length, result[tableName].Count);
         }
@@ -148,7 +148,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Equal(timestamps.Length, result[tableName].Count);
         }
@@ -166,7 +166,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Equal(tableName, result[tableName][0].TypeName);
         }
@@ -184,7 +184,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Null(result[tableName][0].SubTypeName);
         }
@@ -204,7 +204,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Equal(subTableName, result[tableName][0].SubTypeName);
         }
@@ -223,7 +223,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Equal(timestamp, result[tableName][0].TimestampRange.Start);
         }
@@ -250,7 +250,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             var sortedTimestamps = timestamps.ToList();
             sortedTimestamps.Sort();
@@ -285,7 +285,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting(string.Empty, -1) }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             var sortedTimestamps = timestamps.ToList();
             sortedTimestamps.Sort();
@@ -321,7 +321,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             var largestTimestamp = timestamps.ToList().Max();
             var largestTimestampDataPoint = result[tableName]
@@ -354,7 +354,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting("false", 1) }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             var matchingDataPoint = result[tableName]
                     .Where(dp => dp.TimestampRange.Start == true1Timestamp)
@@ -380,7 +380,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting("false", 1) }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             var matchingDataPoint = result[tableName]
                     .Where(dp => dp.TimestampRange.Start == timestamp)
@@ -410,7 +410,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings, snapshotSettings);
 
             var matchingDataPoint = result[tableName][0];
             Assert.Equal(matchingDataPoint.TimestampRange.Start, matchingDataPoint.TimestampRange.End);
@@ -433,7 +433,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { tableName, new DataPointSetting("false", 1) }
             };
 
-            var result = DataPointsCreator.Create(luaTable, null, dataPointSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
             Assert.Equal(0, result[tableName].Count);
         }

@@ -23,7 +23,7 @@ namespace TheEyeTether.Types
             }
 
             var snapshots = new Dictionary<SnapshotSetting, List<Snapshot>>();
-            var dataPoints = DataPointsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
+            var dataPoints = DataPointsCreator.Create(luaTable, dataPointSettings, snapshotSettings);
 
             foreach(KeyValuePair<string, SnapshotSetting> keyValuePair in snapshotSettings)
             {
