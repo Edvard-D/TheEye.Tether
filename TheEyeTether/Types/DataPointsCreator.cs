@@ -23,6 +23,7 @@ namespace TheEyeTether.Types
         /// "example_true" table are used as the TimestampRange.Start value.
         public static Dictionary<string, List<DataPoint>> Create(
                 Dictionary<object, object> luaTable,
+                Dictionary<string, SnapshotSetting> snapshotSettings,
                 Dictionary<string, DataPointSetting> dataPointSettings)
         {
             if(luaTable == null)
@@ -42,7 +43,7 @@ namespace TheEyeTether.Types
             {
                 var subTable = keyValuePair.Value as Dictionary<object, object>;
                 dataPoints[(string)keyValuePair.Key] = ConvertTableToDataPoints(subTable,
-                        (string)keyValuePair.Key, dataPointSettings);
+                        (string)keyValuePair.Key, snapshotSettings, dataPointSettings);
             }
 
             return dataPoints;
@@ -51,8 +52,10 @@ namespace TheEyeTether.Types
         private static List<DataPoint> ConvertTableToDataPoints(
                 Dictionary<object, object> table,
                 string typeName,
+                Dictionary<string, SnapshotSetting> snapshotSettings,
                 Dictionary<string, DataPointSetting> dataPointSettings)
         {
+            var isSnapshotType = snapshotSettings != null && snapshotSettings.ContainsKey(typeName);
             var dataPointSetting = dataPointSettings[typeName];
             var timestampDatas = GetTimestampDatas(table, dataPointSetting);
             var dataPoints = new List<DataPoint>();
@@ -69,7 +72,7 @@ namespace TheEyeTether.Types
                 }
 
                 var timestampRange = new TimestampRange(timestampData.Timestamp,
-                        GetEndTimestamp(timestampData, timestampDatas, dataPointSetting));
+                        GetEndTimestamp(timestampData, timestampDatas, dataPointSetting, isSnapshotType));
                 dataPoints.Add(new DataPoint(typeName, timestampData.SubTypeName, timestampRange));
             }
 
@@ -130,8 +133,14 @@ namespace TheEyeTether.Types
         private static float GetEndTimestamp(
                 TimestampData comparisonTimestampData,
                 List<TimestampData> timestampDatas,
-                DataPointSetting dataPointSetting)
+                DataPointSetting dataPointSetting,
+                bool isSnapshotType)
         {
+            if(isSnapshotType == true)
+            {
+                return comparisonTimestampData.Timestamp;
+            }
+
             if(timestampDatas.Count == 0)
             {
                 return float.MaxValue;
