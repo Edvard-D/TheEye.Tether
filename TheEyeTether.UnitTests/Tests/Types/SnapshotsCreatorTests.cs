@@ -17,8 +17,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } },
                 { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[1] { new SnapshotSetting(snapshotSettingName,
-                    new string[] { dataPointTypeName })};
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName }) }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() },
@@ -33,7 +35,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Fact]
         public void Create_ThrowsInvalidOperationException_WhenPassedNullLuaTable()
         {
-            var snapshotSettings = new SnapshotSetting[1];
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>();
             var dataPointSettings = new Dictionary<string, DataPointSetting>();
 
             try
@@ -72,8 +74,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName,
-                    new string[0]) };
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, new SnapshotSetting(snapshotSettingName, new string[0]) }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() }
@@ -98,7 +102,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName, null) };
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, new SnapshotSetting(snapshotSettingName, null) }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() }
@@ -127,7 +134,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[snapshotSettingNames.Length];
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>();
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { dataPointTypeName, new DataPointSetting() }
@@ -136,14 +143,14 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 var subTable = new Dictionary<object, object>() { { 1, 1f } };
                 luaTable[snapshotSettingNames[i]] = subTable;
-                snapshotSettings[i] = new SnapshotSetting(snapshotSettingNames[i],
+                snapshotSettings[snapshotSettingNames[i]] = new SnapshotSetting(snapshotSettingNames[i],
                         new string[1] { dataPointTypeName });
                 dataPointSettings[snapshotSettingNames[i]] = new DataPointSetting();
             }
 
             var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
 
-            Assert.Equal(snapshotSettings.Length, result.Keys.Count);
+            Assert.Equal(snapshotSettingNames.Length, result.Keys.Count);
         }
         
         [Fact]
@@ -151,8 +158,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var snapshotSettingName = "test1";
             var luaTable = new Dictionary<object, object>();
-            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName,
-                    new string[] { "test2" }) };
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, new SnapshotSetting(snapshotSettingName, new string[] { "test2" }) }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>();
 
             var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
@@ -168,8 +177,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName,
-                    new string[] { "test2" }) };
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, new SnapshotSetting(snapshotSettingName, new string[] { "test2" }) }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() }
@@ -191,7 +202,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
             };
             var snapshotSetting =  new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
-            var snapshotSettings = new SnapshotSetting[] { snapshotSetting };
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, snapshotSetting }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() },
@@ -222,8 +236,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { snapshotSettingName, subTableTimestamps },
                 { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName,
-                    new string[] { dataPointTypeName }) };
+            var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, snapshotSetting }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() },
@@ -232,7 +249,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
 
-            var snapshots = result[snapshotSettings[0]] as List<Snapshot>;
+            var snapshots = result[snapshotSetting];
             Assert.Equal(timestamps.Length, snapshots.Count);
         }
 
@@ -262,8 +279,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { snapshotSettingName, subTables },
                 { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName,
-                    new string[] { dataPointTypeName }) };
+            var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, snapshotSetting }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() },
@@ -272,7 +292,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
 
-            var snapshots = result[snapshotSettings[0]] as List<Snapshot>;
+            var snapshots = result[snapshotSetting];
             Assert.Equal(subTableNames.Length * entriesPerSubTable, snapshots.Count);
         }
 
@@ -286,9 +306,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } },
                 { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[]
+            var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
             {
-                new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName })
+                { snapshotSettingName, snapshotSetting }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
@@ -298,7 +319,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
 
-            var matchingDataPoints = result[snapshotSettings[0]][0].DataPoints
+            var matchingDataPoints = result[snapshotSetting][0].DataPoints
                     .Where(dp => dp.TypeName == dataPointTypeName)
                     .ToList();
             Assert.Equal(1, matchingDataPoints.Count);
@@ -315,9 +336,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } },
                 { dataPointTypeName, new Dictionary<object, object>() { { "test", subTable } } }
             };
-            var snapshotSettings = new SnapshotSetting[]
+            var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
             {
-                new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName })
+                { snapshotSettingName, snapshotSetting }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
@@ -327,7 +349,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
 
-            var matchingDataPoints = result[snapshotSettings[0]][0].DataPoints
+            var matchingDataPoints = result[snapshotSetting][0].DataPoints
                     .Where(dp => dp.TypeName == dataPointTypeName)
                     .ToList();
             Assert.Equal(1, matchingDataPoints.Count);
@@ -343,7 +365,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } },
             };
             var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
-            var snapshotSettings = new SnapshotSetting[] { snapshotSetting };
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, snapshotSetting }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() },
@@ -375,9 +400,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, snapshotTimeStamp } } },
                 { dataPointTypeName, new Dictionary<object, object>() { { "test", subTable } } }
             };
-            var snapshotSettings = new SnapshotSetting[]
+            var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
             {
-                new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName })
+                { snapshotSettingName, snapshotSetting }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
@@ -390,7 +416,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var correctTimeStamp = dataPointTimestamps.ToList()
                     .Where(dpt => dpt <= snapshotTimeStamp)
                     .Max();
-            var matchingDataPoint = result[snapshotSettings[0]][0].DataPoints
+            var matchingDataPoint = result[snapshotSetting][0].DataPoints
                     .Where(dp => dp.TypeName == dataPointTypeName)
                     .First();
             Assert.Equal(correctTimeStamp, matchingDataPoint.TimestampRange.Start);
@@ -416,7 +442,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { dataPointTypeName, new Dictionary<object, object>() { { "test", subTable } } }
             };
             var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
-            var snapshotSettings = new SnapshotSetting[] { snapshotSetting };
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, snapshotSetting }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() },
