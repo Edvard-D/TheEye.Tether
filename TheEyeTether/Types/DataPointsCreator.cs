@@ -47,8 +47,7 @@ namespace TheEyeTether.Types
                 timestampDatas.RemoveAt(0);
                 var timestampRange = new TimestampRange(timestampData.Timestamp,
                         GetEndTimestamp(timestampData, timestampDatas, dataPointSetting));
-                dataPoints.Add(new DataPoint(typeName, timestampData.SubTypeName,
-                        timestampRange));
+                dataPoints.Add(new DataPoint(typeName, timestampData.SubTypeName, timestampRange));
             }
 
             return dataPoints;
