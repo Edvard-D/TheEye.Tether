@@ -5,6 +5,22 @@ namespace TheEyeTether.Types
 {
     public static class DataPointsCreator
     {
+        /// Expects luaTable's 2nd level objects to be Dictionary<object, object> values that represent
+        /// a table for a data point type, defined in dataPointSettings. Each of those 2nd level tables
+        /// will have 3rd level tables that represent either timestamps or 4th level sub type sub table of
+        /// timestamps. The hierarchy can thus be:
+        ///
+        /// luaTable > data point type > timestamps
+        /// OR
+        /// luaTable > data point type > sub type > timestamps
+        /// 
+        /// DataPointSetting will determine how the data is handled. If the EndMarker value is not null
+        /// then it is expected that some of the sub type tables will contain timestamps that are only
+        /// meant to be used as the TimestampRange.End value of corresponding sub types. As an example,
+        /// take a sub type called "example_true" with a DataPointSetting.EndMarker value of "false". This
+        /// indicates that the values in the sub type table "example_false" are meant to be used as the
+        /// TimestampRange.End value for the DataPoint that gets created, while the timestamps in the
+        /// "example_true" table are used as the TimestampRange.Start value.
         public static Dictionary<string, List<DataPoint>> Create(
                 Dictionary<object, object> luaTable,
                 Dictionary<string, DataPointSetting> dataPointSettings)
