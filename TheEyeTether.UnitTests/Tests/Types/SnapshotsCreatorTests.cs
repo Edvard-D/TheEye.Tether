@@ -399,7 +399,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Theory]
         [InlineData(3f)]
         [InlineData(3f, 4.5f, 5f)]
-        public void Create_OnlyAddsDataPointWithHighestTimestampThatIsLessThanEqualToSnapshotTimestamp_WhenDataPointTimestampsAreAllLessThanEqualToSnapshotTimestamp(
+        public void Create_DoesNotCreateASnapshot_WhenAllDataPointTimestampsAreLessThanEqualToSnapshotTimestamp(
                 params float[] dataPointTimestamps)
         {
             var snapshotSettingName = "test1";
