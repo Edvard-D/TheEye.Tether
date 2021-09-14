@@ -31,27 +31,37 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
-        public void Create_ReturnsNull_WhenPassedNullLuaTable()
+        public void Create_ThrowsInvalidOperationException_WhenPassedNullLuaTable()
         {
-            Dictionary<object, object> luaTable = null;
             var snapshotSettings = new SnapshotSetting[1];
             var dataPointSettings = new Dictionary<string, DataPointSetting>();
 
-            var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
-
-            Assert.Null(result);
+            try
+            {
+                var result = SnapshotsCreator.Create(null, snapshotSettings, dataPointSettings);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
         }
 
         [Fact]
-        public void Create_ReturnsNull_WhenPassedNullsnapshotSettings()
+        public void Create_ThrowsInvalidOperationException_WhenPassedNullSnapshotSettings()
         {
             var luaTable = new Dictionary<object, object>();
-            SnapshotSetting[] snapshotSettings = null;
             var dataPointSettings = new Dictionary<string, DataPointSetting>();
 
-            var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
-
-            Assert.Null(result);
+            try
+            {
+                var result = SnapshotsCreator.Create(luaTable, null, dataPointSettings);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
         }
         
         [Fact]

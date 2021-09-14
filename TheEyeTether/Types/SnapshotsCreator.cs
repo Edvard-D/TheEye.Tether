@@ -11,9 +11,16 @@ namespace TheEyeTether.Types
                 SnapshotSetting[] snapshotSettings,
                 Dictionary<string, DataPointSetting> dataPointSettings)
         {
-            if(luaTable == null || snapshotSettings == null)
+            if(luaTable == null)
             {
-                return null;
+                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
+                        nameof(luaTable)));
+            }
+
+            if(snapshotSettings == null)
+            {
+                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
+                        nameof(snapshotSettings)));
             }
 
             var snapshots = new Dictionary<SnapshotSetting, List<Snapshot>>();
