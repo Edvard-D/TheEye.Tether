@@ -89,6 +89,31 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 Assert.IsType<System.InvalidOperationException>(ex);
             }
         }
+        
+        [Fact]
+        public void Create_ThrowsInvalidOperationException_WhenSnapshotSettingDataPointTypeNamesIsNull()
+        {
+            var snapshotSettingName = "test1";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } }
+            };
+            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName, null) };
+            var dataPointSettings = new Dictionary<string, DataPointSetting>()
+            {
+                { snapshotSettingName, new DataPointSetting() }
+            };
+
+            try
+            {
+                var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
+        }
 
         [Theory]
         [InlineData("test")]

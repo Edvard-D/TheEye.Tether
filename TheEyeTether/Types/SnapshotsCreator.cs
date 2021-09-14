@@ -28,7 +28,8 @@ namespace TheEyeTether.Types
 
             foreach(SnapshotSetting snapshotSetting in snapshotSettings)
             {
-                if(snapshotSetting.DataPointTypeNames.Count() == 0)
+                if(snapshotSetting.DataPointTypeNames == null
+                        || snapshotSetting.DataPointTypeNames.Count() == 0)
                 {
                     throw new System.InvalidOperationException(string.Format(
                             "{0} {1} does not have any {2} assigned.",
