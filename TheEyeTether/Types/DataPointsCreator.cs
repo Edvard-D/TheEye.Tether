@@ -11,7 +11,8 @@ namespace TheEyeTether.Types
         {
             if(luaTable == null)
             {
-                return null;
+                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
+                        nameof(luaTable)));
             }
             
             if(dataPointSettings == null)
