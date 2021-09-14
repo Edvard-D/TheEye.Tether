@@ -55,7 +55,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
         
         [Fact]
-        public void Create_ThrowsInvalidOperationException_WhensnapshotSettingHasNoDataPointTypeNames()
+        public void Create_ThrowsInvalidOperationException_WhenSnapshotSettingHasNoDataPointTypeNames()
         {
             var snapshotSettingName = "test1";
             var luaTable = new Dictionary<object, object>()
