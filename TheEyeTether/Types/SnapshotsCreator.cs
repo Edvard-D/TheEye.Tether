@@ -31,8 +31,9 @@ namespace TheEyeTether.Types
                 if(snapshotSetting.DataPointTypeNames.Count() == 0)
                 {
                     throw new System.InvalidOperationException(string.Format(
-                            "snapshotSetting {0} does not have any DataPointTypeNames assigned.",
-                            snapshotSetting.Name));
+                            "{0} {1} does not have any {2} assigned.",
+                            nameof(snapshotSetting), snapshotSetting.Name,
+                            nameof(snapshotSetting.DataPointTypeNames)));
                 }
 
                 if(!dataPoints.ContainsKey(snapshotSetting.Name))
