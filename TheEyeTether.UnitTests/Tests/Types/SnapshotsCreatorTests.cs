@@ -8,7 +8,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
     public class SnapshotsCreatorTests
     {
         [Fact]
-        public void Create_ReturnsDictionaryOfListsOfSnapshots_WhenPassedValidLuaTableAndSnapshoTypes()
+        public void Create_ReturnsDictionaryOfListsOfSnapshots_WhenPassedValidLuaTableAndSnapshotTypes()
         {
             var snapshotSettingName = "test1";
             var dataPointTypeName = "test2";
