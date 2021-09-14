@@ -387,5 +387,27 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     .First();
             Assert.Equal(float.MaxValue, matchingDataPoint.TimestampRange.End);
         }
+
+        [Fact]
+        public void Create_DoesNotAddEntryOfDataPointType_WhenItIsAnEndMarker()
+        {
+            var subTable = new Dictionary<object, object>()
+            {
+                { "test_false", new Dictionary<object, object>() { { 1, 1f } } }
+            };
+            var tableName = "test";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { tableName, subTable }
+            };
+            var dataPointSettings = new Dictionary<string, DataPointSetting>()
+            {
+                { tableName, new DataPointSetting("false", 1) }
+            };
+
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings);
+
+            Assert.Equal(0, result[tableName].Count);
+        }
     }
 }

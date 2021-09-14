@@ -45,6 +45,13 @@ namespace TheEyeTether.Types
             {
                 var timestampData = timestampDatas[0];
                 timestampDatas.RemoveAt(0);
+
+                if(timestampData.EndMarkerSubTypeName != null
+                        && timestampData.EndMarkerSubTypeName == timestampData.SubTypeName)
+                {
+                    continue;
+                }
+
                 var timestampRange = new TimestampRange(timestampData.Timestamp,
                         GetEndTimestamp(timestampData, timestampDatas, dataPointSetting));
                 dataPoints.Add(new DataPoint(typeName, timestampData.SubTypeName, timestampRange));
