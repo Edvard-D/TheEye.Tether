@@ -14,6 +14,12 @@ namespace TheEyeTether.Types
                 return null;
             }
             
+            if(dataPointSettings == null)
+            {
+                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
+                        nameof(dataPointSettings)));
+            }
+
             var dataPoints = new Dictionary<string, List<DataPoint>>();
             foreach(KeyValuePair<object, object> keyValuePair in luaTable)
             {

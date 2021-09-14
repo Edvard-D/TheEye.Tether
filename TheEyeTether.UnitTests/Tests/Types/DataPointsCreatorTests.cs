@@ -38,6 +38,22 @@ namespace TheEyeTether.UnitTests.Tests.Types
             Assert.Null(result);
         }
 
+        [Fact]
+        public void Create_ThrowsInvalidOperationException_WhenPassedNullDataPointSettingsDictionary()
+        {
+            var luaTable = new Dictionary<object, object>();
+
+            try
+            {
+                var result = DataPointsCreator.Create(luaTable, null);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
+        }
+
         [Theory]
         [InlineData("test1")]
         [InlineData("test1", "test2")]
