@@ -53,9 +53,6 @@ namespace TheEyeTether.Types
                 currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory(),
                 "Data",
                 "Snapshots",
-                inputFilePathElements[inputFilePathElements.Length - AccountNameElementOffset],
-                inputFilePathElements[inputFilePathElements.Length - ServerNameElementOffset],
-                inputFilePathElements[inputFilePathElements.Length - CharacterNameElementOffset],
                 "test.txt"
             };
 
