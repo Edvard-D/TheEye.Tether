@@ -384,7 +384,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData(1f, 2f, 3f)]
         [InlineData(1f, 1.5f, 3f)]
         [InlineData(1f)]
-        public void Create_AddsDataPointWithHighestTimestampThatIsLessThanEqualToSnapshotTimestamp_WhenDataPointTimestampsAreAllLessThanEqualToSnapshotTimestamp(
+        public void Create_AddsDataPointWithRangeThatSnapshotTimestampFallsBetween_WhenADataPointTimestampWithAStartTimeLessThanTheSnapshotTimestampExists(
                 params float[] dataPointTimestamps)
         {
             var snapshotSettingName = "test1";
@@ -413,9 +413,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, snapshotSettings, dataPointSettings);
 
-            var correctTimeStamp = dataPointTimestamps.ToList()
-                    .Where(dpt => dpt <= snapshotTimeStamp)
-                    .Max();
+            var correctTimeStamp = dataPointTimestamps[0];
+            for(int i = 1; i < dataPointTimestamps.Length - 1; i++)
+            {
+                var timestamp = dataPointTimestamps[i];
+                var nextTimestamp = dataPointTimestamps[i + 1];
+
+                if(timestamp > correctTimeStamp
+                        && timestamp <= snapshotTimeStamp
+                        && nextTimestamp > snapshotTimeStamp)
+                {
+                    correctTimeStamp = timestamp;
+                }
+            }
             var matchingDataPoint = result[snapshotSetting][0].DataPoints
                     .Where(dp => dp.TypeName == dataPointTypeName)
                     .First();
