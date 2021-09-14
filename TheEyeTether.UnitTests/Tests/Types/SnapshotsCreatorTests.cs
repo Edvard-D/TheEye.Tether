@@ -72,7 +72,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName, new string[0]) };
+            var snapshotSettings = new SnapshotSetting[] { new SnapshotSetting(snapshotSettingName,
+                    new string[0]) };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { snapshotSettingName, new DataPointSetting() }
