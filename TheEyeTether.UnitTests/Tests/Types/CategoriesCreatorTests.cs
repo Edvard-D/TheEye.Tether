@@ -17,7 +17,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { categoryName, new List<DataPoint>() { dataPoint}}
             };
-            var categorySettings = new CategorySetting[] { new CategorySetting(categoryName) };
+            var categorySettings = new CategorySetting[] { new CategorySetting(categoryName, null) };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
 
@@ -27,7 +27,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Fact]
         public void Create_ThrowsInvalidOperationException_WhenPassedNullDataPoints()
         {
-            var categorySettings = new CategorySetting[] { new CategorySetting("test") };
+            var categorySettings = new CategorySetting[] { new CategorySetting("test", null) };
 
             try
             {
@@ -72,7 +72,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 {
                     new DataPoint(categoryTypeName, "test", new TimestampRange(1f, 2f))
                 };
-                categorySettings[i] = new CategorySetting(categoryTypeName);
+                categorySettings[i] = new CategorySetting(categoryTypeName, null);
             }
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
@@ -99,7 +99,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { categoryName, categoryDataPoints }
             };
-            var categorySetting = new CategorySetting(categoryName);
+            var categorySetting = new CategorySetting(categoryName, null);
             var categorySettings = new CategorySetting[] { categorySetting };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
@@ -122,7 +122,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     }
                 }
             };
-            var categorySetting = new CategorySetting(categoryName);
+            var categorySetting = new CategorySetting(categoryName, null);
             var categorySettings = new CategorySetting[] { categorySetting };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
@@ -135,7 +135,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var categoryName = "test";
             var dataPoints = new Dictionary<string, List<DataPoint>>();
-            var categorySetting = new CategorySetting(categoryName);
+            var categorySetting = new CategorySetting(categoryName, null);
             var categorySettings = new CategorySetting[] { categorySetting };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
@@ -168,7 +168,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { categoryName, categoryDataPoints }
             };
-            var categorySetting = new CategorySetting(categoryName);
+            var categorySetting = new CategorySetting(categoryName, null);
             var categorySettings = new CategorySetting[] { categorySetting };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
