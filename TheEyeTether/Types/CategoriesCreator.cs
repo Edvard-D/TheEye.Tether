@@ -23,6 +23,11 @@ namespace TheEyeTether.Types
             var categories = new Dictionary<CategorySetting, List<Category>>();
             foreach(CategorySetting categorySetting in categorySettings)
             {
+                if(!dataPoints.ContainsKey(categorySetting.Name))
+                {
+                    continue;
+                }
+
                 var categoryDataPoints = dataPoints[categorySetting.Name];
                 var categorySettingCategories = new List<Category>();
                 var categorySubTypeIndexes = new Dictionary<string, int>();
@@ -39,7 +44,7 @@ namespace TheEyeTether.Types
                     categorySettingCategories[categorySubTypeIndexes[dataPoint.SubTypeName]]
                             .ActiveTimePeriods.Add(dataPoint.TimestampRange);
                 }
-                
+
                 categories[categorySetting] = categorySettingCategories;
             }
 

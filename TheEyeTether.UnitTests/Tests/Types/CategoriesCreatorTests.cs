@@ -129,5 +129,18 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Equal(subTypeName, result[categorySetting][0].Identifier);
         }
+
+        [Fact]
+        public void Create_DoesNotCreateDictionaryEntry_WhenCategoryHasNoData()
+        {
+            var categoryName = "test";
+            var dataPoints = new Dictionary<string, List<DataPoint>>();
+            var categorySetting = new CategorySetting(categoryName);
+            var categorySettings = new CategorySetting[] { categorySetting };
+
+            var result = CategoriesCreator.Create(dataPoints, categorySettings);
+
+            Assert.DoesNotContain(categorySetting, result.Keys);
+        }
     }
 }
