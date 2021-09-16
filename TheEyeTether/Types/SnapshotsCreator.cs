@@ -26,51 +26,8 @@ namespace TheEyeTether.Types
 
             foreach(KeyValuePair<string, CategorySetting> categoryKeyValuePair in categorySettings)
             {
-                var categorySettingSnapshots = new Dictionary<SnapshotSetting, List<Snapshot>>();
-                var dataPoints = DataPointsCreator.Create(luaTable, dataPointSettings,
-                        categoryKeyValuePair.Value);
-
-                foreach(KeyValuePair<string, SnapshotSetting> settingKeyValuePair in
-                        categoryKeyValuePair.Value.SnapshotSettings)
-                {
-                    if(settingKeyValuePair.Value.DataPointTypeNames == null
-                            || settingKeyValuePair.Value.DataPointTypeNames.Count() == 0)
-                    {
-                        throw new System.InvalidOperationException(string.Format(
-                                "{0} {1} does not have any {2} assigned.",
-                                nameof(settingKeyValuePair), settingKeyValuePair.Key,
-                                nameof(settingKeyValuePair.Value.DataPointTypeNames)));
-                    }
-
-                    if(!dataPoints.ContainsKey(settingKeyValuePair.Key))
-                    {
-                        continue;
-                    }
-
-                    var snapshotSettingSnapshots = new List<Snapshot>();
-                    var snapshotSettingLuaTable = luaTable[settingKeyValuePair.Key]
-                            as Dictionary<object, object>;
-                    var snapshotSettingLuaTableValues = new List<object>(snapshotSettingLuaTable.Values);
-
-                    foreach(DataPoint dataPoint in dataPoints[settingKeyValuePair.Key])
-                    {
-                        var snapshot = CreateSnapshot(settingKeyValuePair.Value, dataPoint, dataPoints);
-
-                        if(snapshot == default(Snapshot))
-                        {
-                            continue;
-                        }
-
-                        snapshotSettingSnapshots.Add(snapshot);
-                    }
-
-                    if(snapshotSettingSnapshots.Count == 0)
-                    {
-                        continue;
-                    }
-
-                    categorySettingSnapshots[settingKeyValuePair.Value] = snapshotSettingSnapshots;
-                }
+                var categorySettingSnapshots = CreateSnapshotsForCategory(categoryKeyValuePair.Value, luaTable,
+                        dataPointSettings);
                 
                 if(categorySettingSnapshots.Count == 0)
                 {
@@ -83,6 +40,70 @@ namespace TheEyeTether.Types
             return snapshots;
         }
         
+        private static Dictionary<SnapshotSetting, List<Snapshot>> CreateSnapshotsForCategory(
+                CategorySetting categorySetting,
+                Dictionary<object, object> luaTable,
+                Dictionary<string, DataPointSetting> dataPointSettings)
+        {
+            var categorySettingSnapshots = new Dictionary<SnapshotSetting, List<Snapshot>>();
+            var dataPoints = DataPointsCreator.Create(luaTable, dataPointSettings, categorySetting);
+
+            foreach(KeyValuePair<string, SnapshotSetting> settingKeyValuePair in
+                    categorySetting.SnapshotSettings)
+            {
+                if(settingKeyValuePair.Value.DataPointTypeNames == null
+                        || settingKeyValuePair.Value.DataPointTypeNames.Count() == 0)
+                {
+                    throw new System.InvalidOperationException(string.Format(
+                            "{0} {1} does not have any {2} assigned.",
+                            nameof(settingKeyValuePair), settingKeyValuePair.Key,
+                            nameof(settingKeyValuePair.Value.DataPointTypeNames)));
+                }
+
+                if(!dataPoints.ContainsKey(settingKeyValuePair.Key))
+                {
+                    continue;
+                }
+
+                var snapshotSettingSnapshots = CreateSnapshotsForSnapshotSetting(settingKeyValuePair.Key,
+                        settingKeyValuePair.Value, luaTable, dataPoints);
+
+                if(snapshotSettingSnapshots.Count == 0)
+                {
+                    continue;
+                }
+
+                categorySettingSnapshots[settingKeyValuePair.Value] = snapshotSettingSnapshots;
+            }
+
+            return categorySettingSnapshots;
+        }
+
+        private static List<Snapshot> CreateSnapshotsForSnapshotSetting(
+                string name,
+                SnapshotSetting setting,
+                Dictionary<object, object> luaTable,
+                Dictionary<string, List<DataPoint>> dataPoints)
+        {
+            var snapshotSettingSnapshots = new List<Snapshot>();
+            var snapshotSettingLuaTable = luaTable[name] as Dictionary<object, object>;
+            var snapshotSettingLuaTableValues = new List<object>(snapshotSettingLuaTable.Values);
+
+            foreach(DataPoint dataPoint in dataPoints[name])
+            {
+                var snapshot = CreateSnapshot(setting, dataPoint, dataPoints);
+
+                if(snapshot == default(Snapshot))
+                {
+                    continue;
+                }
+
+                snapshotSettingSnapshots.Add(snapshot);
+            }
+
+            return snapshotSettingSnapshots;
+        }
+
         private static Snapshot CreateSnapshot(
                 SnapshotSetting snapshotSetting,
                 DataPoint snapshotDataPoint,
