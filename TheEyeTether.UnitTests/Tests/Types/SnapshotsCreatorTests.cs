@@ -223,6 +223,38 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
+        public void Create_UsesInputCategorySettingAsOutputDictionaryKey_WhenPassedValidLuaTable()
+        {
+            var categorySettingsName = "test1";
+            var snapshotSettingName = "test2";
+            var dataPointTypeName = "test3";
+            var luaTable = new Dictionary<object, object>()
+            {
+                { snapshotSettingName, new Dictionary<object, object>() { { 1, 1f } } },
+                { dataPointTypeName, new Dictionary<object, object>() { { 1, 1f } } }
+            };
+            var snapshotSetting =  new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
+            var snapshotSettings = new Dictionary<string, SnapshotSetting>
+            {
+                { snapshotSettingName, snapshotSetting }
+            };
+            var categorySetting = new CategorySetting(categorySettingsName, snapshotSettings);
+            var categorySettings = new Dictionary<string, CategorySetting>()
+            {
+                { categorySettingsName, categorySetting }
+            };
+            var dataPointSettings = new Dictionary<string, DataPointSetting>()
+            {
+                { snapshotSettingName, new DataPointSetting() },
+                { dataPointTypeName, new DataPointSetting() }
+            };
+
+            var result = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
+
+            Assert.Contains(categorySetting, result.Keys);
+        }
+
+        [Fact]
         public void Create_UsesInputSnapshotSettingAsOutputDictionaryKey_WhenPassedValidLuaTable()
         {
             var categorySettingsName = "test1";
