@@ -60,23 +60,24 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData("test1, test2")]
         [InlineData("test1, test2, test3, test4, test5")]
         public void Create_CreatesADictionaryEntryForEachCategorySetting_WhenCategorySettingsArePassedAndHaveValidData(
+                params string[] categoryTypeNames)
         {
             var luaTable = new Dictionary<object, object>();
             var subTable = new Dictionary<object, object>()
             {
                 { "test", new Dictionary<object, object>() { { 1, 1f } } }
             };
-            var categorySettings = new CategorySetting[categoryNames.Length];
-            for(int i = 0; i < categoryNames.Length; i++)
+            var categorySettings = new CategorySetting[categoryTypeNames.Length];
+            for(int i = 0; i < categoryTypeNames.Length; i++)
             {
-                var categoryName = categoryNames[i];
-                luaTable[categoryName] = subTable;
-                categorySettings[i] = new CategorySetting(categoryName);
+                var categoryTypeName = categoryTypeNames[i];
+                luaTable[categoryTypeName] = subTable;
+                categorySettings[i] = new CategorySetting(categoryTypeName);
             }
 
             var result = CategoriesCreator.Create(luaTable, categorySettings);
 
-            Assert.Equal(categoryNames.Length, result.Keys.Count);
+            Assert.Equal(categoryTypeNames.Length, result.Keys.Count);
         }
     }
 }
