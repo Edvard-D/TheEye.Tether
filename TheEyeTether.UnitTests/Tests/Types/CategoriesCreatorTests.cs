@@ -38,5 +38,21 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 Assert.IsType<System.InvalidOperationException>(ex);
             }
         }
+
+        [Fact]
+        public void Create_ThrowsInvalidOperationException_WhenPassedNullCategorySettings()
+        {
+            var luaTable = new Dictionary<object, object>();
+
+            try
+            {
+                var result = CategoriesCreator.Create(luaTable, null);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
+        }
     }
 }

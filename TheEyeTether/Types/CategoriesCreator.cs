@@ -14,6 +14,12 @@ namespace TheEyeTether.Types
                         nameof(luaTable)));
             }
 
+            if(categorySettings == null)
+            {
+                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
+                        nameof(categorySettings)));
+            }
+
             return new Dictionary<CategorySetting, Category>();
         }
     }
