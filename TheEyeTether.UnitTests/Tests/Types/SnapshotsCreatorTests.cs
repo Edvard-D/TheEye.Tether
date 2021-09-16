@@ -255,7 +255,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
-        public void Create_UsesInputSnapshotSettingAsOutputDictionaryKey_WhenPassedValidLuaTable()
+        public void Create_UsesInputSnapshotSettingAsOutputSubDictionaryKey_WhenPassedValidLuaTable()
         {
             var categorySettingsName = "test1";
             var snapshotSettingName = "test2";
