@@ -7,7 +7,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
     public class CategoriesCreatorTests
     {
         [Fact]
-        public void Create_ReturnsADictionaryOfCategorySettingCategoryPairs_WhenPassedValidLuaTable()
+        public void Create_ReturnsADictionaryOfListsOfCategorySettingCategoryPairs_WhenPassedValidLuaTable()
         {
             var categoryName = "test1";
             var subTableName = "test2";
@@ -20,7 +20,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = CategoriesCreator.Create(luaTable, categorySettings);
 
-            Assert.IsType<Dictionary<CategorySetting, Category>>(result);
+            Assert.IsType<Dictionary<CategorySetting, List<Category>>>(result);
         }
 
         [Fact]

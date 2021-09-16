@@ -4,7 +4,7 @@ namespace TheEyeTether.Types
 {
     public static class CategoriesCreator
     {
-        public static Dictionary<CategorySetting, Category> Create(
+        public static Dictionary<CategorySetting, List<Category>> Create(
                 Dictionary<object, object> luaTable,
                 CategorySetting[] categorySettings)
         {
@@ -20,10 +20,11 @@ namespace TheEyeTether.Types
                         nameof(categorySettings)));
             }
 
-            var categories = new Dictionary<CategorySetting, Category>();
+            var categories = new Dictionary<CategorySetting, List<Category>>();
             foreach(CategorySetting categorySetting in categorySettings)
             {
-                categories[categorySetting] = new Category(string.Empty, new List<TimestampRange>());
+                categories[categorySetting] = new List<Category>();
+                categories[categorySetting].Add(new Category(string.Empty, new List<TimestampRange>()));
             }
 
             return categories;
