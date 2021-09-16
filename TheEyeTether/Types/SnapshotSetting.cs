@@ -1,21 +1,12 @@
 namespace TheEyeTether.Types
 {
-    public struct SnapshotSetting
+    public record SnapshotSetting
     {
-        private string _name;
-        private string[] _dataPointTypeNames;
+        public string[] DataPointTypeNames;
+        public string Name;
 
 
-        public string Name { get { return _name; } }
-        public string[] DataPointTypeNames { get { return _dataPointTypeNames; } }
-
-
-        public SnapshotSetting(
-                string name,
-                string[] dataPointTypeNames)
-        {
-            _name = name;
-            _dataPointTypeNames = dataPointTypeNames;
-        }
+        public SnapshotSetting(string name, string[] dataPointTypeNames) =>
+                (DataPointTypeNames, Name) = (dataPointTypeNames, name);
     }
 }
