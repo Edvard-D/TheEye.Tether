@@ -405,12 +405,13 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { tableName, new SnapshotSetting(tableName, null) }
             };
+            var categorySetting = new CategorySetting("test", snapshotSettings);
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, dataPointSettings, snapshotSettings);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings, categorySetting);
 
             var matchingDataPoint = result[tableName][0];
             Assert.Equal(matchingDataPoint.TimestampRange.Start, matchingDataPoint.TimestampRange.End);
