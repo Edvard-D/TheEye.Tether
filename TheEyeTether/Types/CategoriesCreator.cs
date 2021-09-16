@@ -28,26 +28,34 @@ namespace TheEyeTether.Types
                     continue;
                 }
 
-                var categorySettingCategories = new List<Category>();
-                var categorySubTypeIndexes = new Dictionary<string, int>();
-
-                foreach(DataPoint dataPoint in dataPoints[categorySetting.Name])
-                {
-                    if(!categorySubTypeIndexes.ContainsKey(dataPoint.SubTypeName))
-                    {
-                        categorySettingCategories.Add(new Category(dataPoint.SubTypeName,
-                                new List<TimestampRange>()));
-                        categorySubTypeIndexes[dataPoint.SubTypeName] = categorySettingCategories.Count - 1;
-                    }
-
-                    categorySettingCategories[categorySubTypeIndexes[dataPoint.SubTypeName]]
-                            .ActiveTimePeriods.Add(dataPoint.TimestampRange);
-                }
-
-                categories[categorySetting] = categorySettingCategories;
+                categories[categorySetting] = CreateCategoriesForCategorySetting(categorySetting,
+                        dataPoints);
             }
 
             return categories;
+        }
+
+        private static List<Category> CreateCategoriesForCategorySetting(
+                CategorySetting categorySetting,
+                Dictionary<string, List<DataPoint>> dataPoints)
+        {
+            var categorySettingCategories = new List<Category>();
+            var categorySubTypeIndexes = new Dictionary<string, int>();
+
+            foreach(DataPoint dataPoint in dataPoints[categorySetting.Name])
+            {
+                if(!categorySubTypeIndexes.ContainsKey(dataPoint.SubTypeName))
+                {
+                    categorySettingCategories.Add(new Category(dataPoint.SubTypeName,
+                            new List<TimestampRange>()));
+                    categorySubTypeIndexes[dataPoint.SubTypeName] = categorySettingCategories.Count - 1;
+                }
+
+                categorySettingCategories[categorySubTypeIndexes[dataPoint.SubTypeName]]
+                        .ActiveTimePeriods.Add(dataPoint.TimestampRange);
+            }
+
+            return categorySettingCategories;
         }
     }
 }
