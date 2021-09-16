@@ -54,5 +54,30 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 Assert.IsType<System.InvalidOperationException>(ex);
             }
         }
+        
+        [Theory]
+        [InlineData("test")]
+        [InlineData("test1, test2")]
+        [InlineData("test1, test2, test3, test4, test5")]
+        public void Create_CreatesADictionaryEntryForEachsnapshotSetting_WhenCategorySettingsArePassedAndHaveValidData(
+                params string[] categoryNames)
+        {
+            var luaTable = new Dictionary<object, object>();
+            var subTable = new Dictionary<object, object>()
+            {
+                { "test", new Dictionary<object, object>() { { 1, 1f } } }
+            };
+            var categorySettings = new CategorySetting[categoryNames.Length];
+            for(int i = 0; i < categoryNames.Length; i++)
+            {
+                var categoryName = categoryNames[i];
+                luaTable[categoryName] = subTable;
+                categorySettings[i] = new CategorySetting(categoryName);
+            }
+
+            var result = CategoriesCreator.Create(luaTable, categorySettings);
+
+            Assert.Equal(categoryNames.Length, result.Keys.Count);
+        }
     }
 }

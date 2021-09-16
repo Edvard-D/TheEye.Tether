@@ -20,7 +20,13 @@ namespace TheEyeTether.Types
                         nameof(categorySettings)));
             }
 
-            return new Dictionary<CategorySetting, Category>();
+            var categories = new Dictionary<CategorySetting, Category>();
+            foreach(CategorySetting categorySetting in categorySettings)
+            {
+                categories[categorySetting] = new Category(string.Empty, new List<TimestampRange>());
+            }
+
+            return categories;
         }
     }
 }
