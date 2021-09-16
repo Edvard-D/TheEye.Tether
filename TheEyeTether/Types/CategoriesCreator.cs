@@ -39,6 +39,7 @@ namespace TheEyeTether.Types
                     categorySettingCategories[categorySubTypeIndexes[dataPoint.SubTypeName]]
                             .ActiveTimePeriods.Add(dataPoint.TimestampRange);
                 }
+                
                 categories[categorySetting] = categorySettingCategories;
             }
 
