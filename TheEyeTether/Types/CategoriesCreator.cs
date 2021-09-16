@@ -23,8 +23,22 @@ namespace TheEyeTether.Types
             var categories = new Dictionary<CategorySetting, List<Category>>();
             foreach(CategorySetting categorySetting in categorySettings)
             {
-                categories[categorySetting] = new List<Category>();
-                categories[categorySetting].Add(new Category(string.Empty, new List<TimestampRange>()));
+                var categoryDataPoints = dataPoints[categorySetting.Name];
+                var categorySettingCategories = new List<Category>();
+                var categorySubTypeIndexes = new Dictionary<string, int>();
+
+                foreach(DataPoint dataPoint in categoryDataPoints)
+                {
+                    if(!categorySubTypeIndexes.ContainsKey(dataPoint.SubTypeName))
+                    {
+                        categorySettingCategories.Add(new Category(string.Empty, new List<TimestampRange>()));
+                        categorySubTypeIndexes[dataPoint.SubTypeName] = categorySettingCategories.Count - 1;
+                    }
+
+                    categorySettingCategories[categorySubTypeIndexes[dataPoint.SubTypeName]]
+                            .ActiveTimePeriods.Add(dataPoint.TimestampRange);
+                }
+                categories[categorySetting] = categorySettingCategories;
             }
 
             return categories;
