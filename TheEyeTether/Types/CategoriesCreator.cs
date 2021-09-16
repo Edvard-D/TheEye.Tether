@@ -28,11 +28,10 @@ namespace TheEyeTether.Types
                     continue;
                 }
 
-                var categoryDataPoints = dataPoints[categorySetting.Name];
                 var categorySettingCategories = new List<Category>();
                 var categorySubTypeIndexes = new Dictionary<string, int>();
 
-                foreach(DataPoint dataPoint in categoryDataPoints)
+                foreach(DataPoint dataPoint in dataPoints[categorySetting.Name])
                 {
                     if(!categorySubTypeIndexes.ContainsKey(dataPoint.SubTypeName))
                     {
