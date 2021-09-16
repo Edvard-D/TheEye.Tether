@@ -142,5 +142,38 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.DoesNotContain(categorySetting, result.Keys);
         }
+
+        [Theory]
+        [InlineData(1f, 2f)]
+        [InlineData(1f, 2f, 3f)]
+        [InlineData(1f, 2f, 3f, 4f, 5f)]
+        public void Create_AddsEntryToActiveTimePeriodsForEachTimestampRange_WhenMultipleDataPointsExistWithTheSameSubTypeName(
+                params float[] timestamps)
+        {
+            var categoryName = "test1";
+            var subTypeName = "test2";
+            var categoryDataPoints = new List<DataPoint>();
+            for(int i = 0; i < timestamps.Length; i++)
+            {
+                float endTimestamp = float.MaxValue;
+                if(i + 1 < timestamps.Length)
+                {
+                    endTimestamp = timestamps[i + 1];
+                }
+
+                categoryDataPoints.Add(new DataPoint(categoryName, subTypeName,
+                        new TimestampRange(timestamps[i], endTimestamp)));
+            }
+            var dataPoints = new Dictionary<string, List<DataPoint>>()
+            {
+                { categoryName, categoryDataPoints }
+            };
+            var categorySetting = new CategorySetting(categoryName);
+            var categorySettings = new CategorySetting[] { categorySetting };
+
+            var result = CategoriesCreator.Create(dataPoints, categorySettings);
+
+            Assert.Equal(timestamps.Length, result[categorySetting][0].ActiveTimePeriods.Count);
+        }
     }
 }
