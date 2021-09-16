@@ -22,5 +22,21 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.IsType<Dictionary<CategorySetting, Category>>(result);
         }
+
+        [Fact]
+        public void Create_ThrowsInvalidOperationException_WhenPassedNullLuaTable()
+        {
+            var categorySettings = new CategorySetting[] { new CategorySetting("test") };
+
+            try
+            {
+                var result = CategoriesCreator.Create(null, categorySettings);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
+        }
     }
 }

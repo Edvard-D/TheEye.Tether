@@ -8,6 +8,12 @@ namespace TheEyeTether.Types
                 Dictionary<object, object> luaTable,
                 CategorySetting[] categorySettings)
         {
+            if(luaTable == null)
+            {
+                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
+                        nameof(luaTable)));
+            }
+
             return new Dictionary<CategorySetting, Category>();
         }
     }
