@@ -31,7 +31,8 @@ namespace TheEyeTether.Types
                 {
                     if(!categorySubTypeIndexes.ContainsKey(dataPoint.SubTypeName))
                     {
-                        categorySettingCategories.Add(new Category(string.Empty, new List<TimestampRange>()));
+                        categorySettingCategories.Add(new Category(dataPoint.SubTypeName,
+                                new List<TimestampRange>()));
                         categorySubTypeIndexes[dataPoint.SubTypeName] = categorySettingCategories.Count - 1;
                     }
 

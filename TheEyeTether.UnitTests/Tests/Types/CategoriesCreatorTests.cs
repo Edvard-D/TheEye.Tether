@@ -107,5 +107,27 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var uniqueSubTypeNames = subTypeNames.Distinct().ToList();
             Assert.Equal(uniqueSubTypeNames.Count, result[categorySetting].Count);
         }
+
+        [Fact]
+        public void Create_AssignsSubTypeNameAsCategoryIdentifier_WhenCalled()
+        {
+            var categoryName = "test1";
+            var subTypeName = "test2";
+            var dataPoints = new Dictionary<string, List<DataPoint>>()
+            {
+                {
+                    categoryName, new List<DataPoint>()
+                    {
+                        new DataPoint(categoryName, subTypeName, new TimestampRange(1f, 2f))
+                    }
+                }
+            };
+            var categorySetting = new CategorySetting(categoryName);
+            var categorySettings = new CategorySetting[] { categorySetting };
+
+            var result = CategoriesCreator.Create(dataPoints, categorySettings);
+
+            Assert.Equal(subTypeName, result[categorySetting][0].Identifier);
+        }
     }
 }
