@@ -59,8 +59,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData("test")]
         [InlineData("test1, test2")]
         [InlineData("test1, test2, test3, test4, test5")]
-        public void Create_CreatesADictionaryEntryForEachsnapshotSetting_WhenCategorySettingsArePassedAndHaveValidData(
-                params string[] categoryNames)
+        public void Create_CreatesADictionaryEntryForEachCategorySetting_WhenCategorySettingsArePassedAndHaveValidData(
         {
             var luaTable = new Dictionary<object, object>();
             var subTable = new Dictionary<object, object>()
