@@ -5,13 +5,13 @@ namespace TheEyeTether.Types
     public static class CategoriesCreator
     {
         public static Dictionary<CategorySetting, List<Category>> Create(
-                Dictionary<object, object> luaTable,
+                Dictionary<string, List<DataPoint>> dataPoints,
                 CategorySetting[] categorySettings)
         {
-            if(luaTable == null)
+            if(dataPoints == null)
             {
                 throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
-                        nameof(luaTable)));
+                        nameof(dataPoints)));
             }
 
             if(categorySettings == null)

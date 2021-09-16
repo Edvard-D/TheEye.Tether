@@ -10,21 +10,21 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Create_ReturnsADictionaryOfListsOfCategorySettingCategoryPairs_WhenPassedValidLuaTable()
         {
             var categoryName = "test1";
-            var subTableName = "test2";
-            var subTable = new Dictionary<object, object>()
+            var subTypeName = "test2";
+            var dataPoint = new DataPoint(categoryName, subTypeName, new TimestampRange(1f, 2f));
+            var dataPoints = new Dictionary<string, List<DataPoint>>()
             {
-                { subTableName, new Dictionary<object, object>() { { 1, 1f } } }
+                { categoryName, new List<DataPoint>() { dataPoint}}
             };
-            var luaTable = new Dictionary<object, object>() { { categoryName, subTable } };
             var categorySettings = new CategorySetting[] { new CategorySetting(categoryName) };
 
-            var result = CategoriesCreator.Create(luaTable, categorySettings);
+            var result = CategoriesCreator.Create(dataPoints, categorySettings);
 
             Assert.IsType<Dictionary<CategorySetting, List<Category>>>(result);
         }
 
         [Fact]
-        public void Create_ThrowsInvalidOperationException_WhenPassedNullLuaTable()
+        public void Create_ThrowsInvalidOperationException_WhenPassedNullDataPoints()
         {
             var categorySettings = new CategorySetting[] { new CategorySetting("test") };
 
@@ -42,11 +42,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Fact]
         public void Create_ThrowsInvalidOperationException_WhenPassedNullCategorySettings()
         {
-            var luaTable = new Dictionary<object, object>();
+            var dataPoints = new Dictionary<string, List<DataPoint>>();
 
             try
             {
-                var result = CategoriesCreator.Create(luaTable, null);
+                var result = CategoriesCreator.Create(dataPoints, null);
                 Assert.True(false);
             }
             catch(System.Exception ex)
@@ -62,20 +62,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Create_CreatesADictionaryEntryForEachCategorySetting_WhenCategorySettingsArePassedAndHaveValidData(
                 params string[] categoryTypeNames)
         {
-            var luaTable = new Dictionary<object, object>();
-            var subTable = new Dictionary<object, object>()
-            {
-                { "test", new Dictionary<object, object>() { { 1, 1f } } }
-            };
+            var dataPoints = new Dictionary<string, List<DataPoint>>();
             var categorySettings = new CategorySetting[categoryTypeNames.Length];
             for(int i = 0; i < categoryTypeNames.Length; i++)
             {
                 var categoryTypeName = categoryTypeNames[i];
-                luaTable[categoryTypeName] = subTable;
+                dataPoints[categoryTypeName] = new List<DataPoint>()
+                {
+                    new DataPoint(categoryTypeName, "test", new TimestampRange(1f, 2f))
+                };
                 categorySettings[i] = new CategorySetting(categoryTypeName);
             }
 
-            var result = CategoriesCreator.Create(luaTable, categorySettings);
+            var result = CategoriesCreator.Create(dataPoints, categorySettings);
 
             Assert.Equal(categoryTypeNames.Length, result.Keys.Count);
         }
