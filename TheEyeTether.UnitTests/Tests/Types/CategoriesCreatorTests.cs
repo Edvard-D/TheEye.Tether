@@ -17,7 +17,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { categoryName, new List<DataPoint>() { dataPoint}}
             };
-            var categorySettings = new CategorySetting[] { new CategorySetting(categoryName, null) };
+            var categorySettings = new Dictionary<string, CategorySetting>
+            {
+                { categoryName, new CategorySetting(categoryName, null) }
+            };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
 
@@ -27,7 +30,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Fact]
         public void Create_ThrowsInvalidOperationException_WhenPassedNullDataPoints()
         {
-            var categorySettings = new CategorySetting[] { new CategorySetting("test", null) };
+            var categoryName = "test";
+            var categorySettings = new Dictionary<string, CategorySetting>
+            {
+                { categoryName, new CategorySetting(categoryName, null) }
+            };
 
             try
             {
@@ -64,7 +71,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 params string[] categoryTypeNames)
         {
             var dataPoints = new Dictionary<string, List<DataPoint>>();
-            var categorySettings = new CategorySetting[categoryTypeNames.Length];
+            var categorySettings = new Dictionary<string, CategorySetting>();
             for(int i = 0; i < categoryTypeNames.Length; i++)
             {
                 var categoryTypeName = categoryTypeNames[i];
@@ -72,7 +79,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 {
                     new DataPoint(categoryTypeName, "test", new TimestampRange(1f, 2f))
                 };
-                categorySettings[i] = new CategorySetting(categoryTypeName, null);
+                categorySettings[categoryTypeNames[i]] = new CategorySetting(categoryTypeName, null);
             }
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
@@ -100,7 +107,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { categoryName, categoryDataPoints }
             };
             var categorySetting = new CategorySetting(categoryName, null);
-            var categorySettings = new CategorySetting[] { categorySetting };
+            var categorySettings = new Dictionary<string, CategorySetting>
+            {
+                { categoryName, categorySetting }
+            };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
 
@@ -123,7 +133,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 }
             };
             var categorySetting = new CategorySetting(categoryName, null);
-            var categorySettings = new CategorySetting[] { categorySetting };
+            var categorySettings = new Dictionary<string, CategorySetting>
+            {
+                { categoryName, categorySetting }
+            };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
 
@@ -136,7 +149,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var categoryName = "test";
             var dataPoints = new Dictionary<string, List<DataPoint>>();
             var categorySetting = new CategorySetting(categoryName, null);
-            var categorySettings = new CategorySetting[] { categorySetting };
+            var categorySettings = new Dictionary<string, CategorySetting>
+            {
+                { categoryName, categorySetting }
+            };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
 
@@ -169,7 +185,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { categoryName, categoryDataPoints }
             };
             var categorySetting = new CategorySetting(categoryName, null);
-            var categorySettings = new CategorySetting[] { categorySetting };
+            var categorySettings = new Dictionary<string, CategorySetting>
+            {
+                { categoryName, categorySetting }
+            };
 
             var result = CategoriesCreator.Create(dataPoints, categorySettings);
 

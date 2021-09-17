@@ -6,7 +6,7 @@ namespace TheEyeTether.Types
     {
         public static Dictionary<CategorySetting, List<Category>> Create(
                 Dictionary<string, List<DataPoint>> dataPoints,
-                CategorySetting[] categorySettings)
+                Dictionary<string, CategorySetting> categorySettings)
         {
             if(dataPoints == null)
             {
@@ -21,14 +21,14 @@ namespace TheEyeTether.Types
             }
 
             var categories = new Dictionary<CategorySetting, List<Category>>();
-            foreach(CategorySetting categorySetting in categorySettings)
+            foreach(KeyValuePair<string, CategorySetting> keyValuePair in categorySettings)
             {
-                if(!dataPoints.ContainsKey(categorySetting.Name))
+                if(!dataPoints.ContainsKey(keyValuePair.Value.Name))
                 {
                     continue;
                 }
 
-                categories[categorySetting] = CreateCategoriesForCategorySetting(categorySetting,
+                categories[keyValuePair.Value] = CreateCategoriesForCategorySetting(keyValuePair.Value,
                         dataPoints);
             }
 
