@@ -396,7 +396,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { "test_true", new Dictionary<object, object>() { { 1, timestamp } } }
             };
-            var tableName = "test";
+            var tableName = "test1";
+            var categorySettingName = "test2";
             var luaTable = new Dictionary<object, object>()
             {
                 { tableName, subTable }
@@ -405,13 +406,16 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 { tableName, new SnapshotSetting(tableName, null) }
             };
-            var categorySetting = new CategorySetting("test", snapshotSettings);
+            var categorySettings = new Dictionary<string, CategorySetting>()
+            {
+                { categorySettingName, new CategorySetting(categorySettingName, snapshotSettings) }
+            };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
                 { tableName, new DataPointSetting() }
             };
 
-            var result = DataPointsCreator.Create(luaTable, dataPointSettings, categorySetting);
+            var result = DataPointsCreator.Create(luaTable, dataPointSettings, categorySettings);
 
             var matchingDataPoint = result[tableName][0];
             Assert.Equal(matchingDataPoint.TimestampRange.Start, matchingDataPoint.TimestampRange.End);

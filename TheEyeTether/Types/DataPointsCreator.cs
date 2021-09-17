@@ -24,7 +24,7 @@ namespace TheEyeTether.Types
         public static Dictionary<string, List<DataPoint>> Create(
                 Dictionary<object, object> luaTable,
                 Dictionary<string, DataPointSetting> dataPointSettings,
-                CategorySetting categorySetting = null)
+                Dictionary<string, CategorySetting> categorySettings = null)
         {
             if(luaTable == null)
             {
@@ -43,7 +43,7 @@ namespace TheEyeTether.Types
             {
                 var subTable = keyValuePair.Value as Dictionary<object, object>;
                 dataPoints[(string)keyValuePair.Key] = ConvertTableToDataPoints(subTable,
-                        (string)keyValuePair.Key, categorySetting, dataPointSettings);
+                        (string)keyValuePair.Key, categorySettings, dataPointSettings);
             }
 
             return dataPoints;
@@ -52,11 +52,11 @@ namespace TheEyeTether.Types
         private static List<DataPoint> ConvertTableToDataPoints(
                 Dictionary<object, object> table,
                 string typeName,
-                CategorySetting categorySetting,
+                Dictionary<string, CategorySetting> categorySettings,
                 Dictionary<string, DataPointSetting> dataPointSettings)
         {
-            var isSnapshotType = categorySetting != null
-                    && categorySetting.SnapshotSettings.ContainsKey(typeName);
+            var isSnapshotType = categorySettings != null
+                    && categorySettings.Any(kvp => kvp.Value.SnapshotSettings.ContainsKey(typeName));
             var dataPointSetting = dataPointSettings[typeName];
             var timestampDatas = GetTimestampDatas(table, dataPointSetting);
             var dataPoints = new List<DataPoint>();
