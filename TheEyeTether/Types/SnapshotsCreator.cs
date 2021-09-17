@@ -5,7 +5,7 @@ namespace TheEyeTether.Types
 {
     public static class SnapshotsCreator
     {
-        public static Dictionary<CategorySetting, Dictionary<SnapshotSetting, List<Snapshot>>> Create(
+        public static Dictionary<Category, Dictionary<SnapshotSetting, List<Snapshot>>> Create(
                 Dictionary<object, object> luaTable,
                 Dictionary<string, CategorySetting> categorySettings,
                 Dictionary<string, DataPointSetting> dataPointSettings)
@@ -22,31 +22,35 @@ namespace TheEyeTether.Types
                         nameof(categorySettings)));
             }
             
-            var snapshots = new Dictionary<CategorySetting, Dictionary<SnapshotSetting, List<Snapshot>>>();
+            var snapshots = new Dictionary<Category, Dictionary<SnapshotSetting, List<Snapshot>>>();
 
-            foreach(KeyValuePair<string, CategorySetting> categoryKeyValuePair in categorySettings)
+            var dataPoints = DataPointsCreator.Create(luaTable, dataPointSettings, categorySettings);
+            var categories = CategoriesCreator.Create(dataPoints, categorySettings);
+            foreach(KeyValuePair<CategorySetting, List<Category>> keyValuePair in categories)
             {
-                var categorySettingSnapshots = CreateSnapshotsForCategory(categoryKeyValuePair.Value, luaTable,
-                        dataPointSettings);
-                
-                if(categorySettingSnapshots.Count == 0)
+                foreach(Category category in keyValuePair.Value)
                 {
-                    continue;
-                }
+                    var categorySnapshots = CreateSnapshotsForCategory(luaTable, dataPoints,
+                            keyValuePair.Key);
+                    
+                    if(categorySnapshots.Count == 0)
+                    {
+                        continue;
+                    }
 
-                snapshots[categoryKeyValuePair.Value] = categorySettingSnapshots;
+                    snapshots[category] = categorySnapshots;
+                }
             }
 
             return snapshots;
         }
         
         private static Dictionary<SnapshotSetting, List<Snapshot>> CreateSnapshotsForCategory(
-                CategorySetting categorySetting,
                 Dictionary<object, object> luaTable,
-                Dictionary<string, DataPointSetting> dataPointSettings)
+                Dictionary<string, List<DataPoint>> dataPoints,
+                CategorySetting categorySetting)
         {
-            var categorySettingSnapshots = new Dictionary<SnapshotSetting, List<Snapshot>>();
-            var dataPoints = DataPointsCreator.Create(luaTable, dataPointSettings, categorySetting);
+            var categorySnapshots = new Dictionary<SnapshotSetting, List<Snapshot>>();
 
             foreach(KeyValuePair<string, SnapshotSetting> settingKeyValuePair in
                     categorySetting.SnapshotSettings)
@@ -73,10 +77,10 @@ namespace TheEyeTether.Types
                     continue;
                 }
 
-                categorySettingSnapshots[settingKeyValuePair.Value] = snapshotSettingSnapshots;
+                categorySnapshots[settingKeyValuePair.Value] = snapshotSettingSnapshots;
             }
 
-            return categorySettingSnapshots;
+            return categorySnapshots;
         }
 
         private static List<Snapshot> CreateSnapshotsForSnapshotSetting(
