@@ -144,6 +144,31 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
+        public void Create_AssignsCategorySettingAsCategorySetting_WhenCalled()
+        {
+            var categoryName = "test1";
+            var subTypeName = "test2";
+            var dataPoints = new Dictionary<string, List<DataPoint>>()
+            {
+                {
+                    categoryName, new List<DataPoint>()
+                    {
+                        new DataPoint(categoryName, subTypeName, new TimestampRange(1f, 2f))
+                    }
+                }
+            };
+            var categorySetting = new CategorySetting(categoryName, null);
+            var categorySettings = new Dictionary<string, CategorySetting>
+            {
+                { categoryName, categorySetting }
+            };
+
+            var result = CategoriesCreator.Create(dataPoints, categorySettings);
+
+            Assert.Equal(categorySetting, result[categorySetting][0].Setting);
+        }
+
+        [Fact]
         public void Create_DoesNotCreateDictionaryEntry_WhenCategoryHasNoData()
         {
             var categoryName = "test";

@@ -292,13 +292,15 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
 
-            var expectedCategory = new Category(categorySubTableName, new List<TimestampRange>()
-            {
-                new TimestampRange(categorySubTableTimestamp, float.MaxValue)
-            });
+            var expectedCategory = new Category(categorySubTableName, categorySetting,
+                    new List<TimestampRange>()
+                    {
+                        new TimestampRange(categorySubTableTimestamp, float.MaxValue)
+                    });
             var key = result.Keys.ToList()[0];
             Assert.Contains(expectedCategory.ActiveTimePeriods[0], key.ActiveTimePeriods);
             Assert.Equal(expectedCategory.Identifier, key.Identifier);
+            Assert.Equal(expectedCategory.Setting, key.Setting);
         }
 
         [Fact]

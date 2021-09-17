@@ -6,9 +6,10 @@ namespace TheEyeTether.Types
     {
         public List<TimestampRange> ActiveTimePeriods;
         public string Identifier;
+        public CategorySetting Setting;
 
 
-        public Category(string identifier, List<TimestampRange> activeTimePeriods) =>
-                (ActiveTimePeriods, Identifier) = (activeTimePeriods, identifier);
+        public Category(string identifier, CategorySetting setting, List<TimestampRange> activeTimePeriods) =>
+                (ActiveTimePeriods, Identifier, Setting) = (activeTimePeriods, identifier, setting);
     }
 }
