@@ -231,7 +231,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Convert_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-            var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
+            var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+                    AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
@@ -282,7 +283,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Convert_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-            var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
+            var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+                    AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
