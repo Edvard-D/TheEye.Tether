@@ -30,7 +30,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
             PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
                     stubCurrentDomainBaseDirectoryGetter);
@@ -46,7 +47,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>() {});
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
             PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
                     stubCurrentDomainBaseDirectoryGetter);
@@ -63,7 +65,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             });
             var stubDivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
             PendingDataConverter.Convert(mockFileSystem, stubDivesGetter, stubOSPlatformChecker,
                     stubCurrentDomainBaseDirectoryGetter);
@@ -80,7 +83,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.OSX);
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
             PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
                     stubCurrentDomainBaseDirectoryGetter);
@@ -101,7 +105,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
             PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
                     stubCurrentDomainBaseDirectoryGetter);
@@ -131,7 +136,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
             PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
                     stubCurrentDomainBaseDirectoryGetter);
@@ -161,7 +167,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(currentDomainBaseDirectory);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
             PendingDataConverter.Convert(mockFileSystem, stubDrivesGetter, stubOSPlatformChecker,
                     stubCurrentDomainBaseDirectoryGetter);
