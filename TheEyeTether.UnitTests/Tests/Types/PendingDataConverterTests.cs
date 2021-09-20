@@ -14,7 +14,15 @@ namespace TheEyeTether.UnitTests.Tests.Types
     {
         private const string AccountName = "VARTIB";
         private const string CharacterName = "Alaror";
+        private const string CategorySettingName = "PLAYER_SPECIALIZATION";
+        private const string DataPointTypeName = "PLAYER_HAS_TARGET";
+        private const string LuaFileText =  "TheEyeRecordedData = { "
+                + "[\""+CategorySettingName+"\"] = { [\"100\"] = { 10000.001 } }, "
+                + "[\""+SnapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
+                + "[\""+DataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
+                + "}";
         private const string ServerName = "Moonguard";
+        private const string SnapshotSettingName = "PLAYER_SPELLCAST_START";
 
 
         [Fact]
@@ -24,22 +32,14 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var categorySettingName = "PLAYER_SPECIALIZATION";
-            var snapshotSettingName = "PLAYER_SPELLCAST_START";
-            var dataPointTypeName = "PLAYER_HAS_TARGET";
-            var luaFileText = "TheEyeRecordedData = { "
-                    + "[\""+categorySettingName+"\"] = { [\"100\"] = { 10000.001 } }, "
-                    + "[\""+snapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
-                    + "[\""+dataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
-                    + "}";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
-                { pendingDataFilePath, luaFileText}
+                { pendingDataFilePath, LuaFileText}
             });
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
-                { pendingDataFilePath, luaFileText },
+                { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) }
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
@@ -48,19 +48,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     currentDomainBaseDirectory);
             var categorySettings = new Dictionary<string, CategorySetting>()
             {
-                { categorySettingName, new CategorySetting(categorySettingName,
+                { CategorySettingName, new CategorySetting(CategorySettingName,
                         new Dictionary<string, SnapshotSetting>()
                         {
-                            { snapshotSettingName, new SnapshotSetting(snapshotSettingName,
-                                    new string[] { dataPointTypeName }) }
+                            { SnapshotSettingName, new SnapshotSetting(SnapshotSettingName,
+                                    new string[] { DataPointTypeName }) }
                         })
                 }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
-                { categorySettingName, new DataPointSetting() },
-                { snapshotSettingName, new DataPointSetting() },
-                { dataPointTypeName, new DataPointSetting("false", 0) }
+                { CategorySettingName, new DataPointSetting() },
+                { SnapshotSettingName, new DataPointSetting() },
+                { DataPointTypeName, new DataPointSetting("false", 0) }
             };
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -94,22 +94,14 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var categorySettingName = "PLAYER_SPECIALIZATION";
-            var snapshotSettingName = "PLAYER_SPELLCAST_START";
-            var dataPointTypeName = "PLAYER_HAS_TARGET";
-            var luaFileText = "TheEyeRecordedData = { "
-                    + "[\""+categorySettingName+"\"] = { [\"100\"] = { 10000.001 } }, "
-                    + "[\""+snapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
-                    + "[\""+dataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
-                    + "}";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
-                { pendingDataFilePath, luaFileText}
+                { pendingDataFilePath, LuaFileText}
             });
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
-                { pendingDataFilePath, luaFileText },
+                { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) }
             });
             var stubDivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
@@ -118,19 +110,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     currentDomainBaseDirectory);
             var categorySettings = new Dictionary<string, CategorySetting>()
             {
-                { categorySettingName, new CategorySetting(categorySettingName,
+                { CategorySettingName, new CategorySetting(CategorySettingName,
                         new Dictionary<string, SnapshotSetting>()
                         {
-                            { snapshotSettingName, new SnapshotSetting(snapshotSettingName,
-                                    new string[] { dataPointTypeName }) }
+                            { SnapshotSettingName, new SnapshotSetting(SnapshotSettingName,
+                                    new string[] { DataPointTypeName }) }
                         })
                 }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
-                { categorySettingName, new DataPointSetting() },
-                { snapshotSettingName, new DataPointSetting() },
-                { dataPointTypeName, new DataPointSetting("false", 0) }
+                { CategorySettingName, new DataPointSetting() },
+                { SnapshotSettingName, new DataPointSetting() },
+                { DataPointTypeName, new DataPointSetting("false", 0) }
             };
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -146,22 +138,14 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var pendingDataFilePath = string.Format(@"C:\Applications\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var categorySettingName = "PLAYER_SPECIALIZATION";
-            var snapshotSettingName = "PLAYER_SPELLCAST_START";
-            var dataPointTypeName = "PLAYER_HAS_TARGET";
-            var luaFileText = "TheEyeRecordedData = { "
-                    + "[\""+categorySettingName+"\"] = { [\"100\"] = { 10000.001 } }, "
-                    + "[\""+snapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
-                    + "[\""+dataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
-                    + "}";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
-                { pendingDataFilePath, luaFileText}
+                { pendingDataFilePath, LuaFileText}
             });
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
-                { pendingDataFilePath, luaFileText },
+                { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) }
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
@@ -170,19 +154,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     currentDomainBaseDirectory);
             var categorySettings = new Dictionary<string, CategorySetting>()
             {
-                { categorySettingName, new CategorySetting(categorySettingName,
+                { CategorySettingName, new CategorySetting(CategorySettingName,
                         new Dictionary<string, SnapshotSetting>()
                         {
-                            { snapshotSettingName, new SnapshotSetting(snapshotSettingName,
-                                    new string[] { dataPointTypeName }) }
+                            { SnapshotSettingName, new SnapshotSetting(SnapshotSettingName,
+                                    new string[] { DataPointTypeName }) }
                         })
                 }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
-                { categorySettingName, new DataPointSetting() },
-                { snapshotSettingName, new DataPointSetting() },
-                { dataPointTypeName, new DataPointSetting("false", 0) }
+                { CategorySettingName, new DataPointSetting() },
+                { SnapshotSettingName, new DataPointSetting() },
+                { DataPointTypeName, new DataPointSetting("false", 0) }
             };
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -198,22 +182,14 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var categorySettingName = "PLAYER_SPECIALIZATION";
-            var snapshotSettingName = "PLAYER_SPELLCAST_START";
-            var dataPointTypeName = "PLAYER_HAS_TARGET";
-            var luaFileText = "TheEyeRecordedData = { "
-                    + "[\""+categorySettingName+"\"] = { [\"100\"] = { 10000.001 } }, "
-                    + "[\""+snapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
-                    + "[\""+dataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
-                    + "}";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
-                { pendingDataFilePath, luaFileText}
+                { pendingDataFilePath, LuaFileText}
             });
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
-                { pendingDataFilePath, luaFileText },
+                { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
@@ -222,19 +198,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     currentDomainBaseDirectory);
             var categorySettings = new Dictionary<string, CategorySetting>()
             {
-                { categorySettingName, new CategorySetting(categorySettingName,
+                { CategorySettingName, new CategorySetting(CategorySettingName,
                         new Dictionary<string, SnapshotSetting>()
                         {
-                            { snapshotSettingName, new SnapshotSetting(snapshotSettingName,
-                                    new string[] { dataPointTypeName }) }
+                            { SnapshotSettingName, new SnapshotSetting(SnapshotSettingName,
+                                    new string[] { DataPointTypeName }) }
                         })
                 }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
-                { categorySettingName, new DataPointSetting() },
-                { snapshotSettingName, new DataPointSetting() },
-                { dataPointTypeName, new DataPointSetting("false", 0) }
+                { CategorySettingName, new DataPointSetting() },
+                { SnapshotSettingName, new DataPointSetting() },
+                { DataPointTypeName, new DataPointSetting("false", 0) }
             };
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -257,22 +233,14 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var categorySettingName = "PLAYER_SPECIALIZATION";
-            var snapshotSettingName = "PLAYER_SPELLCAST_START";
-            var dataPointTypeName = "PLAYER_HAS_TARGET";
-            var luaFileText = "TheEyeRecordedData = { "
-                    + "[\""+categorySettingName+"\"] = { [\"100\"] = { 10000.001 } }, "
-                    + "[\""+snapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
-                    + "[\""+dataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
-                    + "}";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
-                { pendingDataFilePath, luaFileText}
+                { pendingDataFilePath, LuaFileText }
             });
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
-                { pendingDataFilePath, luaFileText },
+                { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
@@ -281,19 +249,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     currentDomainBaseDirectory);
             var categorySettings = new Dictionary<string, CategorySetting>()
             {
-                { categorySettingName, new CategorySetting(categorySettingName,
+                { CategorySettingName, new CategorySetting(CategorySettingName,
                         new Dictionary<string, SnapshotSetting>()
                         {
-                            { snapshotSettingName, new SnapshotSetting(snapshotSettingName,
-                                    new string[] { dataPointTypeName }) }
+                            { SnapshotSettingName, new SnapshotSetting(SnapshotSettingName,
+                                    new string[] { DataPointTypeName }) }
                         })
                 }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
-                { categorySettingName, new DataPointSetting() },
-                { snapshotSettingName, new DataPointSetting() },
-                { dataPointTypeName, new DataPointSetting("false", 0) }
+                { CategorySettingName, new DataPointSetting() },
+                { SnapshotSettingName, new DataPointSetting() },
+                { DataPointTypeName, new DataPointSetting("false", 0) }
             };
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -316,22 +284,14 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
             var pendingDataFilePath = @"C:\WorldOfWarcraft\_retail_\WTF\Account\AccountName\ServerName\CharacterName\SavedVariables\TheEyeRecorder.lua";
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var categorySettingName = "PLAYER_SPECIALIZATION";
-            var snapshotSettingName = "PLAYER_SPELLCAST_START";
-            var dataPointTypeName = "PLAYER_HAS_TARGET";
-            var luaFileText = "TheEyeRecordedData = { "
-                    + "[\""+categorySettingName+"\"] = { [\"100\"] = { 10000.001 } }, "
-                    + "[\""+snapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
-                    + "[\""+dataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
-                    + "}";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
-                { pendingDataFilePath, luaFileText}
+                { pendingDataFilePath, LuaFileText}
             });
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { programPath, new MockFileData(string.Empty) },
-                { pendingDataFilePath, luaFileText },
+                { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
             var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
@@ -340,19 +300,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     currentDomainBaseDirectory);
             var categorySettings = new Dictionary<string, CategorySetting>()
             {
-                { categorySettingName, new CategorySetting(categorySettingName,
+                { CategorySettingName, new CategorySetting(CategorySettingName,
                         new Dictionary<string, SnapshotSetting>()
                         {
-                            { snapshotSettingName, new SnapshotSetting(snapshotSettingName,
-                                    new string[] { dataPointTypeName }) }
+                            { SnapshotSettingName, new SnapshotSetting(SnapshotSettingName,
+                                    new string[] { DataPointTypeName }) }
                         })
                 }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
-                { categorySettingName, new DataPointSetting() },
-                { snapshotSettingName, new DataPointSetting() },
-                { dataPointTypeName, new DataPointSetting("false", 0) }
+                { CategorySettingName, new DataPointSetting() },
+                { SnapshotSettingName, new DataPointSetting() },
+                { DataPointTypeName, new DataPointSetting("false", 0) }
             };
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
