@@ -67,6 +67,7 @@ namespace TheEyeTether.Types
                 "Data",
                 "Snapshots",
                 category.Setting.Name,
+                category.Identifier,
                 "test.txt"
             };
 

@@ -17,12 +17,13 @@ namespace TheEyeTether.UnitTests.Tests.Types
         private const string CategorySettingName = "PLAYER_SPECIALIZATION";
         private const string DataPointTypeName = "PLAYER_HAS_TARGET";
         private const string LuaFileText =  "TheEyeRecordedData = { "
-                + "[\""+CategorySettingName+"\"] = { [\"100\"] = { 10000.001 } }, "
+                + "[\""+CategorySettingName+"\"] = { [\""+SpecializationId+"\"] = { 10000.001 } }, "
                 + "[\""+SnapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
                 + "[\""+DataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
                 + "}";
         private const string ServerName = "Moonguard";
         private const string SnapshotSettingName = "PLAYER_SPELLCAST_START";
+        private const string SpecializationId = "100";
 
 
         [Fact]
@@ -228,6 +229,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData("Data")]
         [InlineData("Snapshots")]
         [InlineData("PLAYER_SPECIALIZATION")]
+        [InlineData(SpecializationId)]
         public void Convert_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
@@ -280,6 +282,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData(@"C:\TheEyeTether\Data")]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots")]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots\PLAYER_SPECIALIZATION")]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\PLAYER_SPECIALIZATION\"+SpecializationId)]
         public void Convert_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
