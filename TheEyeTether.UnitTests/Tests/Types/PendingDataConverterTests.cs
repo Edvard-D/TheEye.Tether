@@ -228,7 +228,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData("TheEyeTether")]
         [InlineData("Data")]
         [InlineData("Snapshots")]
-        [InlineData("PLAYER_SPECIALIZATION")]
+        [InlineData(CategorySettingName)]
         [InlineData(SpecializationId)]
         public void Convert_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
@@ -281,8 +281,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData(@"C:\TheEyeTether")]
         [InlineData(@"C:\TheEyeTether\Data")]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots")]
-        [InlineData(@"C:\TheEyeTether\Data\Snapshots\PLAYER_SPECIALIZATION")]
-        [InlineData(@"C:\TheEyeTether\Data\Snapshots\PLAYER_SPECIALIZATION\"+SpecializationId)]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\"+CategorySettingName)]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\"+CategorySettingName+@"\"+SpecializationId)]
         public void Convert_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
