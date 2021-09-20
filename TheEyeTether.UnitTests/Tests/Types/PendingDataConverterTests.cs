@@ -16,6 +16,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         private const string CharacterName = "Alaror";
         private const string CategorySettingName = "PLAYER_SPECIALIZATION";
         private const string DataPointTypeName = "PLAYER_HAS_TARGET";
+        private const string DateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
+        private const string FileSaveDateTime = "2021_09_20__12_00_00";
         private const string LuaFileText =  "TheEyeRecordedData = { "
                 + "[\""+CategorySettingName+"\"] = { [\""+SpecializationId+"\"] = { 10000.001 } }, "
                 + "[\""+SnapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
@@ -63,9 +65,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+                    null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
-                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter);
+                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter,
+                    stubClock);
 
             var allFiles = mockFileSystem.AllFiles as string[];
             Assert.Equal(3, allFiles.Length);
@@ -83,9 +88,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     currentDomainBaseDirectory);
             var categorySettings = new Dictionary<string, CategorySetting>();
             var dataPointSettings = new Dictionary<string, DataPointSetting>();
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+                    null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
-                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter);
+                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter,
+                    stubClock);
         }
 
         [Fact]
@@ -125,9 +133,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+                    null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
-                    stubDivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter);
+                    stubDivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter,
+                    stubClock);
 
             Assert.True(true);
         }
@@ -169,9 +180,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+                    null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
-                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter);
+                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter,
+                    stubClock);
 
             Assert.True(true);
         }
@@ -213,9 +227,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+                    null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
-                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter);
+                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter,
+                    stubClock);
 
             var files = mockFileSystem.AllFiles as string[];
             var createdFilePath = files.ToList()
@@ -230,6 +247,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData("Snapshots")]
         [InlineData(CategorySettingName)]
         [InlineData(SpecializationId)]
+        [InlineData(FileSaveDateTime+".txt")]
         public void Convert_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
@@ -266,9 +284,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+                    null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
-                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter);
+                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter,
+                    stubClock);
             
             var files = mockFileSystem.AllFiles as string[];
             var createdFilePath = files.ToList()
@@ -319,9 +340,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+                    null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
-                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter);
+                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter,
+                    stubClock);
             
             var directories = mockFileSystem.AllDirectories as string[];
             Assert.Contains(requiredValue, directories);

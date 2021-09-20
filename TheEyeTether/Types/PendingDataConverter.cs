@@ -12,6 +12,7 @@ namespace TheEyeTether.Types
         private const int CharacterNameElementOffset = 3;
         private const string FileName = "TheEyeRecorder.lua";
         private const string LuaTableName = "TheEyeRecordedData";
+        private const string OutputFilePathDateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
         private const string ProgramName = "Wow";
         private const string RequiredDirectories = @"WorldOfWarcraft\_retail_\";
         private const int ServerNameElementOffset = 4;
@@ -24,7 +25,8 @@ namespace TheEyeTether.Types
                 ILua lua,
                 IDrivesGetter drivesGetter,
                 IOSPlatformChecker osPlatformChecker,
-                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
+                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter,
+                IClock clock)
         {
             var programPath = ProgramPathLocater.LocateProgramPath(ProgramName, RequiredDirectories,
                     fileSystem, drivesGetter, osPlatformChecker);
@@ -47,7 +49,7 @@ namespace TheEyeTether.Types
                 foreach(KeyValuePair<Category, Dictionary<SnapshotSetting, List<Snapshot>>> keyValuePair in snapshots)
                 {
                     var outputFilePath = CreateOutputFilePath(filePath, keyValuePair.Key, fileSystem,
-                            currentDomainBaseDirectoryGetter);
+                            currentDomainBaseDirectoryGetter, clock);
                     fileSystem.File.Create(outputFilePath);
                 }
             }
@@ -57,10 +59,12 @@ namespace TheEyeTether.Types
                 string inputFilePath,
                 Category category,
                 IFileSystem fileSystem,
-                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
+                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter,
+                IClock clock)
         {
             var inputFilePathElements = inputFilePath.Split(@"/\".ToCharArray());
-
+            var now = clock.Now.ToString(OutputFilePathDateTimeFormat);
+            
             var outputFilePathParts = new string[]
             {
                 currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory(),
@@ -68,7 +72,7 @@ namespace TheEyeTether.Types
                 "Snapshots",
                 category.Setting.Name,
                 category.Identifier,
-                "test.txt"
+                now + ".txt"
             };
 
             var outputFilePath = Path.Combine(outputFilePathParts);
