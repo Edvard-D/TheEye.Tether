@@ -125,13 +125,13 @@ namespace TheEyeTether.Types
             foreach(KeyValuePair<object, object> keyValuePair in timestamps)
             {
                 timestampDatas.Add(new TimestampData(subTypeName, endMarkerSubTypeName,
-                        (float)keyValuePair.Value));
+                        (double)keyValuePair.Value));
             }
 
             return timestampDatas;
         }
 
-        private static float GetEndTimestamp(
+        private static double GetEndTimestamp(
                 TimestampData comparisonTimestampData,
                 List<TimestampData> timestampDatas,
                 DataPointSetting dataPointSetting,
@@ -144,7 +144,7 @@ namespace TheEyeTether.Types
 
             if(timestampDatas.Count == 0)
             {
-                return float.MaxValue;
+                return double.MaxValue;
             }
 
             if(dataPointSetting.EndMarker == null || dataPointSetting.EndMarker == string.Empty)
@@ -165,7 +165,7 @@ namespace TheEyeTether.Types
                 }
             }
 
-            return float.MaxValue;
+            return double.MaxValue;
         }
 
 
@@ -173,10 +173,10 @@ namespace TheEyeTether.Types
         {
             public string EndMarkerSubTypeName;
             public string SubTypeName;
-            public float Timestamp;
+            public double Timestamp;
 
 
-            public TimestampData(string subTypeName, string endMarkerSubTypeName, float timestamp) => 
+            public TimestampData(string subTypeName, string endMarkerSubTypeName, double timestamp) => 
                 (EndMarkerSubTypeName, SubTypeName, Timestamp) = (endMarkerSubTypeName, subTypeName, timestamp);
         }
     }

@@ -13,7 +13,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var tableName = "test";
             var luaTable = new Dictionary<object, object>()
             {
-                { tableName, new Dictionary<object, object>() { { 1, 1f } } }
+                { tableName, new Dictionary<object, object>() { { 1, 1d } } }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
@@ -71,7 +71,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var dataPointSettings = new Dictionary<string, DataPointSetting>();
             foreach(string tableName in tableNames)
             {
-                luaTable[tableName] = new Dictionary<object, object>() { { 1, 1f } };
+                luaTable[tableName] = new Dictionary<object, object>() { { 1, 1d } };
                 dataPointSettings[tableName] = new DataPointSetting();
             }
 
@@ -86,7 +86,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var tableName = "test";
             var luaTable = new Dictionary<object, object>()
             {
-                { tableName, new Dictionary<object, object>() { { 1, 1f } } }
+                { tableName, new Dictionary<object, object>() { { 1, 1d } } }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
@@ -99,11 +99,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Theory]
-        [InlineData(1f)]
-        [InlineData(1f, 2f)]
-        [InlineData(1f, 2f, 3f, 4f, 5f)]
+        [InlineData(1d)]
+        [InlineData(1d, 2d)]
+        [InlineData(1d, 2d, 3d, 4d, 5d)]
         public void Create_ReturnsADataPointForEachDataEntry_WhenEntriesAreNotNested(
-                params float[] timestamps)
+                params double[] timestamps)
         {
             var subTable = new Dictionary<object, object>();
             for(int i = 0; i < timestamps.Length; i++)
@@ -126,11 +126,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Theory]
-        [InlineData(1f)]
-        [InlineData(1f, 2f)]
-        [InlineData(1f, 2f, 3f, 4f, 5f)]
+        [InlineData(1d)]
+        [InlineData(1d, 2d)]
+        [InlineData(1d, 2d, 3d, 4d, 5d)]
         public void Create_ReturnsADataPointForEachDataEntry_WhenEntriesAreNested(
-                params float[] timestamps)
+                params double[] timestamps)
         {
             var subTable = new Dictionary<object, object>();
             for(int i = 0; i < timestamps.Length; i++)
@@ -159,7 +159,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var tableName = "test";
             var luaTable = new Dictionary<object, object>()
             {
-                { tableName, new Dictionary<object, object>() { { 1, 1f } } }
+                { tableName, new Dictionary<object, object>() { { 1, 1d } } }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
@@ -177,7 +177,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var tableName = "test";
             var luaTable = new Dictionary<object, object>()
             {
-                { tableName, new Dictionary<object, object>() { { 1, 1f } } }
+                { tableName, new Dictionary<object, object>() { { 1, 1d } } }
             };
             var dataPointSettings = new Dictionary<string, DataPointSetting>()
             {
@@ -194,7 +194,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var tableName = "test1";
             var subTableName = "test2";
-            var subTable = new Dictionary<object, object>() { { 1, 1f } };
+            var subTable = new Dictionary<object, object>() { { 1, 1d } };
             var luaTable = new Dictionary<object, object>()
             {
                 { tableName, new Dictionary<object, object>() { { subTableName, subTable } } }
@@ -213,7 +213,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Create_AssignsDataEntryValueAsDataPointTimestampRangeStart_WhenPassedValidLuaTable()
         {
             var tableName = "test";
-            var timestamp = 1f;
+            var timestamp = 1d;
             var luaTable = new Dictionary<object, object>()
             {
                 { tableName, new Dictionary<object, object>() { { 1, timestamp } } }
@@ -229,11 +229,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Theory]
-        [InlineData(1f, 2f)]
-        [InlineData(2f, 1f)]
-        [InlineData(1f, 2f, 5f, 4f, 3f)]
+        [InlineData(1d, 2d)]
+        [InlineData(2d, 1d)]
+        [InlineData(1d, 2d, 5d, 4d, 3d)]
         public void Create_AssignsNextLargestValueAsDataPointTimestampRangeEnd_WhenThereIsALargerTimestampAndDataPointSettingEndMarkerIsNull(
-                params float[] timestamps)
+                params double[] timestamps)
         {
             var tableName = "test";
             var subTable = new Dictionary<object, object>();
@@ -264,11 +264,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Theory]
-        [InlineData(1f, 2f)]
-        [InlineData(2f, 1f)]
-        [InlineData(1f, 2f, 5f, 4f, 3f)]
+        [InlineData(1d, 2d)]
+        [InlineData(2d, 1d)]
+        [InlineData(1d, 2d, 5d, 4d, 3d)]
         public void Create_AssignsNextLargestValueAsDataPointTimestampRangeEnd_WhenThereIsALargerTimestampAndDataPointSettingEndMarkerIsEmptyString(
-                params float[] timestamps)
+                params double[] timestamps)
         {
             var tableName = "test";
             var subTable = new Dictionary<object, object>();
@@ -299,12 +299,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Theory]
-        [InlineData(1f)]
-        [InlineData(1f, 2f)]
-        [InlineData(2f, 1f)]
-        [InlineData(1f, 2f, 5f, 4f, 3f)]
+        [InlineData(1d)]
+        [InlineData(1d, 2d)]
+        [InlineData(2d, 1d)]
+        [InlineData(1d, 2d, 5d, 4d, 3d)]
         public void Create_AssignsMaxValueAsDataPointTimestampRangeEnd_WhenLargestTimestamp(
-                params float[] timestamps)
+                params double[] timestamps)
         {
             var tableName = "test";
             var subTable = new Dictionary<object, object>();
@@ -327,16 +327,16 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var largestTimestampDataPoint = result[tableName]
                     .Where(dp => dp.TimestampRange.Start == largestTimestamp)
                     .First();
-            Assert.Equal(float.MaxValue, largestTimestampDataPoint.TimestampRange.End);
+            Assert.Equal(double.MaxValue, largestTimestampDataPoint.TimestampRange.End);
         }
 
         [Fact]
         public void Create_AssignsMatchingFalseTimestampAsDataPointTimestampRangeEnd_WhenValidMatchingSubTableExistsAndDataPointSettingsHasFalseAssigned()
         {
-            var true1Timestamp = 1f;
-            var true2Timestamp = 2f;
-            var false1Timestamp = 4f;
-            var false2Timestamp = 3f;
+            var true1Timestamp = 1d;
+            var true2Timestamp = 2d;
+            var false1Timestamp = 4d;
+            var false2Timestamp = 3d;
             var subTables = new Dictionary<object, object>()
             {
                 { "test1_true", new Dictionary<object, object>() { { 1, true1Timestamp } } },
@@ -365,7 +365,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Fact]
         public void Create_AssignsMaxValueAsDataPointTimestampRangeEnd_WhenValidMatchingSubTableDoesNotExist()
         {
-            var timestamp = 1f;
+            var timestamp = 1d;
             var subTable = new Dictionary<object, object>()
             {
                 { "test_true", new Dictionary<object, object>() { { 1, timestamp } } }
@@ -385,13 +385,13 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var matchingDataPoint = result[tableName]
                     .Where(dp => dp.TimestampRange.Start == timestamp)
                     .First();
-            Assert.Equal(float.MaxValue, matchingDataPoint.TimestampRange.End);
+            Assert.Equal(double.MaxValue, matchingDataPoint.TimestampRange.End);
         }
 
         [Fact]
         public void Create_AssignsSameValueAsDataPointTimestampRangeStartAndEnd_WhenDataPointTypeIsASnapshotType()
         {
-            var timestamp = 1f;
+            var timestamp = 1d;
             var subTable = new Dictionary<object, object>()
             {
                 { "test_true", new Dictionary<object, object>() { { 1, timestamp } } }
@@ -426,7 +426,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var subTable = new Dictionary<object, object>()
             {
-                { "test_false", new Dictionary<object, object>() { { 1, 1f } } }
+                { "test_false", new Dictionary<object, object>() { { 1, 1d } } }
             };
             var tableName = "test";
             var luaTable = new Dictionary<object, object>()

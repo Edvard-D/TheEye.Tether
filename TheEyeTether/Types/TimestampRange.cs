@@ -2,10 +2,10 @@ namespace TheEyeTether.Types
 {
     public record TimestampRange
     {
-        public float End;
-        public float Start;
+        public double End;
+        public double Start;
 
 
-        public TimestampRange(float start, float end) => (Start, End) = (start, end);
+        public TimestampRange(double start, double end) => (Start, End) = (start, end);
     }
 }
