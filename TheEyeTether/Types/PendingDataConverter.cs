@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using TheEyeTether.Helpers;
@@ -10,13 +11,17 @@ namespace TheEyeTether.Types
         private const int AccountNameElementOffset = 5;
         private const int CharacterNameElementOffset = 3;
         private const string FileName = "TheEyeRecorder.lua";
+        private const string LuaTableName = "TheEyeRecordedData";
         private const string ProgramName = "Wow";
         private const string RequiredDirectories = @"WorldOfWarcraft\_retail_\";
         private const int ServerNameElementOffset = 4;
 
 
         public static void Convert(
+                Dictionary<string, CategorySetting> categorySettings,
+                Dictionary<string, DataPointSetting> dataPointSettings,
                 IFileSystem fileSystem,
+                ILua lua,
                 IDrivesGetter drivesGetter,
                 IOSPlatformChecker osPlatformChecker,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
@@ -35,14 +40,22 @@ namespace TheEyeTether.Types
 
             foreach(string filePath in filePaths)
             {
-                var outputFilePath = CreateOutputFilePath(filePath, fileSystem,
-                        currentDomainBaseDirectoryGetter);
-                fileSystem.File.Create(outputFilePath);
+                lua.DoFile(filePath);
+                var luaTable = lua.ConvertTableHierarchyToDict(lua.GetTable(LuaTableName));
+                var snapshots = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
+
+                foreach(KeyValuePair<Category, Dictionary<SnapshotSetting, List<Snapshot>>> keyValuePair in snapshots)
+                {
+                    var outputFilePath = CreateOutputFilePath(filePath, keyValuePair.Key, fileSystem,
+                            currentDomainBaseDirectoryGetter);
+                    fileSystem.File.Create(outputFilePath);
+                }
             }
         }
 
         private static string CreateOutputFilePath(
                 string inputFilePath,
+                Category category,
                 IFileSystem fileSystem,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
         {
@@ -53,7 +66,7 @@ namespace TheEyeTether.Types
                 currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory(),
                 "Data",
                 "Snapshots",
-                "Specializations",
+                category.Setting.Name,
                 "test.txt"
             };
 
