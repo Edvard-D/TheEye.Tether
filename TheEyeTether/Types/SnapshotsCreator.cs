@@ -126,11 +126,14 @@ namespace TheEyeTether.Types
                         .Where(dp => dp.TimestampRange.Start <= snapshotDataPoint.TimestampRange.Start
                                 && dp.TimestampRange.End > snapshotDataPoint.TimestampRange.End)
                         .ToList();
-
-                snapshot.DataPoints.AddRange(validDataPoints);
+                
+                foreach(DataPoint validDataPoint in validDataPoints)
+                {
+                    snapshot.DataPointsIds.Add(validDataPoint.TypeName + "__" + validDataPoint.SubTypeName);
+                }
             }
 
-            if(snapshot.DataPoints.Count == 0)
+            if(snapshot.DataPointsIds.Count == 0)
             {
                 return default(Snapshot);
             }

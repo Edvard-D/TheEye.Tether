@@ -5,17 +5,17 @@ namespace TheEyeTether.Types
     public struct Snapshot
     {
         private DataPoint _dataPoint;
-        private List<DataPoint> _dataPoints;
+        private List<string> _dataPoints;
 
         
         public DataPoint DataPoint { get { return _dataPoint; } }
-        public List<DataPoint> DataPoints { get { return _dataPoints; } }
+        public List<string> DataPointsIds { get { return _dataPoints; } }
 
 
         public Snapshot(DataPoint dataPoint)
         {
             _dataPoint = dataPoint;
-            _dataPoints = new List<DataPoint>();
+            _dataPoints = new List<string>();
         }
 
         public override bool Equals(object obj)
