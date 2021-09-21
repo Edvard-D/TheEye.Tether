@@ -50,19 +50,49 @@ namespace TheEyeTether.Types
                 {
                     foreach(KeyValuePair<SnapshotSetting, List<Snapshot>> snapshotSettingKeyValuePair in categoryKeyValuePair.Value)
                     {
-                        var outputFilePath = CreateOutputFilePath(filePath, categoryKeyValuePair.Key,
-                                snapshotSettingKeyValuePair.Key, fileSystem, currentDomainBaseDirectoryGetter,
-                                clock);
-                        fileSystem.File.Create(outputFilePath);
+                        var groupedSnapshots = GroupSnapshotsBySubTypeName(snapshotSettingKeyValuePair.Value);
+                        
+                        foreach(KeyValuePair<string, List<Snapshot>> groupedSnapshotKeyValuePair in groupedSnapshots)
+                        {
+                            var outputFilePath = CreateOutputFilePath(filePath, categoryKeyValuePair.Key,
+                                    snapshotSettingKeyValuePair.Key, groupedSnapshotKeyValuePair.Key,
+                                    fileSystem, currentDomainBaseDirectoryGetter, clock);
+                            fileSystem.File.Create(outputFilePath);
+                        }
                     }
                 }
             }
+        }
+
+        private static Dictionary<string, List<Snapshot>> GroupSnapshotsBySubTypeName(
+                List<Snapshot> snapshots)
+        {
+            var groupedSnapshots = new Dictionary<string, List<Snapshot>>();
+
+            foreach(Snapshot snapshot in snapshots)
+            {
+                var snapshotSubTypeName = snapshot.DataPoint.SubTypeName;
+                if(snapshotSubTypeName == null)
+                {
+                    snapshotSubTypeName = "default";
+                }
+
+                if(!groupedSnapshots.ContainsKey(snapshotSubTypeName))
+                {
+                    groupedSnapshots[snapshotSubTypeName] = new List<Snapshot>();
+                }
+
+                groupedSnapshots[snapshotSubTypeName].Add(snapshot);
+            }
+
+            return groupedSnapshots;
         }
 
         private static string CreateOutputFilePath(
                 string inputFilePath,
                 Category category,
                 SnapshotSetting snapshotSetting,
+                string snapshotSubTypeName,
                 IFileSystem fileSystem,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter,
                 IClock clock)
@@ -78,6 +108,7 @@ namespace TheEyeTether.Types
                 category.Setting.Name,
                 category.Identifier,
                 snapshotSetting.Name,
+                snapshotSubTypeName,
                 now + ".txt"
             };
 

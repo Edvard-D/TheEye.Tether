@@ -20,11 +20,12 @@ namespace TheEyeTether.UnitTests.Tests.Types
         private const string FileSaveDateTime = "2021_09_20__12_00_00";
         private const string LuaFileText =  "TheEyeRecordedData = { "
                 + "[\""+CategorySettingName+"\"] = { [\""+SpecializationId+"\"] = { 10000.001 } }, "
-                + "[\""+SnapshotSettingName+"\"] = { [\"1000\"] = { 10000.001 } }, "
+                + "[\""+SnapshotSettingName+"\"] = { [\""+SnapshotSubTypeName+"\"] = { 10000.001 } }, "
                 + "[\""+DataPointTypeName+"\"] = { [\"true\"] = { 10000.001 } } "
                 + "}";
         private const string ServerName = "Moonguard";
         private const string SnapshotSettingName = "PLAYER_SPELLCAST_START";
+        private const string SnapshotSubTypeName = "1000";
         private const string SpecializationId = "100";
 
 
@@ -248,6 +249,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData(CategorySettingName)]
         [InlineData(SpecializationId)]
         [InlineData(SnapshotSettingName)]
+        [InlineData(SnapshotSubTypeName)]
         [InlineData(FileSaveDateTime+".txt")]
         public void Convert_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
         {
@@ -305,7 +307,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [InlineData(@"C:\TheEyeTether\Data\Snapshots")]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots\"+CategorySettingName)]
         [InlineData(@"C:\TheEyeTether\Data\Snapshots\"+CategorySettingName+@"\"+SpecializationId)]
-        [InlineData(@"C:\TheEyeTether\Data\Snapshots\"+CategorySettingName+@"\"+SpecializationId+@"\"+SnapshotSettingName)]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\"+CategorySettingName+@"\"+SpecializationId+@"\"+
+                SnapshotSettingName)]
+        [InlineData(@"C:\TheEyeTether\Data\Snapshots\"+CategorySettingName+@"\"+SpecializationId+@"\"+
+                SnapshotSettingName+@"\"+SnapshotSubTypeName)]
         public void Convert_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
         {
             var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
