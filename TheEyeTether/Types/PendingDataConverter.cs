@@ -70,6 +70,8 @@ namespace TheEyeTether.Types
                         }
                     }
                 }
+
+                fileSystem.File.Delete(filePath);
             }
         }
 

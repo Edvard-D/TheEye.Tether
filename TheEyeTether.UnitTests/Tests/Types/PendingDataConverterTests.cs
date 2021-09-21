@@ -411,5 +411,52 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var outputJson = JsonSerializer.Deserialize<List<List<string>>>(outputFile);
             Assert.Equal(DataPointTypeName + "__" + DataPointSubTypeName, outputJson[0][0]);
         }
+
+        [Fact]
+        public void Convert_DeletesConvertedPendingData_WhenCalled()
+        {
+            var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
+            var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+                    AccountName, ServerName, CharacterName);
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            {
+                { pendingDataFilePath, LuaFileText}
+            });
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { programPath, new MockFileData(string.Empty) },
+                { pendingDataFilePath, LuaFileText },
+                { currentDomainBaseDirectory, new MockFileData(string.Empty) },
+            });
+            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
+            var categorySettings = new Dictionary<string, CategorySetting>()
+            {
+                { CategorySettingName, new CategorySetting(CategorySettingName,
+                        new Dictionary<string, SnapshotSetting>()
+                        {
+                            { SnapshotSettingName, new SnapshotSetting(SnapshotSettingName,
+                                    new string[] { DataPointTypeName }) }
+                        })
+                }
+            };
+            var dataPointSettings = new Dictionary<string, DataPointSetting>()
+            {
+                { CategorySettingName, new DataPointSetting() },
+                { SnapshotSettingName, new DataPointSetting() },
+                { DataPointTypeName, new DataPointSetting("false", 0) }
+            };
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+                    null));
+
+            PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
+                    stubDrivesGetter, stubOSPlatformChecker, stubCurrentDomainBaseDirectoryGetter,
+                    stubClock);
+
+            Assert.False(mockFileSystem.FileExists(pendingDataFilePath));
+        }
     }
 }
