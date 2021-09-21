@@ -108,12 +108,12 @@ namespace TheEyeTether.Types
                 category.Setting.Name,
                 category.Identifier,
                 snapshotSetting.Name,
-                snapshotSubTypeName,
-                now + ".txt"
+                snapshotSubTypeName
             };
 
             var outputFilePath = Path.Combine(outputFilePathParts);
             fileSystem.Directory.CreateDirectory(outputFilePath);
+            outputFilePath = Path.Combine(outputFilePath, now + ".txt");
             
             return outputFilePath;
         }
