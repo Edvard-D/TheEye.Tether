@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
+using System.Text.Json;
 using TheEyeTether.Helpers;
 using TheEyeTether.Interfaces;
 
@@ -57,7 +58,15 @@ namespace TheEyeTether.Types
                             var outputFilePath = CreateOutputFilePath(filePath, categoryKeyValuePair.Key,
                                     snapshotSettingKeyValuePair.Key, groupedSnapshotKeyValuePair.Key,
                                     fileSystem, currentDomainBaseDirectoryGetter, clock);
-                            fileSystem.File.Create(outputFilePath);
+                            
+                            var outputData = new List<List<string>>();
+                            foreach(Snapshot snapshot in groupedSnapshotKeyValuePair.Value)
+                            {
+                                outputData.Add(snapshot.DataPointsIds);
+                            }
+
+                            var outputJson = JsonSerializer.Serialize(outputData);
+                            fileSystem.File.WriteAllText(outputFilePath, outputJson);
                         }
                     }
                 }
@@ -113,7 +122,7 @@ namespace TheEyeTether.Types
 
             var outputFilePath = Path.Combine(outputFilePathParts);
             fileSystem.Directory.CreateDirectory(outputFilePath);
-            outputFilePath = Path.Combine(outputFilePath, now + ".txt");
+            outputFilePath = Path.Combine(outputFilePath, now + ".json");
             
             return outputFilePath;
         }
