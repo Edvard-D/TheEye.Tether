@@ -46,11 +46,15 @@ namespace TheEyeTether.Types
                 var luaTable = lua.ConvertTableHierarchyToDict(lua.GetTable(LuaTableName));
                 var snapshots = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
 
-                foreach(KeyValuePair<Category, Dictionary<SnapshotSetting, List<Snapshot>>> keyValuePair in snapshots)
+                foreach(KeyValuePair<Category, Dictionary<SnapshotSetting, List<Snapshot>>> categoryKeyValuePair in snapshots)
                 {
-                    var outputFilePath = CreateOutputFilePath(filePath, keyValuePair.Key, fileSystem,
-                            currentDomainBaseDirectoryGetter, clock);
-                    fileSystem.File.Create(outputFilePath);
+                    foreach(KeyValuePair<SnapshotSetting, List<Snapshot>> snapshotSettingKeyValuePair in categoryKeyValuePair.Value)
+                    {
+                        var outputFilePath = CreateOutputFilePath(filePath, categoryKeyValuePair.Key,
+                                snapshotSettingKeyValuePair.Key, fileSystem, currentDomainBaseDirectoryGetter,
+                                clock);
+                        fileSystem.File.Create(outputFilePath);
+                    }
                 }
             }
         }
@@ -58,6 +62,7 @@ namespace TheEyeTether.Types
         private static string CreateOutputFilePath(
                 string inputFilePath,
                 Category category,
+                SnapshotSetting snapshotSetting,
                 IFileSystem fileSystem,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter,
                 IClock clock)
@@ -72,6 +77,7 @@ namespace TheEyeTether.Types
                 "Snapshots",
                 category.Setting.Name,
                 category.Identifier,
+                snapshotSetting.Name,
                 now + ".txt"
             };
 
