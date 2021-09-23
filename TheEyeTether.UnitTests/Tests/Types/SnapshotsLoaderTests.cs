@@ -16,10 +16,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 new List<string>() { "test1" }
             };
-            var jsonText1 = JsonSerializer.Serialize(snapshotData);
+            var jsonText = JsonSerializer.Serialize(snapshotData);
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { directoryPath + fileName, new MockFileData(jsonText1) }
+                { directoryPath + fileName, new MockFileData(jsonText) }
             });
 
             var result = SnapshotsLoader.Load(directoryPath, 1, mockFileSystem);
