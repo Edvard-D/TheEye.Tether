@@ -12,6 +12,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Load_ReturnsListOfListsOfStrings_WhenCalled()
         {
             var directoryPath = @"C:\TestDirectory\";
+            var fileName = "test1.json";
             var snapshotData = new List<List<string>>()
             {
                 new List<string>() { "test1" }
@@ -87,6 +88,23 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var expectedSnapshotCount = snapshotData1.Count + snapshotData2.Count;
             Assert.Equal(expectedSnapshotCount, result.Count);
+        }
+
+        [Fact]
+        public void Load_DoesNotThrowException_WhenDirectoryContainsMisformattedFile()
+        {
+            var directoryPath = @"C:\TestDirectory\";
+            var fileName = "test1.json";
+            var snapshotData = new List<string>() { "test" };
+            var jsonText = JsonSerializer.Serialize(snapshotData);
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { directoryPath + fileName, new MockFileData(jsonText) }
+            });
+
+            var result = SnapshotsLoader.Load(directoryPath, 1, mockFileSystem);
+
+            Assert.True(true);
         }
     }
 }
