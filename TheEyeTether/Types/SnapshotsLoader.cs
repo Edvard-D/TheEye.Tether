@@ -4,7 +4,7 @@ namespace TheEyeTether.Types
 {
     public static class SnapshotsLoader
     {
-        public static List<Snapshot> Load(
+        public static List<List<string>> Load(
                 string directoryPath,
                 int lookbackDays)
         {
@@ -20,7 +20,7 @@ namespace TheEyeTether.Types
                         nameof(lookbackDays)));
             }
 
-            return new List<Snapshot>();
+            return new List<List<string>>();
         }
     }
 }

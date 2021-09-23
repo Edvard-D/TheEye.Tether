@@ -7,13 +7,13 @@ namespace TheEyeTether.UnitTests.Tests.Types
     public class SnapshotsLoaderTests
     {
         [Fact]
-        public void Load_ReturnsListOfSnapshots_WhenCalled()
+        public void Load_ReturnsListOfListsOfStrings_WhenCalled()
         {
             var directoryPath = string.Empty;
 
             var result = SnapshotsLoader.Load(directoryPath, 1);
 
-            Assert.IsType<List<Snapshot>>(result);
+            Assert.IsType<List<List<string>>>(result);
         }
 
         [Fact]
