@@ -9,9 +9,25 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Fact]
         public void Load_ReturnsListOfSnapshots_WhenCalled()
         {
-            var result = SnapshotsLoader.Load();
+            var directoryPath = string.Empty;
+
+            var result = SnapshotsLoader.Load(directoryPath);
 
             Assert.IsType<List<Snapshot>>(result);
+        }
+
+        [Fact]
+        public void Load_ThrowsInvalidOperationException_WhenPassedNullDirectoryPath()
+        {
+            try
+            {
+                var result = SnapshotsLoader.Load(null);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
         }
     }
 }
