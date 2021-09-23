@@ -33,11 +33,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public void Load_ThrowsInvalidOperationException_WhenPassedNegativeOrZeroLookbackRange(int lookbackRange)
+        public void Load_ThrowsInvalidOperationException_WhenPassedNegativeOrZeroLookbackDays(int lookbackDays)
         {
             try
             {
-                var result = SnapshotsLoader.Load(null, lookbackRange);
+                var result = SnapshotsLoader.Load(null, lookbackDays);
                 Assert.True(false);
             }
             catch(System.Exception ex)

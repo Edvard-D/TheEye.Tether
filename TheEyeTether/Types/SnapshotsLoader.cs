@@ -6,7 +6,7 @@ namespace TheEyeTether.Types
     {
         public static List<Snapshot> Load(
                 string directoryPath,
-                int lookbackRange)
+                int lookbackDays)
         {
             if(directoryPath == null)
             {
@@ -14,10 +14,10 @@ namespace TheEyeTether.Types
                         nameof(directoryPath)));
             }
 
-            if(lookbackRange <= 0)
+            if(lookbackDays <= 0)
             {
                 throw new System.InvalidOperationException(string.Format("Argument {0} must be positive.",
-                        nameof(lookbackRange)));
+                        nameof(lookbackDays)));
             }
 
             return new List<Snapshot>();
