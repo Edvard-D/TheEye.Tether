@@ -1,15 +1,20 @@
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Text.Json;
+using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Types
 {
     public static class SnapshotsLoader
     {
+        private const string FilePathDateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
+
+
         public static List<List<string>> Load(
                 string directoryPath,
                 int lookbackDays,
-                IFileSystem fileSystem)
+                IFileSystem fileSystem,
+                IClock clock)
         {
             if(directoryPath == null)
             {
@@ -26,6 +31,16 @@ namespace TheEyeTether.Types
             var snapshots = new List<List<string>>();
             foreach(string filePath in fileSystem.Directory.GetFiles(directoryPath))
             {
+                var fileName = fileSystem.Path.GetFileName(filePath);
+                fileName = fileName.Split(".")[0];
+                var fileDateTime = System.DateTime.ParseExact(fileName, FilePathDateTimeFormat, null);
+                var elapsedTime = clock.Now - fileDateTime;
+
+                if(elapsedTime.Days > lookbackDays)
+                {
+                    continue;
+                }
+
                 var fileText = fileSystem.File.ReadAllText(filePath);
 
                 try
