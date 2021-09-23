@@ -12,12 +12,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
         public void Load_ReturnsListOfListsOfStrings_WhenCalled()
         {
             var directoryPath = @"C:\TestDirectory\";
-            var fileName = "test1.json";
-            var snapshotData1 = new List<List<string>>()
+            var snapshotData = new List<List<string>>()
             {
                 new List<string>() { "test1" }
             };
-            var jsonText1 = JsonSerializer.Serialize(snapshotData1);
+            var jsonText1 = JsonSerializer.Serialize(snapshotData);
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { directoryPath + fileName, new MockFileData(jsonText1) }
