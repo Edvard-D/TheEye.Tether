@@ -11,7 +11,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var directoryPath = string.Empty;
 
-            var result = SnapshotsLoader.Load(directoryPath);
+            var result = SnapshotsLoader.Load(directoryPath, 1);
 
             Assert.IsType<List<Snapshot>>(result);
         }
@@ -21,7 +21,23 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             try
             {
-                var result = SnapshotsLoader.Load(null);
+                var result = SnapshotsLoader.Load(null, 1);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void Load_ThrowsInvalidOperationException_WhenPassedNegativeOrZeroLookbackRange(int lookbackRange)
+        {
+            try
+            {
+                var result = SnapshotsLoader.Load(null, lookbackRange);
                 Assert.True(false);
             }
             catch(System.Exception ex)
