@@ -52,9 +52,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var creationDateTime = nowDateTime.AddDays(-8);
             var directoryPath = @"C:\";
-            var fileName = creationDateTime.ToString(DateTimeFormat) + ".json";
+            var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var snapshots = new List<List<string>>();
             for(int i = 0; i < 100; i++)
             {
@@ -62,7 +61,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             }
             var fileDataJson = JsonSerializer.Serialize(snapshots);
             var mockFileData = new MockFileData(fileDataJson);
-            mockFileData.CreationTime = creationDateTime;
+            mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { directoryPath + fileName, mockFileData }
@@ -72,6 +71,32 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var result = HypothesesCreator.Create(mockFileSystem, stubClock);
 
             Assert.NotEmpty(result);
+        }
+        
+        [Fact]
+        public void Create_DoesNotCreateHypothesis_WhenLessThan100SnapshotsExistForTypeAndSubType()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var directoryPath = @"C:\";
+            var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
+            var snapshots = new List<List<string>>();
+            for(int i = 0; i < 99; i++)
+            {
+                snapshots.Add(new List<string>() { "test" });
+            }
+            var fileDataJson = JsonSerializer.Serialize(snapshots);
+            var mockFileData = new MockFileData(fileDataJson);
+            mockFileData.CreationTime = nowDateTime;
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { directoryPath + fileName, mockFileData }
+            });
+            var stubClock = new StubClock(nowDateTime);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+
+            Assert.Empty(result);
         }
     }
 }
