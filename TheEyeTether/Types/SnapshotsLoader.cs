@@ -32,7 +32,6 @@ namespace TheEyeTether.Types
             foreach(string filePath in fileSystem.Directory.GetFiles(directoryPath))
             {
                 System.DateTime fileDateTime;
-                
                 try
                 {
                     var fileName = fileSystem.Path.GetFileName(filePath);
@@ -45,16 +44,14 @@ namespace TheEyeTether.Types
                 }
                 
                 var elapsedTime = clock.Now - fileDateTime;
-
                 if(elapsedTime.Days > lookbackDays)
                 {
                     continue;
                 }
 
-                var fileText = fileSystem.File.ReadAllText(filePath);
-
                 try
                 {
+                    var fileText = fileSystem.File.ReadAllText(filePath);
                     var jsonData = JsonSerializer.Deserialize<List<List<string>>>(fileText);
                     snapshots.AddRange(jsonData);
                 }
