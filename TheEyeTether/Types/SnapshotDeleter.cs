@@ -1,4 +1,5 @@
 using System.IO.Abstractions;
+using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Types
 {
@@ -7,7 +8,8 @@ namespace TheEyeTether.Types
         public static void DeleteOutdatedFiles(
                 string directoryPath,
                 int keepLookbackDays,
-                IFileSystem fileSystem)
+                IFileSystem fileSystem,
+                IClock clock)
         {
             if(directoryPath == null)
             {
@@ -19,6 +21,17 @@ namespace TheEyeTether.Types
             {
                 throw new System.InvalidOperationException(string.Format("Argument {0} must be positive.",
                         nameof(keepLookbackDays)));
+            }
+
+            foreach(string filePath in fileSystem.Directory.GetFiles(directoryPath))
+            {
+                var creationDateTime = fileSystem.File.GetCreationTimeUtc(filePath);
+                var keepThresholdDateTime = clock.Now.ToUniversalTime().AddDays(-keepLookbackDays);
+
+                if(creationDateTime < keepThresholdDateTime)
+                {
+                    fileSystem.File.Delete(filePath);
+                }
             }
         }
     }
