@@ -31,9 +31,19 @@ namespace TheEyeTether.Types
             var snapshots = new List<List<string>>();
             foreach(string filePath in fileSystem.Directory.GetFiles(directoryPath))
             {
-                var fileName = fileSystem.Path.GetFileName(filePath);
-                fileName = fileName.Split(".")[0];
-                var fileDateTime = System.DateTime.ParseExact(fileName, FilePathDateTimeFormat, null);
+                System.DateTime fileDateTime;
+                
+                try
+                {
+                    var fileName = fileSystem.Path.GetFileName(filePath);
+                    fileName = fileName.Split(".")[0];
+                    fileDateTime = System.DateTime.ParseExact(fileName, FilePathDateTimeFormat, null);
+                }
+                catch
+                {
+                    continue;
+                }
+                
                 var elapsedTime = clock.Now - fileDateTime;
 
                 if(elapsedTime.Days > lookbackDays)

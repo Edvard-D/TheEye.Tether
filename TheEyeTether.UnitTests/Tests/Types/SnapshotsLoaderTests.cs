@@ -121,6 +121,25 @@ namespace TheEyeTether.UnitTests.Tests.Types
             
             Assert.True(true);
         }
+        
+        [Fact]
+        public void Load_DoesNotThrowException_WhenFileNameDoesNotMatchExpectedDateTimeFormat()
+        {
+            var directoryPath = @"C:\TestDirectory\";
+            var fileName = "incorrectly_formatted_name.json";
+            var snapshotData = new List<string>() { "test" };
+            var jsonText = JsonSerializer.Serialize(snapshotData);
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { directoryPath + fileName, new MockFileData(jsonText) }
+            });
+            var stubClock = new StubClock(System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat,
+                    null));
+
+            var result = SnapshotsLoader.Load(directoryPath, 1, mockFileSystem, stubClock);
+            
+            Assert.True(true);
+        }
 
         [Fact]
         public void Load_ReturnsSnapshotsInFilesWithinLookbackRange_WhenCalled()
