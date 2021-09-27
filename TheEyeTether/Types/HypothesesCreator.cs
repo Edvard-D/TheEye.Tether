@@ -13,9 +13,12 @@ namespace TheEyeTether.Types
                 IFileSystem fileSystem,
                 IClock clock)
         {
-            SnapshotDeleter.DeleteOutdatedFiles(@"C:\", SnapshotKeepLookbackDays, fileSystem, clock);
+            var hypotheses = new List<Hypothesis>();
 
-            return new List<Hypothesis>();
+            SnapshotDeleter.DeleteOutdatedFiles(@"C:\", SnapshotKeepLookbackDays, fileSystem, clock);
+            hypotheses.Add(new Hypothesis());
+
+            return hypotheses;
         }
     }
 }
