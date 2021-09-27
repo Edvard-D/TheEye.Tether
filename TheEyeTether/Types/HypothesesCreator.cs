@@ -20,20 +20,22 @@ namespace TheEyeTether.Types
             SnapshotDeleter.DeleteOutdatedFiles(directoryPath, SnapshotKeepLookbackDays, fileSystem, clock);
             var snapshots = SnapshotsLoader.Load(directoryPath, fileSystem);
 
-            if(snapshots.Count >= MinRequiredSnapshots)
+            if(snapshots.Count < MinRequiredSnapshots)
             {
-                var hypothesis = new Hypothesis();
-                
-                foreach(List<string> snapshot in snapshots)
-                {
-                    foreach(string dataPointString in snapshot)
-                    {
-                        hypothesis.DataPointStrings.Add(dataPointString);
-                    }
-                }
-
-                hypotheses.Add(hypothesis);
+                return new List<Hypothesis>();
             }
+
+            var hypothesis = new Hypothesis();
+
+            foreach(List<string> snapshot in snapshots)
+            {
+                foreach(string dataPointString in snapshot)
+                {
+                    hypothesis.DataPointStrings.Add(dataPointString);
+                }
+            }
+
+            hypotheses.Add(hypothesis);
 
             return hypotheses;
         }
