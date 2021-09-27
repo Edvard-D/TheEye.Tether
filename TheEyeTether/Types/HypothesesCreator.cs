@@ -22,7 +22,17 @@ namespace TheEyeTether.Types
 
             if(snapshots.Count >= MinRequiredSnapshots)
             {
-                hypotheses.Add(new Hypothesis());
+                var hypothesis = new Hypothesis();
+                
+                foreach(List<string> snapshot in snapshots)
+                {
+                    foreach(string dataPointString in snapshot)
+                    {
+                        hypothesis.DataPointStrings.Add(dataPointString);
+                    }
+                }
+
+                hypotheses.Add(hypothesis);
             }
 
             return hypotheses;
