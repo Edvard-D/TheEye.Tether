@@ -129,5 +129,36 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Contains(testDataPointString, result[0].DataPointStrings);
         }
+        
+        [Fact]
+        public void Create_FiltersOutSnapshotDataPointStrings_WhenTheyAreBelowThe75thPercentileForNumberOfSnapshotsTheyAppearIn()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var directoryPath = @"C:\";
+            var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
+            var invalidDataPointString = "invalidDataPointString";
+            var snapshots = new List<List<string>>();
+            for(int i = 0; i < 100; i++)
+            {
+                snapshots.Add(new List<string>() { "baseDataPointString" });
+            }
+            for(int i = 0; i < 74; i++)
+            {
+                snapshots[i].Add(invalidDataPointString);
+            }
+            var fileDataJson = JsonSerializer.Serialize(snapshots);
+            var mockFileData = new MockFileData(fileDataJson);
+            mockFileData.CreationTime = nowDateTime;
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { directoryPath + fileName, mockFileData }
+            });
+            var stubClock = new StubClock(nowDateTime);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+
+            Assert.DoesNotContain(invalidDataPointString, result[0].DataPointStrings);
+        }
     }
 }
