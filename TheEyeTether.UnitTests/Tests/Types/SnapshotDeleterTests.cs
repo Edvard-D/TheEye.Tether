@@ -9,9 +9,30 @@ namespace TheEyeTether.UnitTests.Tests.Types
         [Fact]
         public void DeleteOutdatedFiles_ThrowsInvalidOperationException_WhenPassedNullDirectoryPath()
         {
+            var keepLookbackDays = 1;
+
             try
             {
-                SnapshotDeleter.DeleteOutdatedFiles(null);
+                SnapshotDeleter.DeleteOutdatedFiles(null, keepLookbackDays);
+                Assert.True(false);
+            }
+            catch(System.Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void DeleteOutdatedFiles_ThrowsInvalidOperationException_WhenPassedNegativeOrZeroLookbackDays(
+                int keepLookbackDays)
+        {
+            var directoryPath = @"C:\";
+
+            try
+            {
+                SnapshotDeleter.DeleteOutdatedFiles(directoryPath, keepLookbackDays);
                 Assert.True(false);
             }
             catch(System.Exception ex)
