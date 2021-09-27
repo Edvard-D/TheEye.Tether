@@ -8,7 +8,7 @@ namespace TheEyeTether.Types
     {
         private const int MinRequiredSnapshots = 100;
         private const int SnapshotKeepLookbackDays = 7;
-        private const float DataPointStringAppearanceThreshold = 0.75f;
+        private const float DataPointStringAppearanceThreshold = 0.25f;
 
 
         public static List<Hypothesis> Create(

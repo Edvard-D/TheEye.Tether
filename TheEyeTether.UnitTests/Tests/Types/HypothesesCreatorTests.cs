@@ -100,7 +100,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
-        public void Create_AddsDataPointStrings_WhenTheyAreAtOrAboveThe75thPercentileForNumberOfSnapshotsTheyAppearIn()
+        public void Create_AddsDataPointStrings_WhenTheyAreAtOrAboveThe25thPercentileForNumberOfSnapshotsTheyAppearIn()
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
@@ -112,7 +112,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 snapshots.Add(new List<string>() { "baseDataPointString" });
             }
-            for(int i = 0; i < 75; i++)
+            for(int i = 0; i < 25; i++)
             {
                 snapshots[i].Add(testDataPointString);
             }
@@ -131,7 +131,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
         
         [Fact]
-        public void Create_FiltersOutSnapshotDataPointStrings_WhenTheyAreBelowThe75thPercentileForNumberOfSnapshotsTheyAppearIn()
+        public void Create_FiltersOutSnapshotDataPointStrings_WhenTheyAreBelowThe25thPercentileForNumberOfSnapshotsTheyAppearIn()
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
@@ -143,7 +143,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             {
                 snapshots.Add(new List<string>() { "baseDataPointString" });
             }
-            for(int i = 0; i < 74; i++)
+            for(int i = 0; i < 24; i++)
             {
                 snapshots[i].Add(invalidDataPointString);
             }
