@@ -1,10 +1,13 @@
+using System.IO.Abstractions;
+
 namespace TheEyeTether.Types
 {
     public static class SnapshotDeleter
     {
         public static void DeleteOutdatedFiles(
                 string directoryPath,
-                int keepLookbackDays)
+                int keepLookbackDays,
+                IFileSystem fileSystem)
         {
             if(directoryPath == null)
             {
