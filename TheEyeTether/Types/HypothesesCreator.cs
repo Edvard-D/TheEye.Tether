@@ -6,9 +6,9 @@ namespace TheEyeTether.Types
 {
     public static class HypothesesCreator
     {
+        private const float DataPointStringAppearanceThreshold = 0.25f;
         private const int MinRequiredSnapshots = 100;
         private const int SnapshotKeepLookbackDays = 7;
-        private const float DataPointStringAppearanceThreshold = 0.25f;
 
 
         public static List<Hypothesis> Create(
