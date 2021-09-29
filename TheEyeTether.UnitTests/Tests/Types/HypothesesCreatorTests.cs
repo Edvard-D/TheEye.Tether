@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
+using System.Linq;
 using System.Text.Json;
 using TheEyeTether.Types;
 using TheEyeTether.UnitTests.Stubs;
@@ -127,7 +128,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock);
 
-            Assert.Contains(testDataPointString, result[0].DataPointStrings);
+            Assert.True(result.Any(h => h.DataPointStrings.Contains(testDataPointString)));
         }
         
         [Fact]
@@ -158,7 +159,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock);
 
-            Assert.DoesNotContain(invalidDataPointString, result[0].DataPointStrings);
+            Assert.False(result.Any(h => h.DataPointStrings.Contains(invalidDataPointString)));
         }
     }
 }
