@@ -161,5 +161,75 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.False(result.Any(h => h.DataPointStrings.Contains(invalidDataPointString)));
         }
+
+        [Fact]
+        public void Create_GroupsDataPointStrings_WhenTheirCorrelationIsAtOrAbove75Percent()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var directoryPath = @"C:\";
+            var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
+            var testDataPointString1 = "testDataPointString1";
+            var testDataPointString2 = "testDataPointString2";
+            var snapshots = new List<List<string>>();
+            for(int i = 0; i < 100; i++)
+            {
+                snapshots.Add(new List<string>() { testDataPointString1 });
+            }
+            for(int i = 0; i < 75; i++)
+            {
+                snapshots[i].Add(testDataPointString2);
+            }
+            var fileDataJson = JsonSerializer.Serialize(snapshots);
+            var mockFileData = new MockFileData(fileDataJson);
+            mockFileData.CreationTime = nowDateTime;
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { directoryPath + fileName, mockFileData }
+            });
+            var stubClock = new StubClock(nowDateTime);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            
+            var dataPointStrings = new HashSet<string>()
+            {
+                testDataPointString1,
+                testDataPointString2
+            };
+            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(dataPointStrings)));
+        }
+
+        [Fact]
+        public void Create_DoesNotCreateHypothesis_WhenTheirCorrelationIsBelow75Percent()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var directoryPath = @"C:\";
+            var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
+            var testDataPointString1 = "testDataPointString1";
+            var testDataPointString2 = "testDataPointString2";
+            var snapshots = new List<List<string>>();
+            for(int i = 0; i < 100; i++)
+            {
+                snapshots.Add(new List<string>() { testDataPointString1 });
+            }
+            for(int i = 0; i < 74; i++)
+            {
+                snapshots[i].Add(testDataPointString2);
+            }
+            var fileDataJson = JsonSerializer.Serialize(snapshots);
+            var mockFileData = new MockFileData(fileDataJson);
+            mockFileData.CreationTime = nowDateTime;
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { directoryPath + fileName, mockFileData }
+            });
+            var stubClock = new StubClock(nowDateTime);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+
+            var hashSet = new HashSet<string>() { testDataPointString1, testDataPointString2 };
+            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(hashSet)));
+        }
     }
 }

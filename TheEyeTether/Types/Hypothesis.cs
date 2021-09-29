@@ -11,5 +11,9 @@ namespace TheEyeTether.Types
         {
             DataPointStrings = new HashSet<string>();
         }
+        public Hypothesis(HashSet<string> dataPointStrings)
+        {
+            DataPointStrings = dataPointStrings;
+        }
     }
 }
