@@ -47,5 +47,21 @@ namespace TheEyeTether.UnitTests.Tests.Extensions
 
             Assert.Equal(3, hypotheses.Count);
         }
+
+        [Fact]
+        public void AddUniques_DoesNotAddHypothesesToList_WhenListHasHypothesesWithMatchingDataPointStrings()
+        {
+            var dataPointStrings1 = new HashSet<string>() { "test1" };
+            var dataPointStrings2 = new HashSet<string>() { "test2" };
+            var hypotheses = new List<Hypothesis>()
+            {
+                new Hypothesis(dataPointStrings1),
+                new Hypothesis(dataPointStrings2)
+            };
+
+            hypotheses.AddUniques(hypotheses);
+
+            Assert.Equal(2, hypotheses.Count);
+        }
     }
 }

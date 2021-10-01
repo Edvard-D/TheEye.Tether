@@ -22,7 +22,10 @@ namespace TheEyeTether.Extensions
                 this List<Hypothesis> list,
                 List<Hypothesis> hypotheses)
         {
-            list.AddRange(hypotheses);
+            for(int i = 0; i < hypotheses.Count; i++)
+            {
+                list.AddUnique(hypotheses[i]);
+            }
         }
     }
 }
