@@ -241,5 +241,47 @@ namespace TheEyeTether.UnitTests.Tests.Types
             Assert.True(result.Any(h => h.DataPointStrings.SetEquals(hashSet2)));
             Assert.True(result.Any(h => h.DataPointStrings.SetEquals(hashSet3)));
         }
+
+        [Fact]
+        public void Create_DoesNotCreateHypotheses_WhenThereAreNoSnapshotsWhereTheCombinationOfDataPointStringsAppears()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var directoryPath = @"C:\";
+            var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
+            var testDataPointString1 = "testDataPointString1";
+            var testDataPointString2 = "testDataPointString2";
+            var testDataPointString3 = "testDataPointString3";
+            var snapshots = new List<List<string>>();
+            for(int i = 0; i < 100; i++)
+            {
+                snapshots.Add(new List<string>() { testDataPointString1 });
+            }
+            for(int i = 0; i < 95; i++)
+            {
+                snapshots[i].Add(testDataPointString2);
+            }
+            for(int i = 0; i < 85; i++)
+            {
+                snapshots[i].Add(testDataPointString3);
+            }
+            var fileDataJson = JsonSerializer.Serialize(snapshots);
+            var mockFileData = new MockFileData(fileDataJson);
+            mockFileData.CreationTime = nowDateTime;
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { directoryPath + fileName, mockFileData }
+            });
+            var stubClock = new StubClock(nowDateTime);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            
+            var invalidHashSet1 = new HashSet<string>() { testDataPointString2 };
+            var invalidHashSet2 = new HashSet<string>() { testDataPointString3 };
+            var invalidHashSet3 = new HashSet<string>() { testDataPointString1, testDataPointString3 };
+            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet1)));
+            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet2)));
+            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet3)));
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace TheEyeTether.Types
             var dataPoints = CreateDataPoints(snapshotHashSets, filteredDataPointStrings);
             var clusteringResult = GetClusteringResult(dataPoints);
             var hypotheses = CreateHypotheses(snapshots, clusteringResult, trueCounts);
+            hypotheses = FilterHypothesesByExistence(hypotheses, snapshotHashSets, filteredDataPointStrings);
 
             return hypotheses;
         }
@@ -188,6 +189,39 @@ namespace TheEyeTether.Types
                 }
 
                 hypotheses.Add(new Hypothesis(dataPointStrings));
+            }
+
+            return hypotheses;
+        }
+
+        /// The hypotheses that get passed to this function may include combinations of DataPointStrings
+        /// that never showed up in any of the snapshots being evaluated. In order to not be removed,
+        /// there needs to be at least one snapshot that contains all of the DataPointStrings in the
+        /// hypothesis, and none of the DataPointStrings that are in filteredDataPointStrings but not in
+        /// the hypothesis.
+        private static List<Hypothesis> FilterHypothesesByExistence(
+                List<Hypothesis> hypotheses,
+                List<HashSet<string>> snapshotHashSets,
+                List<string> filteredDataPointStrings)
+        {
+            for(int i = hypotheses.Count - 1; i >= 0; i--)
+            {
+                var hypothesis = hypotheses[i];
+                var excluded = new List<string>(filteredDataPointStrings);
+                excluded.RemoveAll(s => hypothesis.DataPointStrings.Contains(s));
+
+                for(int j = 0; j < snapshotHashSets.Count; j++)
+                {
+                    if(snapshotHashSets[j].All(s => hypothesis.DataPointStrings.Contains(s))
+                            && !snapshotHashSets[j].Any(s => excluded.Contains(s)))
+                    {
+                        break;
+                    }
+                    else if(j == snapshotHashSets.Count - 1)
+                    {
+                        hypotheses.RemoveAt(i);
+                    }
+                }
             }
 
             return hypotheses;
