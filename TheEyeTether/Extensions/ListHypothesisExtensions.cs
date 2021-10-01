@@ -17,5 +17,12 @@ namespace TheEyeTether.Extensions
 
             list.Add(hypothesis);
         }
+
+        public static void AddUniques(
+                this List<Hypothesis> list,
+                List<Hypothesis> hypotheses)
+        {
+            list.AddRange(hypotheses);
+        }
     }
 }
