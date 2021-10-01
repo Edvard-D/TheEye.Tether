@@ -31,7 +31,7 @@ namespace TheEyeTether.UnitTests.Tests.Extensions
         }
 
         [Fact]
-        public void AddUniques_AddsHypothesesToList_WhenListDoesNotHaveAHypothesesWithMatchingDataPointStrings()
+        public void AddUniques_AddsHypothesesToList_WhenListDoesNotHaveHypothesesWithMatchingDataPointStrings()
         {
             var dataPointStrings1 = new HashSet<string>() { "test1" };
             var dataPointStrings2 = new HashSet<string>() { "test2" };
