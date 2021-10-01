@@ -11,9 +11,9 @@ namespace TheEyeTether.UnitTests.Tests.Extensions
         public void AddUnique_AddsHypothesisToList_WhenListDoesNotHaveAHypothesisWithMatchingDataPointStrings()
         {
             var dataPointStrings1 = new HashSet<string>() { "test1" };
+            var dataPointStrings2 = new HashSet<string>() { "test2" };
             var hypotheses = new List<Hypothesis>() { new Hypothesis(dataPointStrings1) };
 
-            var dataPointStrings2 = new HashSet<string>() { "test2" };
             hypotheses.AddUnique(new Hypothesis(dataPointStrings2));
 
             Assert.Equal(2, hypotheses.Count);
