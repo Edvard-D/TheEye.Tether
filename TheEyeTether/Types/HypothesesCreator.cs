@@ -1,6 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
+using Aglomera;
+using Aglomera.Evaluation.Internal;
+using Aglomera.Linkage;
+using TheEyeTether.Extensions;
 using TheEyeTether.Helpers;
 using TheEyeTether.Interfaces;
 
@@ -12,14 +17,13 @@ namespace TheEyeTether.Types
         private const float DataPointStringCorrelationThreshold = 0.75f;
         private const int MinRequiredSnapshots = 100;
         private const int SnapshotKeepLookbackDays = 7;
+        private const float ThresholdStepIncreaseAmount = 0.05f;
 
 
         public static List<Hypothesis> Create(
                 IFileSystem fileSystem,
                 IClock clock)
         {
-            var hypotheses = new List<Hypothesis>();
-
             var directoryPath = @"C:\";
             SnapshotDeleter.DeleteOutdatedFiles(directoryPath, SnapshotKeepLookbackDays, fileSystem, clock);
             var snapshots = SnapshotsLoader.Load(directoryPath, fileSystem);
@@ -29,35 +33,17 @@ namespace TheEyeTether.Types
                 return new List<Hypothesis>();
             }
 
-            var filteredDataPointStrings = FilterDataPointStringsByAppearanceCounts(snapshots);
-            var appearanceValues = AggregateAppearanceValues(snapshots, filteredDataPointStrings);
-            var correlations = CalculateDataPointStringPairCorrelations(filteredDataPointStrings,
-                    appearanceValues);
-            hypotheses.AddRange(CreateHypothesesFromCorrelations(correlations));
+            var trueCounts = CountNumberOfTruesForEachDataPointString(snapshots);
+            var filteredDataPointStrings = FilterDataPointStringsByTrueCounts(snapshots, trueCounts);
+            var snapshotHashSets = ConvertSnapshotsToHashSets(snapshots);
+            var dataPoints = CreateDataPoints(snapshotHashSets, filteredDataPointStrings);
+            var clusteringResult = GetClusteringResult(dataPoints);
+            var hypotheses = CreateHypotheses(snapshots, clusteringResult, trueCounts);
 
             return hypotheses;
         }
 
-        private static List<string> FilterDataPointStringsByAppearanceCounts(List<List<string>> snapshots)
-        {
-            var filteredDataPointStrings = new List<string>();
-            var appearanceCounts = CountNumberOfAppearancesForEachDataPointString(snapshots);
-            var snapshotsCount = (float)snapshots.Count;
-
-            foreach(KeyValuePair<string, int> keyValuePair in appearanceCounts)
-            {
-                if(keyValuePair.Value / snapshotsCount < DataPointStringAppearanceThreshold)
-                {
-                    continue;
-                }
-
-                filteredDataPointStrings.Add(keyValuePair.Key);
-            }
-
-            return filteredDataPointStrings;
-        }
-
-        private static Dictionary<string, int> CountNumberOfAppearancesForEachDataPointString(
+        private static Dictionary<string, int> CountNumberOfTruesForEachDataPointString(
                 List<List<string>> snapshots)
         {
             var appearanceCounts = new Dictionary<string, int>();
@@ -79,27 +65,24 @@ namespace TheEyeTether.Types
             return appearanceCounts;
         }
 
-        private static Dictionary<string, List<int>> AggregateAppearanceValues(
+        private static List<string> FilterDataPointStringsByTrueCounts(
                 List<List<string>> snapshots,
-                List<string> filteredDataPointStrings)
+                Dictionary<string, int> trueCounts)
         {
-            var snapshotHashSets = ConvertSnapshotsToHashSets(snapshots);
-            var appearanceValues = new Dictionary<string, List<int>>();
+            var filteredDataPointStrings = new List<string>();
+            var snapshotsCount = (float)snapshots.Count;
 
-            foreach(string dataPointString in filteredDataPointStrings)
+            foreach(KeyValuePair<string, int> keyValuePair in trueCounts)
             {
-                var dataPointStringAppearanceValues = new List<int>();
-
-                foreach(HashSet<string> snapshotHashSet in snapshotHashSets)
+                if(keyValuePair.Value / snapshotsCount < DataPointStringAppearanceThreshold)
                 {
-                    var containsKey = snapshotHashSet.Contains(dataPointString);
-                    dataPointStringAppearanceValues.Add(System.Convert.ToInt32(containsKey));
+                    continue;
                 }
 
-                appearanceValues[dataPointString] = dataPointStringAppearanceValues;
+                filteredDataPointStrings.Add(keyValuePair.Key);
             }
 
-            return appearanceValues;
+            return filteredDataPointStrings;
         }
         
         private static List<HashSet<string>> ConvertSnapshotsToHashSets(List<List<string>> snapshots)
@@ -121,99 +104,126 @@ namespace TheEyeTether.Types
             return snapshotHashSets;
         }
 
-        private static Dictionary<string, Dictionary<string, float>> CalculateDataPointStringPairCorrelations(
-                List<string> filteredDataPointStrings,
-                Dictionary<string, List<int>> appearanceValues)
+        private static HashSet<DataPoint> CreateDataPoints(
+                List<HashSet<string>> snapshotHashSets,
+                List<string> filteredDataPointStrings)
         {
-            var correlations = new Dictionary<string, Dictionary<string, float>>();
+            var dataPoints = new HashSet<DataPoint>();
 
-            for(int i = 0; i < filteredDataPointStrings.Count; i++)
+            foreach(string dataPointString in filteredDataPointStrings)
             {
-                var iDataPointString = filteredDataPointStrings[i];
-                var dataPointStringCorrelations = new Dictionary<string, float>();
+                var values = new List<int>();
 
-                for(int j = 0; j < filteredDataPointStrings.Count; j++)
+                foreach(HashSet<string> snapshotHashSet in snapshotHashSets)
                 {
-                    if(i == j)
-                    {
-                        continue;
-                    }
-
-                    var jDataPointString = filteredDataPointStrings[j];
-
-                    /// We can reuse value that was already calculated.
-                    if(correlations.ContainsKey(jDataPointString))
-                    {
-                        dataPointStringCorrelations[jDataPointString] =
-                                correlations[jDataPointString][iDataPointString];
-                        
-                        continue;
-                    }
-
-                    dataPointStringCorrelations[jDataPointString] =
-                            DataAnalysisHelpers.CalculateJaccardSimilarity(
-                                    appearanceValues[iDataPointString], appearanceValues[jDataPointString]);
+                    var containsKey = snapshotHashSet.Contains(dataPointString);
+                    values.Add(System.Convert.ToInt32(containsKey));
                 }
 
-                correlations[iDataPointString] = dataPointStringCorrelations;
+                dataPoints.Add(new DataPoint(dataPointString, values));
             }
 
-            return correlations;
+            return dataPoints;
         }
 
-        private static List<Hypothesis> CreateHypothesesFromCorrelations(
-                Dictionary<string, Dictionary<string, float>> correlations)
+        private static ClusteringResult<DataPoint> GetClusteringResult(HashSet<DataPoint> dataPoints)
+        {
+            var dissimilarityMetric = new JaccardDissimilarityMetric();
+            var linkage = new AverageLinkage<DataPoint>(dissimilarityMetric);
+            var algorithm = new AgglomerativeClusteringAlgorithm<DataPoint>(linkage);
+            var clusteringResult = algorithm.GetClustering(dataPoints);
+
+            return clusteringResult;
+        }
+
+        private static List<Hypothesis> CreateHypotheses(
+                List<List<string>> snapshots,
+                ClusteringResult<DataPoint> clusteringResult,
+                Dictionary<string, int> trueCounts)
         {
             var hypotheses = new List<Hypothesis>();
 
-            foreach(KeyValuePair<string, Dictionary<string, float>> correlationKeyValuePair in correlations)
+            for(int i = 0; i < clusteringResult.Count; i++)
             {
-                var filteredCorrelations = correlationKeyValuePair.Value
-                        .Where(kvp => kvp.Value >= DataPointStringCorrelationThreshold)
-                        .ToList();
-                
-                if(filteredCorrelations.Count == 0)
-                {
-                    hypotheses.Add(new Hypothesis(new HashSet<string>() { correlationKeyValuePair.Key }));
-                    continue;
-                }
-                
-                var validCorrelations = new HashSet<string>();
-                
-                /// We want to find the DataPointStrings that correlate with all the other filtered
-                /// DataPointStrings. We can filter out the ones that don't correlate with all of the
-                /// other DataPointStrings that correlate with the correlationKeyValuePair being checked.
-                /// This is because it will be added as its own Hypothesis if it hasn't already been.
-                foreach(KeyValuePair<string, float> filteredCorrelationKeyValuePair in filteredCorrelations)
-                {
-                    var filteredCorrelationKey = filteredCorrelationKeyValuePair.Key;
-                    var doesCorrelateWithAllOthers = filteredCorrelations
-                            .All(kvp => filteredCorrelationKey == kvp.Key ||
-                                    correlations[filteredCorrelationKey][kvp.Key] >=
-                                            DataPointStringCorrelationThreshold);
-
-                    if(doesCorrelateWithAllOthers == true)
-                    {
-                        validCorrelations.Add(filteredCorrelationKey);
-                    }
-                }
-                
-                validCorrelations.Add(correlationKeyValuePair.Key);
-                
-                if(!DoesHypothesisExist(validCorrelations, hypotheses))
-                {
-                    hypotheses.Add(new Hypothesis(validCorrelations));
-                }
+                hypotheses.AddUniques(ConvertClusterSetToHypotheses(clusteringResult[i]));
             }
 
             return hypotheses;
         }
 
-        private static bool DoesHypothesisExist(
-                HashSet<string> dataPointStrings,
-                List<Hypothesis> hypotheses)
+        private static ClusterSet<DataPoint> GetBestClusterSet(
+                ClusteringResult<DataPoint> clusteringResult)
         {
-            return hypotheses.Any(h => h.DataPointStrings.SetEquals(dataPointStrings));
+            var dissimilarityMetric = new JaccardDissimilarityMetric();
+            var criterion = new SilhouetteCoefficient<DataPoint>(dissimilarityMetric);
+            var bestClusterSet = clusteringResult[0];
+            var bestScore = criterion.Evaluate(clusteringResult[0]);
+
+            for(int i = 1; i < clusteringResult.Count; i++)
+            {
+                var clusterSet = clusteringResult[i];
+                var score = criterion.Evaluate(clusterSet);
+
+                if(score > bestScore)
+                {
+                    bestScore = score;
+                    bestClusterSet = clusterSet;
+                }
+            }
+
+            return bestClusterSet;
+        }
+
+        private static List<Hypothesis> ConvertClusterSetToHypotheses(ClusterSet<DataPoint> clusterSet)
+        {
+            var hypotheses = new List<Hypothesis>();
+
+            foreach(Cluster<DataPoint> cluster in clusterSet)
+            {
+                var dataPointStrings = new HashSet<string>();
+
+                foreach(DataPoint dataPoint in cluster)
+                {
+                    dataPointStrings.Add(dataPoint.Name);
+                }
+
+                hypotheses.Add(new Hypothesis(dataPointStrings));
+            }
+
+            return hypotheses;
+        }
+
+
+        private class JaccardDissimilarityMetric : IDissimilarityMetric<DataPoint>
+        {
+            public double Calculate(DataPoint instance1, DataPoint instance2)
+            {
+                var similarity = DataAnalysisHelpers.CalculateJaccardSimilarity(instance1.Values,
+                        instance2.Values);
+                var dissimilarity = 1 - similarity;
+
+                return dissimilarity;
+            }
+        }
+
+
+        private class DataPoint : IComparable<DataPoint>
+        {
+            public string Name;
+            public List<int> Values;
+
+
+            public DataPoint(string name, List<int> values)
+            {
+                Name = name;
+                Values = values;
+            }
+
+
+            public int CompareTo(DataPoint other)
+            {
+                return this.Name.CompareTo(other.Name);
+            }
         }
     }
 }

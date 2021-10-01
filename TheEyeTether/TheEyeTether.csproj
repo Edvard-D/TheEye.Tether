@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aglomera" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="MoreLinq" Version="3.3.2" />
     <PackageReference Include="NLua" Version="1.5.11" />

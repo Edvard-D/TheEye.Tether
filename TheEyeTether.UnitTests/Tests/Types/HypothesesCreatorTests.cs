@@ -163,7 +163,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
-        public void Create_GroupsDataPointStrings_WhenTheirCorrelationIsAtOrAbove75Percent()
+        public void Create_GroupsDataPointStrings_WhenTheyCorrelate()
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
@@ -200,7 +200,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         }
 
         [Fact]
-        public void Create_DoesNotCreateHypothesis_WhenTheirCorrelationIsBelow75Percent()
+        public void Create_CreatesMultipleHypotheses_WhenMultipleHighlyCorrelatedDataPointStringsExist()
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
@@ -208,14 +208,19 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var testDataPointString1 = "testDataPointString1";
             var testDataPointString2 = "testDataPointString2";
+            var testDataPointString3 = "testDataPointString3";
             var snapshots = new List<List<string>>();
             for(int i = 0; i < 100; i++)
             {
                 snapshots.Add(new List<string>() { testDataPointString1 });
             }
-            for(int i = 0; i < 74; i++)
+            for(int i = 0; i < 95; i++)
             {
                 snapshots[i].Add(testDataPointString2);
+            }
+            for(int i = 0; i < 85; i++)
+            {
+                snapshots[i].Add(testDataPointString3);
             }
             var fileDataJson = JsonSerializer.Serialize(snapshots);
             var mockFileData = new MockFileData(fileDataJson);
@@ -228,8 +233,13 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock);
 
-            var hashSet = new HashSet<string>() { testDataPointString1, testDataPointString2 };
-            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(hashSet)));
+            var hashSet1 = new HashSet<string>() { testDataPointString1 };
+            var hashSet2 = new HashSet<string>() { testDataPointString1, testDataPointString2 };
+            var hashSet3 = new HashSet<string>() { testDataPointString1, testDataPointString2,
+                    testDataPointString3 };
+            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(hashSet1)));
+            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(hashSet2)));
+            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(hashSet3)));
         }
     }
 }
