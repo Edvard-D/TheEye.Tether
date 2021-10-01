@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TheEyeTether.Types;
 
 namespace TheEyeTether.Extensions
@@ -9,6 +10,11 @@ namespace TheEyeTether.Extensions
                 this List<Hypothesis> list,
                 Hypothesis hypothesis)
         {
+            if(list.Any(h => h.DataPointStrings.SetEquals(hypothesis.DataPointStrings)))
+            {
+                return;
+            }
+
             list.Add(hypothesis);
         }
     }
