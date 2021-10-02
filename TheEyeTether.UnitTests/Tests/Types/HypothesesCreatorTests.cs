@@ -35,7 +35,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                     SnapshotId
                 };
                 
-                return Path.Combine(directoryPathElements);
+                return Path.Combine(directoryPathElements) + Path.DirectorySeparatorChar;
             }
         }
 

@@ -14,13 +14,13 @@ namespace TheEyeTether.Types
 {
     public static class HypothesesCreator
     {
-        private const int CategoryIdIndexOffset = 2;
-        private const int CategoryTypeIndexOffset = 3;
+        private const int CategoryIdIndexOffset = 3;
+        private const int CategoryTypeIndexOffset = 4;
         private const float DataPointStringAppearanceThreshold = 0.25f;
         private const float DataPointStringCorrelationThreshold = 0.75f;
         private const int MinRequiredSnapshots = 100;
         private const int SnapshotKeepLookbackDays = 7;
-        private const int SnapshotTypeIndexOffset = 1;
+        private const int SnapshotTypeIndexOffset = 2;
         private const float ThresholdStepIncreaseAmount = 0.05f;
 
 
