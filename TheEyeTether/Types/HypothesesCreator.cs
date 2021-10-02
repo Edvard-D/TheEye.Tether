@@ -14,6 +14,7 @@ namespace TheEyeTether.Types
 {
     public static class HypothesesCreator
     {
+        private const int CategoryIdIndexOffset = 2;
         private const int CategoryTypeIndexOffset = 3;
         private const float DataPointStringAppearanceThreshold = 0.25f;
         private const float DataPointStringCorrelationThreshold = 0.75f;
@@ -231,6 +232,7 @@ namespace TheEyeTether.Types
             var hypotheses = new List<Hypothesis>();
             var directoryPathElements = directoryPath.Split(@"/\".ToCharArray());
             var categoryType = directoryPathElements[directoryPathElements.Length - CategoryTypeIndexOffset];
+            var categoryId = directoryPathElements[directoryPathElements.Length - CategoryIdIndexOffset];
 
             foreach(Cluster<DataPoint> cluster in clusterSet)
             {
@@ -241,7 +243,7 @@ namespace TheEyeTether.Types
                     dataPointStrings.Add(dataPoint.Name);
                 }
 
-                hypotheses.Add(new Hypothesis(categoryType, dataPointStrings));
+                hypotheses.Add(new Hypothesis(categoryType, categoryId, dataPointStrings));
             }
 
             return hypotheses;
