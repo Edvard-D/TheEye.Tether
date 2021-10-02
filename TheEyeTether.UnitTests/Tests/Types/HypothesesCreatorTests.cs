@@ -501,5 +501,33 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Equal(SnapshotType, result[0].SnapshotType);
         }
+
+        [Fact]
+        public void Create_GetsAndAssignsSnapshotIdValueFromFilePath_WhenCalled()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
+            var testDataPointString = "testDataPointString";
+            var snapshots = new List<List<string>>();
+            for(int i = 0; i < 100; i++)
+            {
+                snapshots.Add(new List<string>() { testDataPointString });
+            }
+            var fileDataJson = JsonSerializer.Serialize(snapshots);
+            var mockFileData = new MockFileData(fileDataJson);
+            mockFileData.CreationTime = nowDateTime;
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { DirectoryPath + fileName, mockFileData }
+            });
+            var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    CurrentDomainBaseDirectory);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
+
+            Assert.Equal(SnapshotId, result[0].SnapshotId);
+        }
     }
 }
