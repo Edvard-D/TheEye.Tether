@@ -14,6 +14,7 @@ namespace TheEyeTether.Types
 {
     public static class HypothesesCreator
     {
+        private const int CategoryTypeIndexOffset = 3;
         private const float DataPointStringAppearanceThreshold = 0.25f;
         private const float DataPointStringCorrelationThreshold = 0.75f;
         private const int MinRequiredSnapshots = 100;
@@ -46,7 +47,7 @@ namespace TheEyeTether.Types
                 var snapshotHashSets = ConvertSnapshotsToHashSets(snapshots);
                 var dataPoints = CreateDataPoints(snapshotHashSets, filteredDataPointStrings);
                 var clusteringResult = GetClusteringResult(dataPoints);
-                var hypotheses = CreateHypotheses(snapshots, clusteringResult, trueCounts);
+                var hypotheses = CreateHypotheses(directoryPath, snapshots, clusteringResult, trueCounts);
                 hypotheses = FilterHypothesesByExistence(hypotheses, snapshotHashSets,
                         filteredDataPointStrings);
 
@@ -185,6 +186,7 @@ namespace TheEyeTether.Types
         }
 
         private static List<Hypothesis> CreateHypotheses(
+                string directoryPath,
                 List<List<string>> snapshots,
                 ClusteringResult<DataPoint> clusteringResult,
                 Dictionary<string, int> trueCounts)
@@ -193,7 +195,7 @@ namespace TheEyeTether.Types
 
             for(int i = 0; i < clusteringResult.Count; i++)
             {
-                hypotheses.AddUniques(ConvertClusterSetToHypotheses(clusteringResult[i]));
+                hypotheses.AddUniques(ConvertClusterSetToHypotheses(directoryPath, clusteringResult[i]));
             }
 
             return hypotheses;
@@ -222,9 +224,13 @@ namespace TheEyeTether.Types
             return bestClusterSet;
         }
 
-        private static List<Hypothesis> ConvertClusterSetToHypotheses(ClusterSet<DataPoint> clusterSet)
+        private static List<Hypothesis> ConvertClusterSetToHypotheses(
+                string directoryPath,
+                ClusterSet<DataPoint> clusterSet)
         {
             var hypotheses = new List<Hypothesis>();
+            var directoryPathElements = directoryPath.Split(@"/\".ToCharArray());
+            var categoryType = directoryPathElements[directoryPathElements.Length - CategoryTypeIndexOffset];
 
             foreach(Cluster<DataPoint> cluster in clusterSet)
             {
@@ -235,7 +241,7 @@ namespace TheEyeTether.Types
                     dataPointStrings.Add(dataPoint.Name);
                 }
 
-                hypotheses.Add(new Hypothesis(dataPointStrings));
+                hypotheses.Add(new Hypothesis(categoryType, dataPointStrings));
             }
 
             return hypotheses;
