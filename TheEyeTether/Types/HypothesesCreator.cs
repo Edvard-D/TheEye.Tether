@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using Aglomera;
@@ -22,26 +23,72 @@ namespace TheEyeTether.Types
 
         public static List<Hypothesis> Create(
                 IFileSystem fileSystem,
-                IClock clock)
+                IClock clock,
+                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
         {
-            var directoryPath = @"C:\";
-            SnapshotDeleter.DeleteOutdatedFiles(directoryPath, SnapshotKeepLookbackDays, fileSystem, clock);
-            var snapshots = SnapshotsLoader.Load(directoryPath, fileSystem);
+            var aggregateHypotheses = new List<Hypothesis>();
+            var snapshotDirectoryPaths = GetSnapshotDirectoryPaths(fileSystem,
+                    currentDomainBaseDirectoryGetter);
 
-            if(snapshots.Count < MinRequiredSnapshots)
+            foreach(string directoryPath in snapshotDirectoryPaths)
             {
-                return new List<Hypothesis>();
+                SnapshotDeleter.DeleteOutdatedFiles(directoryPath, SnapshotKeepLookbackDays, fileSystem,
+                        clock);
+                var snapshots = SnapshotsLoader.Load(directoryPath, fileSystem);
+
+                if(snapshots.Count < MinRequiredSnapshots)
+                {
+                    continue;
+                }
+
+                var trueCounts = CountNumberOfTruesForEachDataPointString(snapshots);
+                var filteredDataPointStrings = FilterDataPointStringsByTrueCounts(snapshots, trueCounts);
+                var snapshotHashSets = ConvertSnapshotsToHashSets(snapshots);
+                var dataPoints = CreateDataPoints(snapshotHashSets, filteredDataPointStrings);
+                var clusteringResult = GetClusteringResult(dataPoints);
+                var hypotheses = CreateHypotheses(snapshots, clusteringResult, trueCounts);
+                hypotheses = FilterHypothesesByExistence(hypotheses, snapshotHashSets,
+                        filteredDataPointStrings);
+
+                aggregateHypotheses.AddRange(hypotheses);
             }
 
-            var trueCounts = CountNumberOfTruesForEachDataPointString(snapshots);
-            var filteredDataPointStrings = FilterDataPointStringsByTrueCounts(snapshots, trueCounts);
-            var snapshotHashSets = ConvertSnapshotsToHashSets(snapshots);
-            var dataPoints = CreateDataPoints(snapshotHashSets, filteredDataPointStrings);
-            var clusteringResult = GetClusteringResult(dataPoints);
-            var hypotheses = CreateHypotheses(snapshots, clusteringResult, trueCounts);
-            hypotheses = FilterHypothesesByExistence(hypotheses, snapshotHashSets, filteredDataPointStrings);
+            return aggregateHypotheses;
+        }
 
-            return hypotheses;
+        private static HashSet<string> GetSnapshotDirectoryPaths(
+                IFileSystem fileSystem,
+                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
+        {
+            var directoryPathElements = new string[]
+            {
+                currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory(),
+                "Data",
+                "Snapshots"
+            };
+            var topDirectoryPath = Path.Combine(directoryPathElements);
+            string[] filePaths;
+
+            try
+            {
+                filePaths = fileSystem.Directory.GetFiles(topDirectoryPath, "*",
+                        SearchOption.AllDirectories);
+            }
+            catch
+            {
+                return new HashSet<string>();
+            }
+
+            var directoryPaths = new HashSet<string>();
+
+            foreach(string filePath in filePaths)
+            {
+                var filePathElements = filePath.Split(@"/\".ToCharArray()).ToList();
+                filePathElements.RemoveAt(filePathElements.Count - 1);
+                directoryPaths.Add(Path.Combine(filePathElements.ToArray()));
+            }
+
+            return directoryPaths;
         }
 
         private static Dictionary<string, int> CountNumberOfTruesForEachDataPointString(

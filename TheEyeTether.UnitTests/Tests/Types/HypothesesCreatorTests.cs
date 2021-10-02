@@ -19,12 +19,34 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var mockFileSystem = new MockFileSystem();
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { currentDomainBaseDirectory + "test.json", new MockFileData(string.Empty) }
+            });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
             Assert.IsType<List<Hypothesis>>(result);
+        }
+
+        [Fact]
+        public void Create_DoesNotThrowException_WhenNoSnapshotsExist()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var mockFileSystem = new MockFileSystem();
+            var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
+
+            Assert.True(true);
         }
 
         [Fact]
@@ -33,7 +55,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
             var creationDateTime = nowDateTime.AddDays(-8);
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = creationDateTime.ToString(DateTimeFormat) + ".json";
             var mockFileData = new MockFileData(string.Empty);
             mockFileData.CreationTime = creationDateTime;
@@ -42,8 +65,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
             Assert.DoesNotContain(directoryPath + fileName, mockFileSystem.AllFiles);
         }
@@ -53,7 +78,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var snapshots = new List<List<string>>();
             for(int i = 0; i < 100; i++)
@@ -68,8 +94,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
             Assert.NotEmpty(result);
         }
@@ -79,7 +107,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var snapshots = new List<List<string>>();
             for(int i = 0; i < 99; i++)
@@ -94,8 +123,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
             Assert.Empty(result);
         }
@@ -105,7 +136,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var testDataPointString = "testDataPointString";
             var snapshots = new List<List<string>>();
@@ -125,8 +157,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
             Assert.True(result.Any(h => h.DataPointStrings.Contains(testDataPointString)));
         }
@@ -136,7 +170,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var invalidDataPointString = "invalidDataPointString";
             var snapshots = new List<List<string>>();
@@ -156,8 +191,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
             Assert.False(result.Any(h => h.DataPointStrings.Contains(invalidDataPointString)));
         }
@@ -167,7 +204,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var testDataPointString1 = "testDataPointString1";
             var testDataPointString2 = "testDataPointString2";
@@ -188,8 +226,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
             
             var dataPointStrings = new HashSet<string>()
             {
@@ -204,7 +244,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var testDataPointString1 = "testDataPointString1";
             var testDataPointString2 = "testDataPointString2";
@@ -230,8 +271,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
             var hashSet1 = new HashSet<string>() { testDataPointString1 };
             var hashSet2 = new HashSet<string>() { testDataPointString1, testDataPointString2 };
@@ -247,7 +290,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var testDataPointString1 = "testDataPointString1";
             var testDataPointString2 = "testDataPointString2";
@@ -273,8 +317,10 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
             
             var invalidHashSet1 = new HashSet<string>() { testDataPointString2 };
             var invalidHashSet2 = new HashSet<string>() { testDataPointString3 };
@@ -289,7 +335,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
         {
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
-            var directoryPath = @"C:\";
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
             var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
             var testDataPointString1 = "testDataPointString1";
             var testDataPointString2 = "testDataPointString2";
@@ -315,13 +362,56 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 { directoryPath + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
 
-            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
             var validHashSet = new HashSet<string>() { testDataPointString1, testDataPointString2 };
             var invalidHashSet = new HashSet<string>() { testDataPointString2, testDataPointString3 };
             Assert.True(result.Any(h => h.DataPointStrings.SetEquals(validHashSet)));
             Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet)));
+        }
+        
+        [Fact]
+        public void Create_OnlyLoadsSnapshotFilesInCurrentDomainBaseDirectoryDataSnapshots_WhenCalled()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var currentDomainBaseDirectory = @"C:\TheEyeTether\";
+            var directoryPath = currentDomainBaseDirectory + @"Data\Snapshots\";
+            var fileCreationTime1 = nowDateTime;
+            var fileCreationTime2 = nowDateTime.AddDays(-1);
+            var fileName1 = fileCreationTime1.ToString(DateTimeFormat) + ".json";
+            var fileName2 = fileCreationTime2.ToString(DateTimeFormat) + ".json";
+            var testDataPointString1 = "testDataPointString1";
+            var testDataPointString2 = "testDataPointString2";
+            var snapshots1 = new List<List<string>>();
+            var snapshots2 = new List<List<string>>();
+            for(int i = 0; i < 100; i++)
+            {
+                snapshots1.Add(new List<string>() { testDataPointString1 });
+                snapshots2.Add(new List<string>() { testDataPointString2 });
+            }
+            var fileDataJson1 = JsonSerializer.Serialize(snapshots1);
+            var fileDataJson2 = JsonSerializer.Serialize(snapshots2);
+            var mockFileData1 = new MockFileData(fileDataJson1);
+            var mockFileData2 = new MockFileData(fileDataJson2);
+            mockFileData1.CreationTime = fileCreationTime1;
+            mockFileData2.CreationTime = fileCreationTime2;
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { @"C:\" + fileName1, mockFileData1 },
+                { directoryPath + fileName2, mockFileData2 }
+            });
+            var stubClock = new StubClock(nowDateTime);
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    currentDomainBaseDirectory);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
+
+            Assert.False(result.Any(h => h.DataPointStrings.Contains(testDataPointString1)));
+            Assert.True(result.Any(h => h.DataPointStrings.Contains(testDataPointString2)));
         }
     }
 }
