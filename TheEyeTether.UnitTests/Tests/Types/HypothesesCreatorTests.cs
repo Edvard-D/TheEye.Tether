@@ -283,5 +283,45 @@ namespace TheEyeTether.UnitTests.Tests.Types
             Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet2)));
             Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet3)));
         }
+
+        [Fact]
+        public void Create_PrioritizesCreatingGroupsWithHigherOverallTrueValues_WhenTwoPossibleGroupsCombinationsExistWithSimilarDistances()
+        {
+            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
+                    .ToUniversalTime();
+            var directoryPath = @"C:\";
+            var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
+            var testDataPointString1 = "testDataPointString1";
+            var testDataPointString2 = "testDataPointString2";
+            var testDataPointString3 = "testDataPointString3";
+            var snapshots = new List<List<string>>();
+            for(int i = 0; i < 100; i++)
+            {
+                snapshots.Add(new List<string>() { testDataPointString1 });
+            }
+            for(int i = 0; i < 95; i++)
+            {
+                snapshots[i].Add(testDataPointString2);
+            }
+            for(int i = 0; i < 90; i++)
+            {
+                snapshots[i].Add(testDataPointString3);
+            }
+            var fileDataJson = JsonSerializer.Serialize(snapshots);
+            var mockFileData = new MockFileData(fileDataJson);
+            mockFileData.CreationTime = nowDateTime;
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { directoryPath + fileName, mockFileData }
+            });
+            var stubClock = new StubClock(nowDateTime);
+
+            var result = HypothesesCreator.Create(mockFileSystem, stubClock);
+
+            var validHashSet = new HashSet<string>() { testDataPointString1, testDataPointString2 };
+            var invalidHashSet = new HashSet<string>() { testDataPointString2, testDataPointString3 };
+            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(validHashSet)));
+            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet)));
+        }
     }
 }

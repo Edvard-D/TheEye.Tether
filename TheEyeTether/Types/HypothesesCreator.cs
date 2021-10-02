@@ -232,9 +232,18 @@ namespace TheEyeTether.Types
         {
             public double Calculate(DataPoint instance1, DataPoint instance2)
             {
-                var similarity = DataAnalysisHelpers.CalculateJaccardSimilarity(instance1.Values,
+                var similarity = (double)DataAnalysisHelpers.CalculateJaccardSimilarity(instance1.Values,
                         instance2.Values);
                 var dissimilarity = 1 - similarity;
+                
+                /// This is to act as a tie breaker in situations where there are two pairs of values that
+                /// have the same dissimilarity score. In those cases, the incorrect pair may be selected
+                /// to be grouped together. We assume that it's more likely for pairs that have more true
+                /// values to be part of the correct pair. At the same time, this value is only meant as
+                /// a tie breaker, so it's important that the change it makes to the base dissimilarity
+                /// score is very small.
+                var trueCountTotal = (double)(instance1.Values.Sum() + instance2.Values.Sum());
+                dissimilarity -= (double)(trueCountTotal / (instance1.Values.Count * 2) / 100);
 
                 return dissimilarity;
             }
