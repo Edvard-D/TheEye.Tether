@@ -20,6 +20,7 @@ namespace TheEyeTether.Types
         private const float DataPointStringCorrelationThreshold = 0.75f;
         private const int MinRequiredSnapshots = 100;
         private const int SnapshotKeepLookbackDays = 7;
+        private const int SnapshotTypeIndexOffset = 1;
         private const float ThresholdStepIncreaseAmount = 0.05f;
 
 
@@ -233,6 +234,7 @@ namespace TheEyeTether.Types
             var directoryPathElements = directoryPath.Split(@"/\".ToCharArray());
             var categoryType = directoryPathElements[directoryPathElements.Length - CategoryTypeIndexOffset];
             var categoryId = directoryPathElements[directoryPathElements.Length - CategoryIdIndexOffset];
+            var snapshotType = directoryPathElements[directoryPathElements.Length - SnapshotTypeIndexOffset];
 
             foreach(Cluster<DataPoint> cluster in clusterSet)
             {
@@ -243,7 +245,7 @@ namespace TheEyeTether.Types
                     dataPointStrings.Add(dataPoint.Name);
                 }
 
-                hypotheses.Add(new Hypothesis(categoryType, categoryId, dataPointStrings));
+                hypotheses.Add(new Hypothesis(categoryType, categoryId, snapshotType, dataPointStrings));
             }
 
             return hypotheses;
