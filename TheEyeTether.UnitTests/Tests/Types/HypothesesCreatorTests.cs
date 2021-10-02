@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using System.Text.Json;
@@ -10,9 +11,13 @@ namespace TheEyeTether.UnitTests.Tests.Types
 {
     public class HypothesesCreatorTests
     {
+        private const string CategoryId = "CategoryId";
+        private const string CategoryType = "CategoryType";
         private const string CurrentDomainBaseDirectory = @"C:\TheEyeTether\";
         private const string DateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
         private const string NowDateTimeString = "2021_09_23__12_00_00";
+        private const string SnapshotId = "SnapshotId";
+        private const string SnapshotType = "SnapshotType";
 
 
         private string DirectoryPath
@@ -23,7 +28,11 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 {
                     CurrentDomainBaseDirectory,
                     "Data",
-                    "Snapshots"
+                    "Snapshots",
+                    CategoryType,
+                    CategoryId,
+                    SnapshotType,
+                    SnapshotId
                 };
                 
                 return Path.Combine(directoryPathElements);
