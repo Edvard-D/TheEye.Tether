@@ -16,7 +16,7 @@ namespace TheEyeTether.Types
     {
         private const int CategoryIdIndexOffset = 3;
         private const int CategoryTypeIndexOffset = 4;
-        private const float DataPointStringAppearanceThreshold = 0.25f;
+        private const float DataPointStringAppearanceThreshold = 0.1f;
         private const int MinRequiredSnapshots = 100;
         private const int SnapshotIdIndexOffset = 1;
         private const int SnapshotKeepLookbackDays = 7;
