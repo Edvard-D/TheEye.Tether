@@ -20,25 +20,21 @@ namespace TheEyeTether.UnitTests.Tests.Types
         private const string SnapshotType = "SnapshotType";
 
 
-        private string DirectoryPath
+        private string CreateDirectoryPath(string snapshotIdModfiier="")
         {
-            get
+            var directoryPathElements = new string[]
             {
-                var directoryPathElements = new string[]
-                {
-                    CurrentDomainBaseDirectory,
-                    "Data",
-                    "Snapshots",
-                    CategoryType,
-                    CategoryId,
-                    SnapshotType,
-                    SnapshotId
-                };
-                
-                return Path.Combine(directoryPathElements) + Path.DirectorySeparatorChar;
-            }
+                CurrentDomainBaseDirectory,
+                "Data",
+                "Snapshots",
+                CategoryType,
+                CategoryId,
+                SnapshotType,
+                SnapshotId + snapshotIdModfiier
+            };
+            
+            return Path.Combine(directoryPathElements) + Path.DirectorySeparatorChar;
         }
-
 
         [Fact]
         public void Create_ReturnsListOfHypotheses_WhenCalled()
@@ -84,7 +80,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = creationDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -92,7 +88,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
-            Assert.DoesNotContain(DirectoryPath + fileName, mockFileSystem.AllFiles);
+            Assert.DoesNotContain(CreateDirectoryPath() + fileName, mockFileSystem.AllFiles);
         }
 
         [Fact]
@@ -111,7 +107,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -138,7 +134,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -170,7 +166,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -202,7 +198,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -235,7 +231,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -278,7 +274,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -322,7 +318,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -365,7 +361,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -406,7 +402,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
                 { @"C:\" + fileName1, mockFileData1 },
-                { DirectoryPath + fileName2, mockFileData2 }
+                { CreateDirectoryPath() + fileName2, mockFileData2 }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -435,7 +431,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -463,7 +459,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -491,7 +487,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
@@ -519,7 +515,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             mockFileData.CreationTime = nowDateTime;
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
-                { DirectoryPath + fileName, mockFileData }
+                { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
