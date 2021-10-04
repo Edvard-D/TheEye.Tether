@@ -25,5 +25,18 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             Assert.Contains(SavePath, mockFileSystem.AllFiles);
         }
+
+        [Fact]
+        public void Save_DoesNotCreateFile_WhenItDoesNotExistAndThereAreNoHypothesesToSave()
+        {
+            var hypotheses = new List<Hypothesis>();
+            var mockFileSystem = new MockFileSystem();
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    ProgramPath);
+
+            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+
+            Assert.DoesNotContain(SavePath, mockFileSystem.AllFiles);
+        }
     }
 }

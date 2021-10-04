@@ -14,6 +14,11 @@ namespace TheEyeTether.Types
                 IFileSystem fileSystem,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
         {
+            if(hypotheses.Count == 0)
+            {
+                return;
+            }
+
             var currentDomainBaseDirectory = currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory();
             var outputFilePathDirectory = fileSystem.Path.Combine(currentDomainBaseDirectory, "Data");
             fileSystem.Directory.CreateDirectory(outputFilePathDirectory);
