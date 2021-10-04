@@ -14,6 +14,8 @@ namespace TheEyeTether.Types
 {
     public static class HypothesesCreator
     {
+        private const int CategoryAppearanceCountMin = 5;
+        private const float CategoryDataPointStringAppearanceThreshold = 0.8f;
         private const int CategoryIdIndexOffset = 3;
         private const int CategoryTypeIndexOffset = 4;
         private const float DataPointStringAppearanceThreshold = 0.1f;
@@ -29,7 +31,8 @@ namespace TheEyeTether.Types
                 IClock clock,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
         {
-            var aggregateHypotheses = new List<Hypothesis>();
+            var aggregateHypotheses = new Dictionary<string, List<Hypothesis>>();
+            var aggregateFilteredDataPointStrings = new Dictionary<string, List<string>>();
             var snapshotDirectoryPaths = GetSnapshotDirectoryPaths(fileSystem,
                     currentDomainBaseDirectoryGetter);
 
@@ -53,10 +56,18 @@ namespace TheEyeTether.Types
                 hypotheses = FilterHypothesesByExistence(hypotheses, snapshotHashSets,
                         filteredDataPointStrings);
 
-                aggregateHypotheses.AddRange(hypotheses);
+                if(!aggregateHypotheses.ContainsKey(directoryPath))
+                {
+                    aggregateHypotheses[directoryPath] = new List<Hypothesis>();
+                }
+                aggregateHypotheses[directoryPath].AddRange(hypotheses);
+                aggregateFilteredDataPointStrings[directoryPath] = filteredDataPointStrings;
             }
 
-            return aggregateHypotheses;
+            var filteredHypotheses = FilterHypothesesByAggregateFilteredDataPointStrings(aggregateHypotheses,
+                    aggregateFilteredDataPointStrings);
+
+            return filteredHypotheses;
         }
 
         private static HashSet<string> GetSnapshotDirectoryPaths(
@@ -286,6 +297,86 @@ namespace TheEyeTether.Types
             return hypotheses;
         }
 
+        /// It is likely that there are some DataPointStrings that appear in most of the snapshots, but
+        /// that do not actually contribute to why a snapshot was taken at a specific moment. An example
+        /// might be an aura that's always active on a player. Even if it improves the player's stats,
+        /// it being active is not something the player is likely considering when casting a spell. We
+        /// filter these out by looking for DataPointStrings that appear in the majority of SnapshotIds
+        /// for a given category.
+        private static List<Hypothesis> FilterHypothesesByAggregateFilteredDataPointStrings(
+                Dictionary<string, List<Hypothesis>> aggregateHypotheses,
+                Dictionary<string, List<string>> aggregateFilteredDataPointStrings)
+        {
+            var filteredHypotheses = new List<Hypothesis>();
+            var categoryDatas = CreateCategoryDatas(aggregateFilteredDataPointStrings);
+
+            foreach(KeyValuePair<string, List<Hypothesis>> keyValuePair in aggregateHypotheses)
+            {
+                var category = GetCategoryFromFilePath(keyValuePair.Key);
+                var categoryData = categoryDatas[category];
+
+                if(categoryData.AppearanceCount < CategoryAppearanceCountMin)
+                {
+                    filteredHypotheses.AddUniques(keyValuePair.Value);
+                    continue;
+                }
+                
+                foreach(Hypothesis hypothesis in keyValuePair.Value)
+                {
+                    foreach(string dataPointString in hypothesis.DataPointStrings)
+                    {
+                        if(categoryData.InvalidDataPointStrings.Contains(dataPointString))
+                        {
+                            hypothesis.DataPointStrings.Remove(dataPointString);
+                        }
+                    }
+
+                    filteredHypotheses.AddUnique(hypothesis);
+                }
+            }
+
+            return filteredHypotheses;
+        }
+
+        private static Dictionary<string, CategoryData> CreateCategoryDatas(
+                Dictionary<string, List<string>> aggregateFilteredDataPointStrings)
+        {
+            var categoryDatas = new Dictionary<string, CategoryData>();
+            
+            foreach(KeyValuePair<string, List<string>> keyValuePair in aggregateFilteredDataPointStrings)
+            {
+                var category = GetCategoryFromFilePath(keyValuePair.Key);
+
+                if(!categoryDatas.ContainsKey(category))
+                {
+                    categoryDatas[category] = new CategoryData();
+                }
+                
+                categoryDatas[category].AppearanceCount++;
+
+                foreach(string dataPointString in keyValuePair.Value)
+                {
+                    if(!categoryDatas[category].DataPointStringAppearanceCounts.ContainsKey(dataPointString))
+                    {
+                        categoryDatas[category].DataPointStringAppearanceCounts[dataPointString] = 0;
+                    }
+
+                    categoryDatas[category].DataPointStringAppearanceCounts[dataPointString]++;
+                }
+            }
+
+            return categoryDatas;
+        }
+
+        private static string GetCategoryFromFilePath(string filePath)
+        {
+            var filePathElements = filePath.Split(@"/\".ToCharArray());
+            var category = filePathElements[filePathElements.Length - CategoryTypeIndexOffset] + "__" +
+                    filePathElements[filePathElements.Length - CategoryIdIndexOffset];
+
+            return category;
+        }
+
 
         private class JaccardDissimilarityMetric : IDissimilarityMetric<DataPoint>
         {
@@ -325,6 +416,44 @@ namespace TheEyeTether.Types
             public int CompareTo(DataPoint other)
             {
                 return this.Name.CompareTo(other.Name);
+            }
+        }
+
+
+        private class CategoryData
+        {
+            public HashSet<string> _invalidDataPointStrings;
+            public int AppearanceCount;
+            public Dictionary<string, int> DataPointStringAppearanceCounts;
+
+
+            public HashSet<string> InvalidDataPointStrings
+            {
+                get
+                {
+                    if(_invalidDataPointStrings == null)
+                    {
+                        _invalidDataPointStrings = new HashSet<string>();
+                        
+                        foreach(KeyValuePair<string, int> keyValuePair in DataPointStringAppearanceCounts)
+                        {
+                            if(keyValuePair.Value / (float)AppearanceCount >=
+                                    CategoryDataPointStringAppearanceThreshold)
+                            {
+                                _invalidDataPointStrings.Add(keyValuePair.Key);
+                            }
+                        }
+                    }
+
+                    return _invalidDataPointStrings;
+                }
+            }
+
+
+            public CategoryData()
+            {
+                AppearanceCount = 0;
+                DataPointStringAppearanceCounts = new Dictionary<string, int>();
             }
         }
     }
