@@ -9,7 +9,6 @@ namespace TheEyeTether.UnitTests.Mocks
 {
     public class MockLua : ILua
     {
-        private string _activeFile;
         private Dictionary<string, string> _files;
         private Lua _lua;
         private string _tempFilePath;
