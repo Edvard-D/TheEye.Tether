@@ -11,7 +11,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
         private const string ProgramPath = @"C:\TestProgram\";
         private const string SavePath = ProgramPath + @"Data\Hypotheses.json";
 
-        
+
         [Fact]
         public void Save_CreatesFile_WhenItDoesNotExistAndThereIsAHypothesesToSave()
         {
