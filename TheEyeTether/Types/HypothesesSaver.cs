@@ -18,13 +18,22 @@ namespace TheEyeTether.Types
             {
                 return;
             }
+            
+            var outputFilePath = GetOutputFilePath(fileSystem, currentDomainBaseDirectoryGetter);
 
+            fileSystem.File.WriteAllText(outputFilePath, string.Empty);
+        }
+
+        private static string GetOutputFilePath(
+                IFileSystem fileSystem,
+                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
+        {
             var currentDomainBaseDirectory = currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory();
             var outputFilePathDirectory = fileSystem.Path.Combine(currentDomainBaseDirectory, "Data");
             fileSystem.Directory.CreateDirectory(outputFilePathDirectory);
             var outputFilePath = fileSystem.Path.Combine(outputFilePathDirectory, SaveFileName);
 
-            fileSystem.File.WriteAllText(outputFilePath, string.Empty);
+            return outputFilePath;
         }
     }
 }
