@@ -13,7 +13,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
 
         [Fact]
-        public void Save_CreatesFile_WhenItDoesNotExistAndThereIsAHypothesesToSave()
+        public void Save_CreatesFile_WhenItDoesNotExistAndThereAreHypothesesToSave()
         {
             var dataPointStrings = new HashSet<string>() { "testDataPointString" };
             var hypotheses = new List<Hypothesis>() { new Hypothesis(dataPointStrings) };
