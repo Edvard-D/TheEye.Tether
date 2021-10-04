@@ -220,7 +220,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
 
-            Assert.Equal(0, result.Keys.Count);
+            Assert.Empty(result.Keys);
         }
 
         [Fact]
@@ -253,7 +253,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
 
-            Assert.Equal(0, result.Keys.Count);
+            Assert.Empty(result.Keys);
         }
 
         [Fact]
@@ -490,7 +490,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var matchingDataPoints = result[key][snapshotSetting][0].DataPointsIds
                     .Where(dp => dp.Contains(dataPointTypeName))
                     .ToList();
-            Assert.Equal(1, matchingDataPoints.Count);
+            Assert.Single(matchingDataPoints);
         }
 
         [Fact]
@@ -534,7 +534,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var matchingDataPoints = result[key][snapshotSetting][0].DataPointsIds
                     .Where(dp => dp.Contains(dataPointTypeName))
                     .ToList();
-            Assert.Equal(1, matchingDataPoints.Count);
+            Assert.Single(matchingDataPoints);
         }
 
         [Fact]
@@ -572,7 +572,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
 
-            Assert.Equal(0, result.Keys.Count);
+            Assert.Empty(result.Keys);
         }
 
         [Theory]
@@ -643,7 +643,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var matchingDataPoints = result[key][snapshotSetting][0].DataPointsIds
                     .Where(dp => dp.Contains(correctSubTableName))
                     .ToList();
-            Assert.Equal(1, matchingDataPoints.Count);
+            Assert.Single(matchingDataPoints);
         }
 
         [Fact]
@@ -743,7 +743,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
 
-            Assert.Equal(0, result.Keys.Count);
+            Assert.Empty(result.Keys);
         }
 
         [Fact]

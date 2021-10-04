@@ -440,7 +440,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
-            Assert.Equal(0, result[tableName].Count);
+            Assert.Empty(result[tableName]);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var results = FilePathAggregator.AggregateFilePaths(correctFileName, searchDirectoryPath,
                     fileSystem);
 
-            Assert.Equal(0, results.Length);
+            Assert.Empty(results);
         }
     }
 }

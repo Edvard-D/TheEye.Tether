@@ -174,7 +174,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
-            Assert.True(result.Any(h => h.DataPointStrings.Contains(testDataPointString)));
+            Assert.Contains(result, h => h.DataPointStrings.Contains(testDataPointString));
         }
         
         [Fact]
@@ -206,7 +206,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
-            Assert.False(result.Any(h => h.DataPointStrings.Contains(invalidDataPointString)));
+            Assert.DoesNotContain(result, h => h.DataPointStrings.Contains(invalidDataPointString));
         }
 
         [Fact]
@@ -244,7 +244,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
                 testDataPointString1,
                 testDataPointString2
             };
-            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(dataPointStrings)));
+            Assert.Contains(result, h => h.DataPointStrings.SetEquals(dataPointStrings));
         }
 
         [Fact]
@@ -286,9 +286,9 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var hashSet2 = new HashSet<string>() { testDataPointString1, testDataPointString2 };
             var hashSet3 = new HashSet<string>() { testDataPointString1, testDataPointString2,
                     testDataPointString3 };
-            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(hashSet1)));
-            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(hashSet2)));
-            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(hashSet3)));
+            Assert.Contains(result, h => h.DataPointStrings.SetEquals(hashSet1));
+            Assert.Contains(result, h => h.DataPointStrings.SetEquals(hashSet2));
+            Assert.Contains(result, h => h.DataPointStrings.SetEquals(hashSet3));
         }
 
         [Fact]
@@ -329,9 +329,9 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var invalidHashSet1 = new HashSet<string>() { testDataPointString2 };
             var invalidHashSet2 = new HashSet<string>() { testDataPointString3 };
             var invalidHashSet3 = new HashSet<string>() { testDataPointString1, testDataPointString3 };
-            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet1)));
-            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet2)));
-            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet3)));
+            Assert.DoesNotContain(result, h => h.DataPointStrings.SetEquals(invalidHashSet1));
+            Assert.DoesNotContain(result, h => h.DataPointStrings.SetEquals(invalidHashSet2));
+            Assert.DoesNotContain(result, h => h.DataPointStrings.SetEquals(invalidHashSet3));
         }
 
         [Fact]
@@ -371,8 +371,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var validHashSet = new HashSet<string>() { testDataPointString1, testDataPointString2 };
             var invalidHashSet = new HashSet<string>() { testDataPointString2, testDataPointString3 };
-            Assert.True(result.Any(h => h.DataPointStrings.SetEquals(validHashSet)));
-            Assert.False(result.Any(h => h.DataPointStrings.SetEquals(invalidHashSet)));
+            Assert.Contains(result, h => h.DataPointStrings.SetEquals(validHashSet));
+            Assert.DoesNotContain(result, h => h.DataPointStrings.SetEquals(invalidHashSet));
         }
         
         [Fact]
@@ -410,8 +410,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
-            Assert.False(result.Any(h => h.DataPointStrings.Contains(testDataPointString1)));
-            Assert.True(result.Any(h => h.DataPointStrings.Contains(testDataPointString2)));
+            Assert.DoesNotContain(result, h => h.DataPointStrings.Contains(testDataPointString1));
+            Assert.Contains(result, h => h.DataPointStrings.Contains(testDataPointString2));
         }
 
         [Fact]
@@ -604,7 +604,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 
-            Assert.False(result.Any(h => h.DataPointStrings.Contains(invalidDataPointString)));
+            Assert.Contains(result, h => h.DataPointStrings.Contains(invalidDataPointString));
             Assert.NotEmpty(result);
         }
     }
