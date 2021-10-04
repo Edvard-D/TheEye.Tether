@@ -18,7 +18,8 @@ namespace TheEyeTether.UnitTests.Tests.Types
             var dataPointStrings = new HashSet<string>() { "testDataPointString" };
             var hypotheses = new List<Hypothesis>() { new Hypothesis(dataPointStrings) };
             var mockFileSystem = new MockFileSystem();
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(ProgramPath);
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    ProgramPath);
 
             HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
 
