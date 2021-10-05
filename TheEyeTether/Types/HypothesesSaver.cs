@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO.Abstractions;
+using Newtonsoft.Json;
 using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Types
@@ -20,8 +21,9 @@ namespace TheEyeTether.Types
             }
             
             var outputFilePath = GetOutputFilePath(fileSystem, currentDomainBaseDirectoryGetter);
-
-            fileSystem.File.WriteAllText(outputFilePath, string.Empty);
+            var outputJson = JsonConvert.SerializeObject(hypotheses);
+            
+            fileSystem.File.WriteAllText(outputFilePath, outputJson);
         }
 
         private static string GetOutputFilePath(

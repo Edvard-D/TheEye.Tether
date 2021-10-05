@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
+using Newtonsoft.Json;
 using TheEyeTether.Types;
 using TheEyeTether.UnitTests.Stubs;
 using Xunit;
@@ -9,7 +11,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
     public class HypothesesSaverTests
     {
         private const string ProgramPath = @"C:\TestProgram\";
-        private const string SavePath = ProgramPath + @"Data\Hypotheses.json";
+        private const string OutputFilePath = ProgramPath + @"Data\Hypotheses.json";
 
 
         [Fact]
@@ -23,7 +25,7 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
 
-            Assert.Contains(SavePath, mockFileSystem.AllFiles);
+            Assert.Contains(OutputFilePath, mockFileSystem.AllFiles);
         }
 
         [Fact]
@@ -36,7 +38,36 @@ namespace TheEyeTether.UnitTests.Tests.Types
 
             HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
 
-            Assert.DoesNotContain(SavePath, mockFileSystem.AllFiles);
+            Assert.DoesNotContain(OutputFilePath, mockFileSystem.AllFiles);
+        }
+
+        [Fact]
+        public void Save_SerializesDataAsJsonListOfHypotheses_WhenCalled()
+        {
+            var categoryType = "testCategoryType";
+            var categoryId = "testCategoryId";
+            var testDataPointString = "testDataPointString";
+            var dataPointStrings = new HashSet<string>() { testDataPointString };
+            var snapshotType = "testSnapshotType";
+            var snapshotId = "testSnapshotId";
+            var hypotheses = new List<Hypothesis>() { new Hypothesis(categoryType, categoryId,
+                    snapshotType, snapshotId, dataPointStrings) };
+            var mockFileSystem = new MockFileSystem();
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    ProgramPath);
+
+            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+
+            var outputFile = mockFileSystem.File.ReadAllText(OutputFilePath);
+            var outputJson = JsonConvert.DeserializeObject<List<Hypothesis>>(outputFile);
+            var hypothesis = outputJson[0];
+            Assert.Equal(categoryType, hypothesis.CategoryType);
+            Assert.Equal(categoryId, hypothesis.CategoryId);
+            Assert.Contains(testDataPointString, hypothesis.DataPointStrings);
+            Assert.Equal(DateTime.UnixEpoch, hypothesis.SentDateTime);
+            Assert.Equal(snapshotType, hypothesis.SnapshotType);
+            Assert.Equal(snapshotId, hypothesis.SnapshotId);
+            Assert.False(hypothesis.WasSent);
         }
     }
 }
