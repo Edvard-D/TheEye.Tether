@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using TheEyeTether.Types;
+using TheEyeTether.Data;
 
 namespace TheEyeTether.Extensions
 {

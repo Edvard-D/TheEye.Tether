@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using TheEyeTether.Data;
 using TheEyeTether.Extensions;
-using TheEyeTether.Types;
 using Xunit;
 
 namespace TheEyeTether.UnitTests.Tests.Extensions
