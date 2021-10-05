@@ -27,7 +27,7 @@ namespace TheEyeTether.UnitTests.Tests.Extensions
 
             hypotheses.AddUnique(new Hypothesis(dataPointStrings1));
 
-            Assert.Equal(1, hypotheses.Count);
+            Assert.Single(hypotheses);
         }
 
         [Fact]
