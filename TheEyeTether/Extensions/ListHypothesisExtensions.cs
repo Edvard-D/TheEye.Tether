@@ -10,7 +10,8 @@ namespace TheEyeTether.Extensions
                 this List<Hypothesis> list,
                 Hypothesis hypothesis)
         {
-            if(list.Any(h => h.DataPointStrings.SetEquals(hypothesis.DataPointStrings)))
+            if(list.Any(h => h.CategoryType == hypothesis.CategoryType
+                    && h.DataPointStrings.SetEquals(hypothesis.DataPointStrings)))
             {
                 return;
             }

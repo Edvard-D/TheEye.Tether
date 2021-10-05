@@ -15,6 +15,20 @@ namespace TheEyeTether.UnitTests.Tests.Extensions
 
 
         [Fact]
+        public void AddUnique_AddsHypothesisToList_WhenAllValuesMatchExceptCategoryType()
+        {
+            var dataPointStrings = new HashSet<string>() { DataPointString };
+            var hypotheses = new List<Hypothesis>() { new Hypothesis(CategoryType + "1", CategoryId,
+                    SnapshotType, SnapshotId, dataPointStrings) };
+            var hypothesis = new Hypothesis(CategoryType + "2", CategoryId, SnapshotType, SnapshotId,
+                    dataPointStrings);
+
+            hypotheses.AddUnique(hypothesis);
+
+            Assert.Equal(2, hypotheses.Count);
+        }
+
+        [Fact]
         public void AddUnique_AddsHypothesisToList_WhenAllValueMatchExceptDataPointStrings()
         {
             var dataPointStrings1 = new HashSet<string>() { DataPointString + "1" };
@@ -34,9 +48,26 @@ namespace TheEyeTether.UnitTests.Tests.Extensions
             var hypotheses = new List<Hypothesis>() { new Hypothesis(CategoryType, CategoryId,
                     SnapshotType, SnapshotId, dataPointStrings) };
 
-            hypotheses.AddUnique(new Hypothesis(dataPointStrings));
+            hypotheses.AddUnique(hypotheses[0]);
 
             Assert.Single(hypotheses);
+        }
+
+        [Fact]
+        public void AddUniques_AddsHypothesesToList_WhenElementWithAllValuesMatchingExceptCategoryTypeExists()
+        {
+            var dataPointStrings = new HashSet<string>() { DataPointString };
+            var hypotheses = new List<Hypothesis>() { new Hypothesis(CategoryType + "1", CategoryId,
+                    SnapshotType, SnapshotId, dataPointStrings) };
+            var newHypotheses = new List<Hypothesis>()
+            {
+                new Hypothesis(CategoryType + "2", CategoryId, SnapshotType, SnapshotId, dataPointStrings),
+                new Hypothesis(CategoryType + "3", CategoryId, SnapshotType, SnapshotId, dataPointStrings),
+            };
+
+            hypotheses.AddUniques(newHypotheses);
+
+            Assert.Equal(3, hypotheses.Count);
         }
 
         [Fact]
