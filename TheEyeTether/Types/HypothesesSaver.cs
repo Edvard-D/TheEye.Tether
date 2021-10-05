@@ -22,8 +22,16 @@ namespace TheEyeTether.Types
             }
             
             var outputFilePath = GetOutputFilePath(fileSystem, currentDomainBaseDirectoryGetter);
-            var outputFile = fileSystem.File.ReadAllText(outputFilePath);
-            var hypotheses = JsonConvert.DeserializeObject<List<Hypothesis>>(outputFile);            
+            List<Hypothesis> hypotheses;
+            try
+            {
+                var outputFile = fileSystem.File.ReadAllText(outputFilePath);
+                hypotheses = JsonConvert.DeserializeObject<List<Hypothesis>>(outputFile);    
+            }
+            catch
+            {
+                hypotheses = new List<Hypothesis>();
+            }
             hypotheses.AddUniques(newHypotheses);
             var outputJson = JsonConvert.SerializeObject(hypotheses);
             

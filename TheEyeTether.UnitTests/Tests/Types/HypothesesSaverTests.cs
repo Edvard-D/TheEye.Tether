@@ -101,5 +101,25 @@ namespace TheEyeTether.UnitTests.Tests.Types
             Assert.Equal(nowDateTime, hypothesis.SentDateTime);
             Assert.True(hypothesis.WasSent);
         }
+
+        [Fact]
+        public void Save_DoesNotThrowException_WhenCalledWithNoExistingOutputFile()
+        {
+            var dataPointStrings = new HashSet<string>() { "testDataPointString" };
+            var hypotheses = new List<Hypothesis>() { new Hypothesis(dataPointStrings) };
+            var mockFileSystem = new MockFileSystem();
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    ProgramPath);
+
+            try
+            {
+                HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+                Assert.True(true);
+            }
+            catch
+            {
+                Assert.True(false);
+            }
+        }
     }
 }
