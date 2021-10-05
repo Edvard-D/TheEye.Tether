@@ -24,7 +24,6 @@ namespace TheEyeTether.Utilities.Hypotheses
         private const int SnapshotIdIndexOffset = 1;
         private const int SnapshotKeepLookbackDays = 7;
         private const int SnapshotTypeIndexOffset = 2;
-        private const float ThresholdStepIncreaseAmount = 0.05f;
 
 
         public static List<Hypothesis> Create(
