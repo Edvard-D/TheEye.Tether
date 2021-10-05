@@ -13,6 +13,7 @@ namespace TheEyeTether.Extensions
             if(list.Any(h => h.CategoryType == hypothesis.CategoryType
                     && h.CategoryId == hypothesis.CategoryId
                     && h.SnapshotType == hypothesis.SnapshotType
+                    && h.SnapshotId == hypothesis.SnapshotId
                     && h.DataPointStrings.SetEquals(hypothesis.DataPointStrings)))
             {
                 return;

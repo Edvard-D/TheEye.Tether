@@ -57,6 +57,20 @@ namespace TheEyeTether.UnitTests.Tests.Extensions
         }
 
         [Fact]
+        public void AddUnique_AddsHypothesisToList_WhenAllValuesMatchExceptSnapshotId()
+        {
+            var dataPointStrings = new HashSet<string>() { DataPointString };
+            var hypotheses = new List<Hypothesis>() { new Hypothesis(CategoryType, CategoryId,
+                    SnapshotType, SnapshotId + "1", dataPointStrings) };
+            var hypothesis = new Hypothesis(CategoryType, CategoryId, SnapshotType, SnapshotId + "2",
+                    dataPointStrings);
+
+            hypotheses.AddUnique(hypothesis);
+
+            Assert.Equal(2, hypotheses.Count);
+        }
+
+        [Fact]
         public void AddUnique_AddsHypothesisToList_WhenAllValueMatchExceptDataPointStrings()
         {
             var dataPointStrings1 = new HashSet<string>() { DataPointString + "1" };
@@ -125,6 +139,23 @@ namespace TheEyeTether.UnitTests.Tests.Extensions
             {
                 new Hypothesis(CategoryType, CategoryId, SnapshotType + "2", SnapshotId, dataPointStrings),
                 new Hypothesis(CategoryType, CategoryId, SnapshotType + "3", SnapshotId, dataPointStrings),
+            };
+
+            hypotheses.AddUniques(newHypotheses);
+
+            Assert.Equal(3, hypotheses.Count);
+        }
+
+        [Fact]
+        public void AddUniques_AddsHypothesesToList_WhenElementWithAllValuesMatchingExceptSnapshotIdExists()
+        {
+            var dataPointStrings = new HashSet<string>() { DataPointString };
+            var hypotheses = new List<Hypothesis>() { new Hypothesis(CategoryType, CategoryId,
+                    SnapshotType, SnapshotId + "1", dataPointStrings) };
+            var newHypotheses = new List<Hypothesis>()
+            {
+                new Hypothesis(CategoryType, CategoryId, SnapshotType, SnapshotId + "2", dataPointStrings),
+                new Hypothesis(CategoryType, CategoryId, SnapshotType, SnapshotId + "3", dataPointStrings),
             };
 
             hypotheses.AddUniques(newHypotheses);
