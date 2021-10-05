@@ -69,5 +69,37 @@ namespace TheEyeTether.UnitTests.Tests.Types
             Assert.Equal(snapshotId, hypothesis.SnapshotId);
             Assert.False(hypothesis.WasSent);
         }
+
+        [Fact]
+        public void Save_DoesNotErasePreviouslySavedHypotheses_WhenCalled()
+        {
+            var categoryType = "testCategoryType";
+            var categoryId = "testCategoryId";
+            var testDataPointString = "testDataPointString";
+            var dataPointStrings = new HashSet<string>() { testDataPointString };
+            var snapshotType = "testSnapshotType";
+            var snapshotId = "testSnapshotId";
+            var nowDateTime = DateTime.UtcNow;
+            var testHypothesis = new Hypothesis(categoryType, categoryId, snapshotType, snapshotId,
+                    dataPointStrings, nowDateTime, true);
+            var inputHypothesis = new Hypothesis(categoryType, categoryId, snapshotType, snapshotId,
+                    dataPointStrings);
+            var hypotheses = new List<Hypothesis>() { inputHypothesis };
+            var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { OutputFilePath, new MockFileData(JsonConvert.SerializeObject(new List<Hypothesis>()
+                        { testHypothesis })) }
+            });
+            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+                    ProgramPath);
+            
+            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+            
+            var outputFile = mockFileSystem.File.ReadAllText(OutputFilePath);
+            var outputJson = JsonConvert.DeserializeObject<List<Hypothesis>>(outputFile);
+            var hypothesis = outputJson[0];
+            Assert.Equal(nowDateTime, hypothesis.SentDateTime);
+            Assert.True(hypothesis.WasSent);
+        }
     }
 }

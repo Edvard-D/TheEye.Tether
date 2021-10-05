@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using Newtonsoft.Json;
+using TheEyeTether.Extensions;
 using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Types
@@ -11,16 +12,19 @@ namespace TheEyeTether.Types
 
 
         public static void Save(
-                List<Hypothesis> hypotheses,
+                List<Hypothesis> newHypotheses,
                 IFileSystem fileSystem,
                 ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
         {
-            if(hypotheses.Count == 0)
+            if(newHypotheses.Count == 0)
             {
                 return;
             }
             
             var outputFilePath = GetOutputFilePath(fileSystem, currentDomainBaseDirectoryGetter);
+            var outputFile = fileSystem.File.ReadAllText(outputFilePath);
+            var hypotheses = JsonConvert.DeserializeObject<List<Hypothesis>>(outputFile);            
+            hypotheses.AddUniques(newHypotheses);
             var outputJson = JsonConvert.SerializeObject(hypotheses);
             
             fileSystem.File.WriteAllText(outputFilePath, outputJson);
