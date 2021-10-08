@@ -13,7 +13,7 @@ namespace TheEyeTether.Utilities.Hypotheses
         private const int AccountNameElementOffset = 5;
         private const int CharacterNameElementOffset = 3;
         private const string FileName = "TheEyeRecorder.lua";
-        private const string LuaTableName = "TheEyeRecordedData";
+        private const string LuaTableName = "TheEyeRecorder_Data";
         private const string OutputFilePathDateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
         private const string ProgramName = "Wow";
         private const string RequiredDirectories = @"WorldOfWarcraft\_retail_\";

@@ -21,7 +21,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
         private const string DataPointTypeName = "PLAYER_HAS_TARGET";
         private const string DateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
         private const string FileSaveDateTime = "2021_09_20__12_00_00";
-        private const string LuaFileText =  "TheEyeRecordedData = { "
+        private const string LuaFileText =  "TheEyeRecorder_Data = { "
                 + "[\""+CategorySettingName+"\"] = { [\""+SpecializationId+"\"] = { 10000.001 } }, "
                 + "[\""+SnapshotSettingName+"\"] = { [\""+SnapshotSubTypeName+"\"] = { 10000.001 } }, "
                 + "[\""+DataPointTypeName+"\"] = { [\""+DataPointSubTypeName+"\"] = { 10000.001 } } "
