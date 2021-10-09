@@ -19,7 +19,7 @@ namespace TheEyeTether.Utilities.General
                 string programName,
                 string requiredDirectories,
                 IFileSystem fileSystem,
-                IDrivesProvider drivesGetter,
+                IDrivesProvider drivesProvider,
                 IOSPlatformChecker osPlatformChecker,
                 string defaultPath = null)
         {
@@ -31,7 +31,7 @@ namespace TheEyeTether.Utilities.General
 
             var ending = GetAppropriateFileEnding(programName, osPlatformChecker);
             var searchPattern = "*" + requiredDirectories + programName + ending;
-            var files = LocateFiles(searchPattern, defaultPath, fileSystem, drivesGetter);
+            var files = LocateFiles(searchPattern, defaultPath, fileSystem, drivesProvider);
 
             if(files.Length == 0)
             {
@@ -62,7 +62,7 @@ namespace TheEyeTether.Utilities.General
                 string searchPattern,
                 string defaultPath,
                 IFileSystem fileSystem,
-                IDrivesProvider drivesGetter)
+                IDrivesProvider drivesProvider)
         {
             if(defaultPath != null)
             {
@@ -74,7 +74,7 @@ namespace TheEyeTether.Utilities.General
                 }
             }
 
-            foreach(DriveInfo driveInfo in drivesGetter.GetDrives())
+            foreach(DriveInfo driveInfo in drivesProvider.GetDrives())
             {
                 var files = fileSystem.Directory.GetFiles(driveInfo.Name, searchPattern, SearchOption.AllDirectories);
                 

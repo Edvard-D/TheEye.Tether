@@ -25,13 +25,13 @@ namespace TheEyeTether.Utilities.Hypotheses
                 Dictionary<string, DataPointSetting> dataPointSettings,
                 IFileSystem fileSystem,
                 ILua lua,
-                IDrivesProvider drivesGetter,
+                IDrivesProvider drivesProvider,
                 IOSPlatformChecker osPlatformChecker,
                 ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter,
                 IClock clock)
         {
             var programPath = ProgramPathLocater.LocateProgramPath(ProgramName, RequiredDirectories,
-                    fileSystem, drivesGetter, osPlatformChecker);
+                    fileSystem, drivesProvider, osPlatformChecker);
 
             if(programPath == null)
             {
