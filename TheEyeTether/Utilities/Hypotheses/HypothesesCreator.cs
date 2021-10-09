@@ -29,7 +29,7 @@ namespace TheEyeTether.Utilities.Hypotheses
         public static List<Hypothesis> Create(
                 IFileSystem fileSystem,
                 IClockProvider clock,
-                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
+                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter)
         {
             var aggregateHypotheses = new Dictionary<string, List<Hypothesis>>();
             var aggregateFilteredDataPointStrings = new Dictionary<string, List<string>>();
@@ -72,7 +72,7 @@ namespace TheEyeTether.Utilities.Hypotheses
 
         private static HashSet<string> GetSnapshotDirectoryPaths(
                 IFileSystem fileSystem,
-                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter)
+                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter)
         {
             var directoryPathElements = new string[]
             {

@@ -2,7 +2,7 @@ using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.UnitTests.Stubs
 {
-    public class StubCurrentDomainBaseDirectoryGetter : ICurrentDomainBaseDirectoryGetter
+    public class StubCurrentDomainBaseDirectoryGetter : ICurrentDomainBaseDirectoryProvider
     {
         private string _baseDirectory;
 

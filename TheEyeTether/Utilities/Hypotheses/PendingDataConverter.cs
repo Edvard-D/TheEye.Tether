@@ -27,7 +27,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 ILua lua,
                 IDrivesGetter drivesGetter,
                 IOSPlatformChecker osPlatformChecker,
-                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter,
+                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter,
                 IClockProvider clock)
         {
             var programPath = ProgramPathLocater.LocateProgramPath(ProgramName, RequiredDirectories,
@@ -106,7 +106,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 SnapshotSetting snapshotSetting,
                 string snapshotSubTypeName,
                 IFileSystem fileSystem,
-                ICurrentDomainBaseDirectoryGetter currentDomainBaseDirectoryGetter,
+                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter,
                 IClockProvider clock)
         {
             var inputFilePathElements = inputFilePath.Split(@"/\".ToCharArray());
