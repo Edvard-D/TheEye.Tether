@@ -13,7 +13,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.General
             var filePath = "test.lua";
             var tableName = "test";
             var fileContent = tableName + " = { 0 }";
-            var mockLua = new MockLua("TheEyeTether", new Dictionary<string, string>()
+            var mockLua = new StubLua("TheEyeTether", new Dictionary<string, string>()
             {
                 { filePath, fileContent }
             });
@@ -28,7 +28,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.General
         {
             var filePath = "test.lua";
             var tableName = "test";
-            var mockLua = new MockLua("TheEyeTether", new Dictionary<string, string>()
+            var mockLua = new StubLua("TheEyeTether", new Dictionary<string, string>()
             {
                 { filePath, string.Empty }
             });
@@ -43,7 +43,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.General
         {
             var filePath = "test.lua";
             var tableName = "test";
-            var mockLua = new MockLua("TheEyeTether", new Dictionary<string, string>());
+            var mockLua = new StubLua("TheEyeTether", new Dictionary<string, string>());
             
             var result = LuaTableReader.Read(filePath, tableName, mockLua);
 

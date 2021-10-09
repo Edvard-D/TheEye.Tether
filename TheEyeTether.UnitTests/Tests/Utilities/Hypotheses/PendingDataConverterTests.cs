@@ -39,7 +39,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
                 { pendingDataFilePath, LuaFileText}
             });
@@ -84,7 +84,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
         public void Convert_DoesNotThrowError_WhenProgramCannotBeFound()
         {
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>());
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>());
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>() {});
             var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
@@ -107,7 +107,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
                 { pendingDataFilePath, LuaFileText}
             });
@@ -154,7 +154,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var pendingDataFilePath = string.Format(@"C:\Applications\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
                 { pendingDataFilePath, LuaFileText}
             });
@@ -201,7 +201,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
                 { pendingDataFilePath, LuaFileText}
             });
@@ -260,7 +260,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
                 { pendingDataFilePath, LuaFileText }
             });
@@ -320,7 +320,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
                 { pendingDataFilePath, LuaFileText}
             });
@@ -368,7 +368,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
                 { pendingDataFilePath, LuaFileText}
             });
@@ -420,7 +420,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
                     AccountName, ServerName, CharacterName);
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-            var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+            var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
             {
                 { pendingDataFilePath, LuaFileText}
             });

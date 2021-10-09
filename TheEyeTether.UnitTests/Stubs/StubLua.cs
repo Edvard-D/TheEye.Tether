@@ -7,14 +7,14 @@ using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.UnitTests.Mocks
 {
-    public class MockLua : ILua
+    public class StubLua : ILua
     {
         private Dictionary<string, string> _files;
         private Lua _lua;
         private string _tempFilePath;
 
 
-        public MockLua(string projectDirectoryName, Dictionary<string, string> files)
+        public StubLua(string projectDirectoryName, Dictionary<string, string> files)
         {
             _files = files;
             _lua = new Lua();
