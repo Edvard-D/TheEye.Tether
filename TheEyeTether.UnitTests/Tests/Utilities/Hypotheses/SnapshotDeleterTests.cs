@@ -19,7 +19,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                     .ToUniversalTime();
             var keepLookbackDays = 1;
             var mockFileSystem = new MockFileSystem();
-            var stubClock = new StubClock(nowDateTime);
+            var stubClock = new StubClockProvider(nowDateTime);
 
             try
             {
@@ -42,7 +42,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                     .ToUniversalTime();
             var directoryPath = @"C:\";
             var mockFileSystem = new MockFileSystem();
-            var stubClock = new StubClock(nowDateTime);
+            var stubClock = new StubClockProvider(nowDateTime);
 
             try
             {
@@ -71,7 +71,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { directoryPath + fileName, mockFileData }
             });
-            var stubClock = new StubClock(nowDateTime);
+            var stubClock = new StubClockProvider(nowDateTime);
 
             SnapshotDeleter.DeleteOutdatedFiles(directoryPath, keepLookbackDays, mockFileSystem, stubClock);
 
@@ -93,7 +93,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { directoryPath + fileName, mockFileData }
             });
-            var stubClock = new StubClock(nowDateTime);
+            var stubClock = new StubClockProvider(nowDateTime);
 
             SnapshotDeleter.DeleteOutdatedFiles(directoryPath, keepLookbackDays, mockFileSystem, stubClock);
 
