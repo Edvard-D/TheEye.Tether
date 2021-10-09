@@ -21,10 +21,10 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var dataPointStrings = new HashSet<string>() { "testDataPointString" };
             var hypotheses = new List<Hypothesis>() { new Hypothesis(dataPointStrings) };
             var mockFileSystem = new MockFileSystem();
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
                     ProgramPath);
 
-            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryProvider);
 
             Assert.Contains(OutputFilePath, mockFileSystem.AllFiles);
         }
@@ -34,10 +34,10 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
         {
             var hypotheses = new List<Hypothesis>();
             var mockFileSystem = new MockFileSystem();
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
                     ProgramPath);
 
-            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryProvider);
 
             Assert.DoesNotContain(OutputFilePath, mockFileSystem.AllFiles);
         }
@@ -54,10 +54,10 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var hypotheses = new List<Hypothesis>() { new Hypothesis(categoryType, categoryId,
                     snapshotType, snapshotId, dataPointStrings) };
             var mockFileSystem = new MockFileSystem();
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
                     ProgramPath);
 
-            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryProvider);
 
             var outputFile = mockFileSystem.File.ReadAllText(OutputFilePath);
             var outputJson = JsonConvert.DeserializeObject<List<Hypothesis>>(outputFile);
@@ -91,10 +91,10 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { OutputFilePath, new MockFileData(JsonConvert.SerializeObject(new List<Hypothesis>()
                         { testHypothesis })) }
             });
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
                     ProgramPath);
             
-            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+            HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryProvider);
             
             var outputFile = mockFileSystem.File.ReadAllText(OutputFilePath);
             var outputJson = JsonConvert.DeserializeObject<List<Hypothesis>>(outputFile);
@@ -109,12 +109,12 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var dataPointStrings = new HashSet<string>() { "testDataPointString" };
             var hypotheses = new List<Hypothesis>() { new Hypothesis(dataPointStrings) };
             var mockFileSystem = new MockFileSystem();
-            var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
                     ProgramPath);
 
             try
             {
-                HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryGetter);
+                HypothesesSaver.Save(hypotheses, mockFileSystem, stubCurrentDomainBaseDirectoryProvider);
                 Assert.True(true);
             }
             catch

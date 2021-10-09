@@ -27,7 +27,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 ILua lua,
                 IDrivesProvider drivesProvider,
                 IOSPlatformChecker osPlatformChecker,
-                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter,
+                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryProvider,
                 IClock clock)
         {
             var programPath = ProgramPathLocater.LocateProgramPath(ProgramName, RequiredDirectories,
@@ -58,7 +58,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                         {
                             var outputFilePath = CreateOutputFilePath(filePath, categoryKeyValuePair.Key,
                                     snapshotSettingKeyValuePair.Key, groupedSnapshotKeyValuePair.Key,
-                                    fileSystem, currentDomainBaseDirectoryGetter, clock);
+                                    fileSystem, currentDomainBaseDirectoryProvider, clock);
                             
                             var outputData = new List<List<string>>();
                             foreach(Snapshot snapshot in groupedSnapshotKeyValuePair.Value)
@@ -106,7 +106,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 SnapshotSetting snapshotSetting,
                 string snapshotSubTypeName,
                 IFileSystem fileSystem,
-                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter,
+                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryProvider,
                 IClock clock)
         {
             var inputFilePathElements = inputFilePath.Split(@"/\".ToCharArray());
@@ -114,7 +114,7 @@ namespace TheEyeTether.Utilities.Hypotheses
             
             var outputFilePathParts = new string[]
             {
-                currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory(),
+                currentDomainBaseDirectoryProvider.GetCurrentDomainBaseDirectory(),
                 "Data",
                 "Snapshots",
                 category.Setting.Name,

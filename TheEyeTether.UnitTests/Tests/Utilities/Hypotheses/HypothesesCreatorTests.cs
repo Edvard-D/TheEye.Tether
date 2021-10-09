@@ -46,7 +46,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CurrentDomainBaseDirectory + "test.json", new MockFileData(string.Empty) }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -61,7 +61,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                     .ToUniversalTime();
             var mockFileSystem = new MockFileSystem();
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -83,7 +83,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -110,7 +110,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -137,7 +137,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -169,7 +169,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -201,7 +201,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -234,7 +234,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -277,7 +277,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -321,7 +321,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -364,7 +364,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -405,7 +405,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName2, mockFileData2 }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -434,7 +434,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -462,7 +462,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -490,7 +490,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -518,7 +518,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
@@ -599,7 +599,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath("10") + fileName10, mockFileData10 }
             });
             var stubClock = new StubClock(nowDateTime);
-            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
+            var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
                     CurrentDomainBaseDirectory);
 
             var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);

@@ -15,14 +15,14 @@ namespace TheEyeTether.Utilities.Hypotheses
         public static void Save(
                 List<Hypothesis> newHypotheses,
                 IFileSystem fileSystem,
-                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter)
+                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryProvider)
         {
             if(newHypotheses.Count == 0)
             {
                 return;
             }
             
-            var outputFilePath = GetOutputFilePath(fileSystem, currentDomainBaseDirectoryGetter);
+            var outputFilePath = GetOutputFilePath(fileSystem, currentDomainBaseDirectoryProvider);
             List<Hypothesis> hypotheses;
             try
             {
@@ -41,9 +41,9 @@ namespace TheEyeTether.Utilities.Hypotheses
 
         private static string GetOutputFilePath(
                 IFileSystem fileSystem,
-                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter)
+                ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryProvider)
         {
-            var currentDomainBaseDirectory = currentDomainBaseDirectoryGetter.GetCurrentDomainBaseDirectory();
+            var currentDomainBaseDirectory = currentDomainBaseDirectoryProvider.GetCurrentDomainBaseDirectory();
             var outputFilePathDirectory = fileSystem.Path.Combine(currentDomainBaseDirectory, "Data");
             fileSystem.Directory.CreateDirectory(outputFilePathDirectory);
             var outputFilePath = fileSystem.Path.Combine(outputFilePathDirectory, SaveFileName);
