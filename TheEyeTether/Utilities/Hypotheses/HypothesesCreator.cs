@@ -28,7 +28,7 @@ namespace TheEyeTether.Utilities.Hypotheses
 
         public static List<Hypothesis> Create(
                 IFileSystem fileSystem,
-                IClockProvider clock,
+                IClock clock,
                 ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter)
         {
             var aggregateHypotheses = new Dictionary<string, List<Hypothesis>>();

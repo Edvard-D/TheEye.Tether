@@ -28,7 +28,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 IDrivesProvider drivesGetter,
                 IOSPlatformChecker osPlatformChecker,
                 ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter,
-                IClockProvider clock)
+                IClock clock)
         {
             var programPath = ProgramPathLocater.LocateProgramPath(ProgramName, RequiredDirectories,
                     fileSystem, drivesGetter, osPlatformChecker);
@@ -107,7 +107,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 string snapshotSubTypeName,
                 IFileSystem fileSystem,
                 ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter,
-                IClockProvider clock)
+                IClock clock)
         {
             var inputFilePathElements = inputFilePath.Split(@"/\".ToCharArray());
             var now = clock.Now.ToString(OutputFilePathDateTimeFormat);

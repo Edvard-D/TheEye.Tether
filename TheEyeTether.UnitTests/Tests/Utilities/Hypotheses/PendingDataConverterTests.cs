@@ -69,7 +69,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -92,7 +92,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                     currentDomainBaseDirectory);
             var categorySettings = new Dictionary<string, CategorySetting>();
             var dataPointSettings = new Dictionary<string, DataPointSetting>();
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -137,7 +137,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -184,7 +184,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -231,7 +231,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -290,7 +290,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -350,7 +350,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -398,7 +398,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,
@@ -450,7 +450,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { SnapshotSettingName, new DataPointSetting() },
                 { DataPointTypeName, new DataPointSetting("false", 0) }
             };
-            var stubClock = new StubClockProvider(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
+            var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
                     null));
 
             PendingDataConverter.Convert(categorySettings, dataPointSettings, mockFileSystem, mockLua,

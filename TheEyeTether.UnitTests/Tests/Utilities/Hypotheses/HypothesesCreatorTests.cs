@@ -45,7 +45,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CurrentDomainBaseDirectory + "test.json", new MockFileData(string.Empty) }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -60,7 +60,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
                     .ToUniversalTime();
             var mockFileSystem = new MockFileSystem();
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -82,7 +82,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -109,7 +109,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -136,7 +136,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -168,7 +168,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -200,7 +200,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -233,7 +233,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -276,7 +276,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -320,7 +320,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -363,7 +363,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -404,7 +404,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { @"C:\" + fileName1, mockFileData1 },
                 { CreateDirectoryPath() + fileName2, mockFileData2 }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -433,7 +433,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -461,7 +461,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -489,7 +489,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -517,7 +517,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             {
                 { CreateDirectoryPath() + fileName, mockFileData }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
@@ -598,7 +598,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { CreateDirectoryPath("9") + fileName9, mockFileData9 },
                 { CreateDirectoryPath("10") + fileName10, mockFileData10 }
             });
-            var stubClock = new StubClockProvider(nowDateTime);
+            var stubClock = new StubClock(nowDateTime);
             var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryGetter(
                     CurrentDomainBaseDirectory);
 
