@@ -3,7 +3,7 @@ using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.UnitTests.Stubs
 {
-    public class StubClock : IClock
+    public class StubClock : IClockProvider
     {
         private DateTime _now;
 

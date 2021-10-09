@@ -2,7 +2,7 @@ using System;
 
 namespace TheEyeTether.Interfaces
 {
-    public interface IClock
+    public interface IClockProvider
     {
         DateTime Now { get; }
     }

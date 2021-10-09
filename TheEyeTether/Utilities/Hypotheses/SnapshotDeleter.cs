@@ -9,7 +9,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 string directoryPath,
                 int keepLookbackDays,
                 IFileSystem fileSystem,
-                IClock clock)
+                IClockProvider clock)
         {
             if(directoryPath == null)
             {
