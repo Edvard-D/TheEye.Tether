@@ -19,7 +19,7 @@ namespace TheEyeTether.Utilities.General
                 string programName,
                 string requiredDirectories,
                 IFileSystem fileSystem,
-                IDrivesGetter drivesGetter,
+                IDrivesProvider drivesGetter,
                 IOSPlatformChecker osPlatformChecker,
                 string defaultPath = null)
         {
@@ -62,7 +62,7 @@ namespace TheEyeTether.Utilities.General
                 string searchPattern,
                 string defaultPath,
                 IFileSystem fileSystem,
-                IDrivesGetter drivesGetter)
+                IDrivesProvider drivesGetter)
         {
             if(defaultPath != null)
             {

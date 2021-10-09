@@ -25,7 +25,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 Dictionary<string, DataPointSetting> dataPointSettings,
                 IFileSystem fileSystem,
                 ILua lua,
-                IDrivesGetter drivesGetter,
+                IDrivesProvider drivesGetter,
                 IOSPlatformChecker osPlatformChecker,
                 ICurrentDomainBaseDirectoryProvider currentDomainBaseDirectoryGetter,
                 IClockProvider clock)

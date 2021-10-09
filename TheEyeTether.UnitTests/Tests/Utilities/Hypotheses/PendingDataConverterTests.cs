@@ -49,7 +49,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) }
             });
-            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
@@ -86,7 +86,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var currentDomainBaseDirectory = @"C:\TheEyeTether\";
             var mockLua = new MockLua(currentDomainBaseDirectory, new Dictionary<string, string>());
             var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>() {});
-            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
@@ -117,7 +117,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) }
             });
-            var stubDivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
@@ -164,7 +164,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) }
             });
-            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.OSX);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
@@ -211,7 +211,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
-            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
@@ -270,7 +270,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
-            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
@@ -330,7 +330,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
-            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
@@ -378,7 +378,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
-            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
@@ -430,7 +430,7 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
                 { pendingDataFilePath, LuaFileText },
                 { currentDomainBaseDirectory, new MockFileData(string.Empty) },
             });
-            var stubDrivesGetter = new StubDrivesGetter(new List<string>() { @"C:\" });
+            var stubDrivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
             var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
             var stubCurrentDomainBaseDirectoryGetter = new StubCurrentDomainBaseDirectoryGetter(
                     currentDomainBaseDirectory);
