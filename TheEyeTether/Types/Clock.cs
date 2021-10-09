@@ -1,7 +1,7 @@
 using System;
 using TheEyeTether.Interfaces;
 
-namespace TheEyeTether.Providers
+namespace TheEyeTether.Types
 {
     public class ClockProvider : IClock
     {
