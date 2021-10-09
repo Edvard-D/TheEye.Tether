@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -44,6 +45,26 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.General
             var result = Resources.ReadTextResource(resourceName, stubAssemblyProvider);
 
             Assert.Equal(resourceText, result);
+        }
+
+        [Fact]
+        public void ReadTextResource_ThrowsInvalidOperationException_WhenResourceDoesNotExist()
+        {
+            var resourceName = "Path.txt";
+            var manifestResourceNames = new string[] {};
+            var mockAssembly = new Mock<Assembly>();
+            mockAssembly.Setup(a => a.GetManifestResourceNames()).Returns(manifestResourceNames);
+            var stubAssemblyProvider = new StubAssemblyProvider(mockAssembly.Object);
+            
+            try
+            {
+                var result = Resources.ReadTextResource(resourceName, stubAssemblyProvider);
+                Assert.True(false);
+            }
+            catch(Exception ex)
+            {
+                Assert.IsType<System.InvalidOperationException>(ex);
+            }
         }
     }
 }
