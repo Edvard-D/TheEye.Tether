@@ -3,7 +3,7 @@ using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.Types
 {
-    public class ClockProvider : IClock
+    public class Clock : IClock
     {
         public DateTime Now => DateTime.Now;
     }
