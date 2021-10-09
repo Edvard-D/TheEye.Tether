@@ -1,10 +1,24 @@
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using TheEyeTether.Interfaces;
+
 namespace TheEyeTether.Utilities.General
 {
     public static class Resources
     {
-        public static string ReadTextResource()
+        public static string ReadTextResource(
+                string resourceName,
+                IAssemblyProvider assemblyProvider)
         {
-            return string.Empty;
+            var assembly = assemblyProvider.GetExecutingAssembly();
+            var resourcePath = assembly.GetManifestResourceNames().Single(s => s.EndsWith(resourceName));
+
+            using(Stream stream = assembly.GetManifestResourceStream(resourcePath))
+            using(StreamReader streamReader = new StreamReader(stream))
+            {
+                return streamReader.ReadToEnd();
+            }
         }
     }
 }
