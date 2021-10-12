@@ -27,42 +27,6 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
 
             Assert.IsType<Dictionary<CategorySetting, List<Category>>>(result);
         }
-
-        [Fact]
-        public void Create_ThrowsInvalidOperationException_WhenPassedNullDataPoints()
-        {
-            var categoryName = "test";
-            var categorySettings = new Dictionary<string, CategorySetting>
-            {
-                { categoryName, new CategorySetting(categoryName, null) }
-            };
-
-            try
-            {
-                var result = CategoriesCreator.Create(null, categorySettings);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
-
-        [Fact]
-        public void Create_ThrowsInvalidOperationException_WhenPassedNullCategorySettings()
-        {
-            var dataPoints = new Dictionary<string, List<DataPoint>>();
-
-            try
-            {
-                var result = CategoriesCreator.Create(dataPoints, null);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
         
         [Theory]
         [InlineData("test")]

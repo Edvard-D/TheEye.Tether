@@ -10,19 +10,7 @@ namespace TheEyeTether.Utilities.Hypotheses
                 Dictionary<object, object> luaTable,
                 Dictionary<string, CategorySetting> categorySettings,
                 Dictionary<string, DataPointSetting> dataPointSettings)
-        {
-            if(luaTable == null)
-            {
-                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
-                        nameof(luaTable)));
-            }
-
-            if(categorySettings == null)
-            {
-                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
-                        nameof(categorySettings)));
-            }
-            
+        {            
             var snapshots = new Dictionary<Category, Dictionary<SnapshotSetting, List<Snapshot>>>();
 
             var dataPoints = DataPointsCreator.Create(luaTable, dataPointSettings, categorySettings);

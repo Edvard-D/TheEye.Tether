@@ -27,18 +27,6 @@ namespace TheEyeTether.Utilities.Hypotheses
                 Dictionary<string, DataPointSetting> dataPointSettings,
                 Dictionary<string, CategorySetting> categorySettings = null)
         {
-            if(luaTable == null)
-            {
-                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
-                        nameof(luaTable)));
-            }
-            
-            if(dataPointSettings == null)
-            {
-                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
-                        nameof(dataPointSettings)));
-            }
-
             var dataPoints = new Dictionary<string, List<DataPoint>>();
             foreach(KeyValuePair<object, object> keyValuePair in luaTable)
             {

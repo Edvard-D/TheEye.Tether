@@ -9,18 +9,6 @@ namespace TheEyeTether.Utilities.Hypotheses
                 Dictionary<string, List<DataPoint>> dataPoints,
                 Dictionary<string, CategorySetting> categorySettings)
         {
-            if(dataPoints == null)
-            {
-                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
-                        nameof(dataPoints)));
-            }
-
-            if(categorySettings == null)
-            {
-                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
-                        nameof(categorySettings)));
-            }
-
             var categories = new Dictionary<CategorySetting, List<Category>>();
             foreach(KeyValuePair<string, CategorySetting> keyValuePair in categorySettings)
             {

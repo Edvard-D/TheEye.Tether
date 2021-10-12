@@ -12,26 +12,6 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
         private const string NowDateTimeString = "2021_09_23__12_00_00";
 
 
-        [Fact]
-        public void DeleteOutdatedFiles_ThrowsInvalidOperationException_WhenPassedNullDirectoryPath()
-        {
-            var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
-                    .ToUniversalTime();
-            var keepLookbackDays = 1;
-            var mockFileSystem = new MockFileSystem();
-            var stubClock = new StubClock(nowDateTime);
-
-            try
-            {
-                SnapshotDeleter.DeleteOutdatedFiles(null, keepLookbackDays, mockFileSystem, stubClock);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
-
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]

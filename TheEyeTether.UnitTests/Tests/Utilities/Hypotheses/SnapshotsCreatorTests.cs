@@ -38,40 +38,6 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             Assert.IsType<Dictionary<Category, Dictionary<SnapshotSetting, List<Snapshot>>>>(
                     result);
         }
-
-        [Fact]
-        public void Create_ThrowsInvalidOperationException_WhenPassedNullLuaTable()
-        {
-            var categorySettings = new Dictionary<string, CategorySetting>();
-            var dataPointSettings = new Dictionary<string, DataPointSetting>();
-
-            try
-            {
-                var result = SnapshotsCreator.Create(null, categorySettings, dataPointSettings);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
-
-        [Fact]
-        public void Create_ThrowsInvalidOperationException_WhenPassedNullSnapshotSettings()
-        {
-            var luaTable = new Dictionary<object, object>();
-            var dataPointSettings = new Dictionary<string, DataPointSetting>();
-
-            try
-            {
-                var result = SnapshotsCreator.Create(luaTable, null, dataPointSettings);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
         
         [Fact]
         public void Create_ThrowsInvalidOperationException_WhenSnapshotSettingHasNoDataPointTypeNames()
@@ -90,45 +56,6 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             var snapshotSettings = new Dictionary<string, SnapshotSetting>
             {
                 { snapshotSettingName, new SnapshotSetting(snapshotSettingName, new string[0]) }
-            };
-            var categorySettings = new Dictionary<string, CategorySetting>()
-            {
-                { categorySettingName, new CategorySetting(categorySettingName, snapshotSettings) }
-            };
-            var dataPointSettings = new Dictionary<string, DataPointSetting>()
-            {
-                { categorySettingName, new DataPointSetting() },
-                { snapshotSettingName, new DataPointSetting() }
-            };
-
-            try
-            {
-                var result = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
-        
-        [Fact]
-        public void Create_ThrowsInvalidOperationException_WhenSnapshotSettingDataPointTypeNamesIsNull()
-        {
-            var categorySettingName = "test1";
-            var snapshotSettingName = "test2";
-            var luaTable = new Dictionary<object, object>()
-            {
-                { categorySettingName, new Dictionary<object, object>()
-                    {
-                        { "test3", new Dictionary<object, object>() { { 1, 1d } } }
-                    }
-                },
-                { snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } }
-            };
-            var snapshotSettings = new Dictionary<string, SnapshotSetting>
-            {
-                { snapshotSettingName, new SnapshotSetting(snapshotSettingName, null) }
             };
             var categorySettings = new Dictionary<string, CategorySetting>()
             {

@@ -33,22 +33,6 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
         }
 
         [Fact]
-        public void Load_ThrowsInvalidOperationException_WhenPassedNullDirectoryPath()
-        {
-            var mockFileSystem = new MockFileSystem();
-
-            try
-            {
-                var result = SnapshotsLoader.Load(null, mockFileSystem);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
-
-        [Fact]
         public void Load_ReturnsSnapshotsInFilesWithinDirectory_WhenCalled()
         {
             var directoryPath = @"C:\TestDirectory\";

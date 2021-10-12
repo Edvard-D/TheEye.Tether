@@ -13,12 +13,6 @@ namespace TheEyeTether.Utilities.Hypotheses
                 string directoryPath,
                 IFileSystem fileSystem)
         {
-            if(directoryPath == null)
-            {
-                throw new System.InvalidOperationException(string.Format("Argument {0} cannot be null.",
-                        nameof(directoryPath)));
-            }
-
             var snapshots = new List<List<string>>();
             foreach(string filePath in fileSystem.Directory.GetFiles(directoryPath))
             {

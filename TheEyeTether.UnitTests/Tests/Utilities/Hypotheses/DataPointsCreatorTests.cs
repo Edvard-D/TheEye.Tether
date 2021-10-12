@@ -26,41 +26,6 @@ namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
             Assert.IsType<Dictionary<string, List<DataPoint>>>(result);
         }
 
-        [Fact]
-        public void Create_ThrowsInvalidOperationException_WhenPassedNullLuaTable()
-        {
-            var dataPointSettings = new Dictionary<string, DataPointSetting>()
-            {
-                { "test", new DataPointSetting() }
-            };
-
-            try
-            {
-                var result = DataPointsCreator.Create(null, dataPointSettings);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
-
-        [Fact]
-        public void Create_ThrowsInvalidOperationException_WhenPassedNullDataPointSettingsDictionary()
-        {
-            var luaTable = new Dictionary<object, object>();
-
-            try
-            {
-                var result = DataPointsCreator.Create(luaTable, null);
-                Assert.True(false);
-            }
-            catch(System.Exception ex)
-            {
-                Assert.IsType<System.InvalidOperationException>(ex);
-            }
-        }
-
         [Theory]
         [InlineData("test1")]
         [InlineData("test1", "test2")]
