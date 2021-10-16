@@ -1,7 +1,7 @@
 namespace TheEyeTether.Interfaces
 {
-    public interface ICurrentDomainBaseDirectoryProvider
-    {
-        string GetCurrentDomainBaseDirectory();
-    }    
+	public interface ICurrentDomainBaseDirectoryProvider
+	{
+		string GetCurrentDomainBaseDirectory();
+	}	
 }

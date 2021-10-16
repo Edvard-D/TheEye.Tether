@@ -1,14 +1,14 @@
 namespace TheEyeTether.Data
 {
-    public record DataPointSetting
-    {
-        public string EndMarker;
-        public int EndMarkerPosition;
+	public record DataPointSetting
+	{
+		public string EndMarker;
+		public int EndMarkerPosition;
 
 
-        public DataPointSetting(string endMarker, int endMarkerPosition) =>
-                (EndMarker, EndMarkerPosition) = (endMarker, endMarkerPosition);
+		public DataPointSetting(string endMarker, int endMarkerPosition) =>
+				(EndMarker, EndMarkerPosition) = (endMarker, endMarkerPosition);
 
-        public DataPointSetting() => (EndMarker, EndMarkerPosition) = (null, -1);
-    }
+		public DataPointSetting() => (EndMarker, EndMarkerPosition) = (null, -1);
+	}
 }

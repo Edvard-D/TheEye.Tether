@@ -1,38 +1,38 @@
 {
-    "PLAYER_SPECIALIZATION":
-    {
-        "Name": "PLAYER_SPECIALIZATION",
-        "SnapshotSettings":
-        {
-            "PLAYER_SPELLCAST_START":
-            {
-                "Name": "PLAYER_SPELLCAST_START",
-                "DataPointTypeNames":
-                [
-                    "PLAYER_EQUIPMENT",
-                    "PLAYER_HAS_TARGET",
-                    "PLAYER_INSTANCE",
-                    "PLAYER_IS_IN_COMBAT",
-                    "PLAYER_IS_MOVING",
-                    "PLAYER_IS_TANKING",
-                    "PLAYER_PVP_TALENT",
-                    "PLAYER_SPELL_CHARGE",
-                    "PLAYER_SPELL_COOLDOWN",
-                    "PLAYER_SPELL_IS_KNOWN",
-                    "PLAYER_SUMMONED_ACTIVE_ELAPSED_TIME",
-                    "PLAYER_TALENT",
-                    "PLAYER_TOTEM_DURATION",
-                    "TARGET_IS_HOSTILE",
-                    "TARGET_SPELLCAST_IS_INTERRUPTIBLE",
-                    "TARGET_TIME_UNTIL_DEATH",
-                    "UNIT_AURA_ACTIVE",
-                    "UNIT_AURA_DURATION",
-                    "UNIT_AURA_STACK_COUNT",
-                    "UNIT_COUNT_CLOSE_TO_TARGET",
-                    "UNIT_HEALTH_PERCENT",
-                    "UNIT_SPELLCAST_IS_ACTIVE"
-                ]
-            }
-        }
-    }
+	"PLAYER_SPECIALIZATION":
+	{
+		"Name": "PLAYER_SPECIALIZATION",
+		"SnapshotSettings":
+		{
+			"PLAYER_SPELLCAST_START":
+			{
+				"Name": "PLAYER_SPELLCAST_START",
+				"DataPointTypeNames":
+				[
+					"PLAYER_EQUIPMENT",
+					"PLAYER_HAS_TARGET",
+					"PLAYER_INSTANCE",
+					"PLAYER_IS_IN_COMBAT",
+					"PLAYER_IS_MOVING",
+					"PLAYER_IS_TANKING",
+					"PLAYER_PVP_TALENT",
+					"PLAYER_SPELL_CHARGE",
+					"PLAYER_SPELL_COOLDOWN",
+					"PLAYER_SPELL_IS_KNOWN",
+					"PLAYER_SUMMONED_ACTIVE_ELAPSED_TIME",
+					"PLAYER_TALENT",
+					"PLAYER_TOTEM_DURATION",
+					"TARGET_IS_HOSTILE",
+					"TARGET_SPELLCAST_IS_INTERRUPTIBLE",
+					"TARGET_TIME_UNTIL_DEATH",
+					"UNIT_AURA_ACTIVE",
+					"UNIT_AURA_DURATION",
+					"UNIT_AURA_STACK_COUNT",
+					"UNIT_COUNT_CLOSE_TO_TARGET",
+					"UNIT_HEALTH_PERCENT",
+					"UNIT_SPELLCAST_IS_ACTIVE"
+				]
+			}
+		}
+	}
 }

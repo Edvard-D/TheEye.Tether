@@ -2,8 +2,8 @@ using System.IO;
 
 namespace TheEyeTether.Interfaces
 {
-    public interface IDrivesProvider
-    {
-        DriveInfo[] GetDrives();
-    }    
+	public interface IDrivesProvider
+	{
+		DriveInfo[] GetDrives();
+	}	
 }

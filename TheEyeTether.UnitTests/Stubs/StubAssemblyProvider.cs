@@ -3,20 +3,20 @@ using TheEyeTether.Interfaces;
 
 namespace TheEyeTether.UnitTests.Stubs
 {
-    public class StubAssemblyProvider : IAssemblyProvider
-    {
-        private Assembly _assembly;
+	public class StubAssemblyProvider : IAssemblyProvider
+	{
+		private Assembly _assembly;
 
 
-        public StubAssemblyProvider(Assembly assembly)
-        {
-            _assembly = assembly;
-        }
+		public StubAssemblyProvider(Assembly assembly)
+		{
+			_assembly = assembly;
+		}
 
 
-        public Assembly GetExecutingAssembly()
-        {
-            return _assembly;
-        }
-    }
+		public Assembly GetExecutingAssembly()
+		{
+			return _assembly;
+		}
+	}
 }
