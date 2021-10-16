@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using TheEyeTether.Utilities;
-using TheEyeTether.Utilities.General;
+using TheEye.Tether.Utilities;
+using TheEye.Tether.Utilities.General;
 using Xunit;
 
-namespace TheEyeTether.UnitTests.Tests.Utilities.General
+namespace TheEye.Tether.UnitTests.Tests.Utilities.General
 {
 	public class DataAnalysisUtilitiesTests
 	{

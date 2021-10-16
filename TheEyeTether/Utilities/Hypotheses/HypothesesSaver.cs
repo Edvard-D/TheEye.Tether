@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using Newtonsoft.Json;
-using TheEyeTether.Data;
-using TheEyeTether.Extensions;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Data;
+using TheEye.Tether.Extensions;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.Utilities.Hypotheses
+namespace TheEye.Tether.Utilities.Hypotheses
 {
 	public static class HypothesesSaver
 	{

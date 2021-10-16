@@ -3,14 +3,14 @@ using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using TheEyeTether.Data;
-using TheEyeTether.UnitTests.Mocks;
-using TheEyeTether.UnitTests.Stubs;
-using TheEyeTether.Utilities.Hypotheses;
+using TheEye.Tether.Data;
+using TheEye.Tether.UnitTests.Mocks;
+using TheEye.Tether.UnitTests.Stubs;
+using TheEye.Tether.Utilities.Hypotheses;
 using Xunit;
 
 
-namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
+namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 {
 	public class PendingDataConverterTests
 	{

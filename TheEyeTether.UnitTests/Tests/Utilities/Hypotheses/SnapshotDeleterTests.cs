@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
-using TheEyeTether.UnitTests.Stubs;
-using TheEyeTether.Utilities.Hypotheses;
+using TheEye.Tether.UnitTests.Stubs;
+using TheEye.Tether.Utilities.Hypotheses;
 using Xunit;
 
-namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
+namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 {
 	public class SnapshotDeleterTests
 	{

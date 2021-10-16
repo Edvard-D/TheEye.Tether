@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.Utilities.General
+namespace TheEye.Tether.Utilities.General
 {
 	public static class LuaTableReader
 	{

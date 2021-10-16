@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using TheEyeTether.Data;
+using TheEye.Tether.Data;
 
-namespace TheEyeTether.Utilities.Hypotheses
+namespace TheEye.Tether.Utilities.Hypotheses
 {
 	public static class SnapshotsCreator
 	{

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TheEyeTether.Data
+namespace TheEye.Tether.Data
 {
 	public record Snapshot
 	{

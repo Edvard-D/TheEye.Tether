@@ -1,4 +1,4 @@
-namespace TheEyeTether.Data
+namespace TheEye.Tether.Data
 {
 	public record DataPoint
 	{

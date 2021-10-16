@@ -1,8 +1,8 @@
 using System.IO;
 using System.Linq;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.Utilities.General
+namespace TheEye.Tether.Utilities.General
 {
 	public static class Resources
 	{

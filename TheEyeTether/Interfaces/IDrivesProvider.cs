@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace TheEyeTether.Interfaces
+namespace TheEye.Tether.Interfaces
 {
 	public interface IDrivesProvider
 	{

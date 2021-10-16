@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using TheEyeTether.Data;
-using TheEyeTether.Providers;
-using TheEyeTether.Types;
-using TheEyeTether.Utilities.General;
-using TheEyeTether.Utilities.Hypotheses;
+using TheEye.Tether.Data;
+using TheEye.Tether.Providers;
+using TheEye.Tether.Types;
+using TheEye.Tether.Utilities.General;
+using TheEye.Tether.Utilities.Hypotheses;
 
-namespace TheEyeTether
+namespace TheEye.Tether
 {
 	public class Worker : BackgroundService
 	{

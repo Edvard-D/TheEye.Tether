@@ -1,6 +1,6 @@
 using System;
 
-namespace TheEyeTether.Interfaces
+namespace TheEye.Tether.Interfaces
 {
 	public interface IClock
 	{

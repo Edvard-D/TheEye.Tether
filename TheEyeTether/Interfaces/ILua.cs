@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NLua;
 
-namespace TheEyeTether.Interfaces
+namespace TheEye.Tether.Interfaces
 {
 	public interface ILua
 	{

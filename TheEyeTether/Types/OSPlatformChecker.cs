@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.Types
+namespace TheEye.Tether.Types
 {
 	public class OSPlatformChecker : IOSPlatformChecker
 	{

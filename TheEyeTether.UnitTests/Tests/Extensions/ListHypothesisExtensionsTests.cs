@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using TheEyeTether.Data;
-using TheEyeTether.Extensions;
+using TheEye.Tether.Data;
+using TheEye.Tether.Extensions;
 using Xunit;
 
-namespace TheEyeTether.UnitTests.Tests.Extensions
+namespace TheEye.Tether.UnitTests.Tests.Extensions
 {
 	public class ListHypothesisExtensionsTests
 	{

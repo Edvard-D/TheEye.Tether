@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace TheEyeTether.Data
+namespace TheEye.Tether.Data
 {
 	public record Hypothesis
 	{

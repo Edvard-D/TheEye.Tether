@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TheEyeTether.Data;
+using TheEye.Tether.Data;
 
-namespace TheEyeTether.Utilities.Hypotheses
+namespace TheEye.Tether.Utilities.Hypotheses
 {
 	public static class CategoriesCreator
 	{

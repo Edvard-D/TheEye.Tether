@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using TheEyeTether.Data;
+using TheEye.Tether.Data;
 
-namespace TheEyeTether.Extensions
+namespace TheEye.Tether.Extensions
 {
 	public static class ListHypothesisExtensions
 	{

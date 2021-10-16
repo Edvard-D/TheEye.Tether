@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.UnitTests.Stubs
+namespace TheEye.Tether.UnitTests.Stubs
 {
 	public class StubDrivesProvider : IDrivesProvider
 	{

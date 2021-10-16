@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TheEyeTether.Utilities.General
+namespace TheEye.Tether.Utilities.General
 {
 	public static class DataAnalysisUtilities
 	{

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
 using System.Text.Json;
-using TheEyeTether.Utilities.Hypotheses;
+using TheEye.Tether.Utilities.Hypotheses;
 using Xunit;
 
-namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
+namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 {
 	public class SnapshotsLoaderTests
 	{

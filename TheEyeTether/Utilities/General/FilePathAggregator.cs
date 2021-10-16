@@ -1,7 +1,7 @@
 using System.IO;
 using System.IO.Abstractions;
 
-namespace TheEyeTether.Utilities.General
+namespace TheEye.Tether.Utilities.General
 {
 	public static class FilePathAggregator
 	{

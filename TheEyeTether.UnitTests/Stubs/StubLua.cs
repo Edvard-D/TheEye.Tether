@@ -3,9 +3,9 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using NLua;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.UnitTests.Mocks
+namespace TheEye.Tether.UnitTests.Mocks
 {
 	public class StubLua : ILua
 	{

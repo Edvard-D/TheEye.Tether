@@ -3,11 +3,11 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Moq;
-using TheEyeTether.UnitTests.Stubs;
-using TheEyeTether.Utilities.General;
+using TheEye.Tether.UnitTests.Stubs;
+using TheEye.Tether.Utilities.General;
 using Xunit;
 
-namespace TheEyeTether.UnitTests.Tests.Utilities.General
+namespace TheEye.Tether.UnitTests.Tests.Utilities.General
 {
 	public class ResourcesTests
 	{

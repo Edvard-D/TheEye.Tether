@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Text.Json;
-using TheEyeTether.Data;
-using TheEyeTether.Interfaces;
-using TheEyeTether.Utilities.General;
+using TheEye.Tether.Data;
+using TheEye.Tether.Interfaces;
+using TheEye.Tether.Utilities.General;
 
-namespace TheEyeTether.Utilities.Hypotheses
+namespace TheEye.Tether.Utilities.Hypotheses
 {
 	public static class PendingDataConverter
 	{

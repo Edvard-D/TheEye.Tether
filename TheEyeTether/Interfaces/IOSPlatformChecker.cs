@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace TheEyeTether.Interfaces
+namespace TheEye.Tether.Interfaces
 {
 	public interface IOSPlatformChecker
 	{

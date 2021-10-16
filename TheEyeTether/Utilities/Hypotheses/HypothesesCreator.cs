@@ -6,12 +6,12 @@ using System.Linq;
 using Aglomera;
 using Aglomera.Evaluation.Internal;
 using Aglomera.Linkage;
-using TheEyeTether.Data;
-using TheEyeTether.Extensions;
-using TheEyeTether.Interfaces;
-using TheEyeTether.Utilities.General;
+using TheEye.Tether.Data;
+using TheEye.Tether.Extensions;
+using TheEye.Tether.Interfaces;
+using TheEye.Tether.Utilities.General;
 
-namespace TheEyeTether.Utilities.Hypotheses
+namespace TheEye.Tether.Utilities.Hypotheses
 {
 	public static class HypothesesCreator
 	{

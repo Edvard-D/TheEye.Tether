@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
 using System.Runtime.InteropServices;
-using TheEyeTether.UnitTests.Stubs;
-using TheEyeTether.Utilities.General;
+using TheEye.Tether.UnitTests.Stubs;
+using TheEye.Tether.Utilities.General;
 using Xunit;
 
-namespace TheEyeTether.UnitTests.Tests.Utilities.General
+namespace TheEye.Tether.UnitTests.Tests.Utilities.General
 {
 	public class ProgramPathLocaterTests
 	{

@@ -1,7 +1,7 @@
 using System.Reflection;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.Providers
+namespace TheEye.Tether.Providers
 {
 	public class AssemblyProvider : IAssemblyProvider
 	{

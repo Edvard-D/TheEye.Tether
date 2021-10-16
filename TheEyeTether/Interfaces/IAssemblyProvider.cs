@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace TheEyeTether.Interfaces
+namespace TheEye.Tether.Interfaces
 {
 	public interface IAssemblyProvider
 	{

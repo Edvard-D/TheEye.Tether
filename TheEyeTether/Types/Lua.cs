@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using NLua;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.Types
+namespace TheEye.Tether.Types
 {
 	public class Lua : ILua
 	{

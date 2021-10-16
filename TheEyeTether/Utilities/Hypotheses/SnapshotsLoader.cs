@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Text.Json;
 
-namespace TheEyeTether.Utilities.Hypotheses
+namespace TheEye.Tether.Utilities.Hypotheses
 {
 	public static class SnapshotsLoader
 	{

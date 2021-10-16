@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using TheEyeTether.Data;
-using TheEyeTether.Utilities.Hypotheses;
+using TheEye.Tether.Data;
+using TheEye.Tether.Utilities.Hypotheses;
 using Xunit;
 
-namespace TheEyeTether.UnitTests.Tests.Utilities.Hypotheses
+namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 {
 	public class CategoriesCreatorTests
 	{

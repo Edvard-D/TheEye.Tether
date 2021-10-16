@@ -1,7 +1,7 @@
 using System.IO.Abstractions;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.Utilities.Hypotheses
+namespace TheEye.Tether.Utilities.Hypotheses
 {
 	public static class SnapshotDeleter
 	{

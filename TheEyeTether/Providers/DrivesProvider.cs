@@ -1,7 +1,7 @@
 using System.IO;
-using TheEyeTether.Interfaces;
+using TheEye.Tether.Interfaces;
 
-namespace TheEyeTether.Providers
+namespace TheEye.Tether.Providers
 {
 	public class DrivesProvider : IDrivesProvider
 	{
