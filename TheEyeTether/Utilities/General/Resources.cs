@@ -7,10 +7,11 @@ namespace TheEye.Tether.Utilities.General
 	public static class Resources
 	{
 		public static string ReadTextResource(
+				string assemblyName,
 				string resourceName,
 				IAssemblyProvider assemblyProvider)
 		{
-			var assembly = assemblyProvider.GetExecutingAssembly();
+			var assembly = assemblyProvider.GetAssemblyByName(assemblyName);
 			var resourcePath = assembly.GetManifestResourceNames().Single(s => s.EndsWith(resourceName));
 
 			using(Stream stream = assembly.GetManifestResourceStream(resourcePath))

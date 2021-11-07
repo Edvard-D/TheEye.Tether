@@ -16,6 +16,9 @@ namespace TheEye.Tether
 {
 	public class Worker : BackgroundService
 	{
+		private const string Assemblyname = "TheEyeTether";
+		
+
 		private readonly ILogger<Worker> _logger;
 
 		public Worker(ILogger<Worker> logger)
@@ -26,11 +29,11 @@ namespace TheEye.Tether
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
 			var assemblyProvider = new AssemblyProvider();
-			var categorySettingsText = Resources.ReadTextResource("CategorySettings.json",
+			var categorySettingsText = Resources.ReadTextResource(Assemblyname, "CategorySettings.json",
 					assemblyProvider);
 			var categorySettings = JsonConvert.DeserializeObject<Dictionary<string, CategorySetting>>(
 					categorySettingsText); 
-			var dataPointSettingsText = Resources.ReadTextResource("DataPointSettings.json",
+			var dataPointSettingsText = Resources.ReadTextResource(Assemblyname, "DataPointSettings.json",
 					assemblyProvider);
 			var dataPointSettings = JsonConvert.DeserializeObject<Dictionary<string, DataPointSetting>>(
 					dataPointSettingsText);
