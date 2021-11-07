@@ -104,5 +104,19 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.General
 
 			Assert.Equal(result, resourceText1);
 		}
+
+		[Fact]
+		public void ReadTextResource_ThrowsInvalidOperationException_WhenAssemblyDoesNotExist()
+		{
+			var resourceName = "Path.txt";
+			var resourcePath = "Test." + resourceName;
+			var assemblyName = "assemblyName";
+			var manifestResourceNames = new string[] { resourcePath };
+			var assemblies = new List<Assembly>();
+			var stubAssemblyProvider = new StubAssemblyProvider(assemblies);
+
+			Assert.Throws<InvalidOperationException>(() =>
+					Resources.ReadTextResource(assemblyName, resourceName, stubAssemblyProvider));
+		}
 	}
 }

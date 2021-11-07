@@ -12,6 +12,11 @@ namespace TheEye.Tether.Utilities.General
 				IAssemblyProvider assemblyProvider)
 		{
 			var assembly = assemblyProvider.GetAssemblyByName(assemblyName);
+			if(assembly == null)
+			{
+				throw new System.InvalidOperationException();
+			}
+
 			var resourcePath = assembly.GetManifestResourceNames().Single(s => s.EndsWith(resourceName));
 
 			using(Stream stream = assembly.GetManifestResourceStream(resourcePath))
