@@ -66,15 +66,8 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.General
 			var assemblies = new List<Assembly>() { mockAssembly.Object };
 			var stubAssemblyProvider = new StubAssemblyProvider(assemblies);
 			
-			try
-			{
-				var result = Resources.ReadTextResource(assemblyName, resourceName, stubAssemblyProvider);
-				Assert.True(false);
-			}
-			catch(Exception ex)
-			{
-				Assert.IsType<System.InvalidOperationException>(ex);
-			}
+			Assert.Throws<InvalidOperationException>(() =>
+					Resources.ReadTextResource(assemblyName, resourceName, stubAssemblyProvider));
 		}
 
 		[Fact]
