@@ -16,7 +16,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 		private const string LuaTableName = "TheEyeRecorder_Data";
 		private const string OutputFilePathDateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
 		private const string ProgramName = "Wow";
-		private const string RequiredDirectories = @"WorldOfWarcraft\_retail_\";
+		private const string RequiredDirectories = @"World Of Warcraft\_retail_\";
 		private const int ServerNameElementOffset = 4;
 
 
