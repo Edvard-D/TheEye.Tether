@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
+using System.Linq;
 using TheEye.Tether.Interfaces;
 
 namespace TheEye.Tether.Utilities.General
@@ -30,10 +31,11 @@ namespace TheEye.Tether.Utilities.General
 			}
 
 			var ending = GetAppropriateFileEnding(programName, osPlatformChecker);
-			var searchPattern = "*" + requiredDirectories + programName + ending;
-			var files = LocateFiles(searchPattern, defaultPath, fileSystem, drivesProvider);
+			var searchPattern = programName + ending;
+			var files = LocateFiles(requiredDirectories, searchPattern, defaultPath, fileSystem,
+					drivesProvider);
 
-			if(files.Length == 0)
+			if(files.Count == 0)
 			{
 				return null;
 			}
@@ -58,7 +60,8 @@ namespace TheEye.Tether.Utilities.General
 			return ending;
 		}
 
-		private static string[] LocateFiles(
+		private static List<string> LocateFiles(
+				string requiredDirectories,
 				string searchPattern,
 				string defaultPath,
 				IFileSystem fileSystem,
@@ -66,25 +69,35 @@ namespace TheEye.Tether.Utilities.General
 		{
 			if(defaultPath != null)
 			{
-				var files = fileSystem.Directory.GetFiles(defaultPath, searchPattern);
-
-				if(files.Length > 0)
-				{
-					return files;
-				}
+				return LocateFilesInDirectory(defaultPath, requiredDirectories, searchPattern,
+						fileSystem);
 			}
 
 			foreach(DriveInfo driveInfo in drivesProvider.GetDrives())
 			{
-				var files = fileSystem.Directory.GetFiles(driveInfo.Name, searchPattern, SearchOption.AllDirectories);
-				
-				if(files.Length > 0)
+				var files = LocateFilesInDirectory(driveInfo.Name, requiredDirectories, searchPattern,
+						fileSystem);
+
+				if(files.Count > 0)
 				{
 					return files;
 				}
 			}
 
-			return new string[0];
+			return new List<string>();
+		}
+
+		private static List<string> LocateFilesInDirectory(
+				string searchDirectory,
+				string requiredDirectories,
+				string searchPattern,
+				IFileSystem fileSystem)
+		{
+			var files = fileSystem.Directory.GetFiles(searchDirectory, searchPattern,
+					SearchOption.AllDirectories).ToList();
+			var filteredFiles = files.Where(f => f.Contains(requiredDirectories)).ToList();
+
+			return filteredFiles;
 		}
 	}
 }
