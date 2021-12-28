@@ -115,6 +115,10 @@ namespace TheEye.Tether.Utilities.General
 			{
 				return foundFiles;
 			}
+			catch(System.IO.IOException)
+			{
+				return foundFiles;
+			}
 
 			var subDirectories = searchDirectoryInfo.EnumerateDirectories();
 			foreach(var subDirectory in subDirectories)

@@ -254,5 +254,26 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.General
 			
 			Assert.Null(exception);
 		}
+
+		[Fact]
+		public void LocateProgramPath_DoesNotThrowIOException_WhenTryingToWriteToDirectoriesThatArentReady()
+		{
+			var programName = "test.exe";
+			var correctProgramDirectory = @"Users\Test1\";
+			var correctProgramPath = @"C:\" + correctProgramDirectory + programName;
+			var mockFileSystem = new Mock<IFileSystem>();
+			mockFileSystem.Setup(x => x.File.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+					.Throws(new System.IO.IOException());
+			mockFileSystem.Setup(x => x.DirectoryInfo.FromDirectoryName(It.IsAny<string>()))
+					.Returns(new StubDirectoryInfo(@"C:\"));
+			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
+			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+
+			var exception = Record.Exception(() => ProgramPathLocater.LocateProgramPath(programName,
+					correctProgramDirectory, mockFileSystem.Object, stubDrivesProvider,
+					stubOSPlatformChecker));
+			
+			Assert.Null(exception);
+		}
 	}
 }
