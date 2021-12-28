@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Runtime.InteropServices;
+using Moq;
 using TheEye.Tether.UnitTests.Stubs;
 using TheEye.Tether.Utilities.General;
 using Xunit;
@@ -230,6 +232,27 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.General
 					mockFileSystem, stubDrivesProvider, stubOSPlatformChecker);
 
 			Assert.Equal(result, correctProgramPath);
+		}
+
+		[Fact]
+		public void LocateProgramPath_DoesNotThrowUnauthorizedAccessException_WhenSearchingDirectoriesNotAuthorizedToAccess()
+		{
+			var programName = "test.exe";
+			var correctProgramDirectory = @"Users\Test1\";
+			var correctProgramPath = @"C:\" + correctProgramDirectory + programName;
+			var mockFileSystem = new Mock<IFileSystem>();
+			mockFileSystem.Setup(x => x.File.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+					.Throws(new System.UnauthorizedAccessException());
+			mockFileSystem.Setup(x => x.DirectoryInfo.FromDirectoryName(It.IsAny<string>()))
+					.Returns(new StubDirectoryInfo(@"C:\"));
+			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
+			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
+
+			var exception = Record.Exception(() => ProgramPathLocater.LocateProgramPath(programName,
+					correctProgramDirectory, mockFileSystem.Object, stubDrivesProvider,
+					stubOSPlatformChecker));
+			
+			Assert.Null(exception);
 		}
 	}
 }
