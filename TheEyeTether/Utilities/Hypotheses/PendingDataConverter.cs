@@ -40,7 +40,8 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			
 			var programEnding = OSPlatformUtilities.GetProgramEnding(osPlatformChecker);
 			var searchDirectoryPath = programPath.Replace(ProgramName + programEnding, string.Empty);
-			var filePaths = FilePathAggregator.AggregateFilePaths(FileName, searchDirectoryPath, fileSystem);
+			var filePaths = FilePathAggregator.Aggregate(searchDirectoryPath, string.Empty, FileName,
+					fileSystem);
 
 			foreach(string filePath in filePaths)
 			{
@@ -72,7 +73,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 					}
 				}
 
-				fileSystem.File.Delete(filePath);
+				//fileSystem.File.Delete(filePath);
 			}
 		}
 
