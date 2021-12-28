@@ -8,7 +8,7 @@ namespace TheEye.Tether.Utilities.General
 {
 	public static class ProgramPathLocater
 	{
-		private const string TempFileName = "TheEyeTempFile.txt";
+		private const string TempFileName = "TheEyeTether_TempFile.txt";
 
 
 		private static Dictionary<string, string> _savedProgramPathPairs = new Dictionary<string, string>();
