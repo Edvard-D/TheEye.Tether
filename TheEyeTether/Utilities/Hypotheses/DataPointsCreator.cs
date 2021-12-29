@@ -163,15 +163,25 @@ namespace TheEye.Tether.Utilities.Hypotheses
 				return timestampDatas[0].Timestamp;
 			}
 			
+			var wasTimestampSame = false;
 			for(int i = 0; i < timestampDatas.Count; i++)
 			{
 				var timestampData = timestampDatas[i];
 
-				if(timestampData.SubTypeName == comparisonTimestampData.EndMarkerSubTypeName
-						&& timestampData.Timestamp >= comparisonTimestampData.Timestamp)
+				if(timestampData.Timestamp == comparisonTimestampData.Timestamp)
 				{
-					timestampDatas.RemoveAt(i);
+					wasTimestampSame = true;
+				}
 
+				if(timestampData.Timestamp != comparisonTimestampData.Timestamp)
+				{
+					if(timestampData.SubTypeName == comparisonTimestampData.EndMarkerSubTypeName
+							&& timestampData.Timestamp >= comparisonTimestampData.Timestamp
+							&& wasTimestampSame == false)
+					{
+						timestampDatas.RemoveAt(i);
+					}
+					
 					return timestampData.Timestamp;
 				}
 			}
