@@ -2,12 +2,12 @@
 	"PLAYER_EQUIPMENT":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 2
+		"EndMarkerPosition": 1
 	},
 	"PLAYER_HAS_TARGET":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 0
 	},
 	"PLAYER_INSTANCE":
 	{
@@ -22,12 +22,12 @@
 	"PLAYER_IS_MOVING":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 0
 	},
 	"PLAYER_IS_TANKING":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 0
 	},
 	"PLAYER_JUMPED":
 	{
@@ -42,7 +42,7 @@
 	"PLAYER_PVP_TALENT":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 2
+		"EndMarkerPosition": 1
 	},
 	"PLAYER_SPECIALIZATION":
 	{
@@ -62,7 +62,7 @@
 	"PLAYER_SPELL_IS_KNOWN":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 2
+		"EndMarkerPosition": 1
 	},
 	"PLAYER_SPELLCAST_START":
 	{
@@ -77,17 +77,17 @@
 	"PLAYER_SUMMONED_ACTIVE_ELAPSED_TIME":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 2
+		"EndMarkerPosition": 1
 	},
 	"PLAYER_TALENT":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 2
+		"EndMarkerPosition": 1
 	},
 	"PLAYER_TOTEM_DURATION":
 	{
 		"EndMarker": "0",
-		"EndMarkerPosition": 2
+		"EndMarkerPosition": 1
 	},
 	"TARGET_IS_HOSTILE":
 	{
@@ -97,12 +97,12 @@
 	"TARGET_SPELLCAST_IS_INTERRUPTIBLE":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 0
 	},
 	"TARGET_TIME_UNTIL_DEATH":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 0
 	},
 	"UNIT_AURA_ACTIVE":
 	{
@@ -127,11 +127,11 @@
 	"UNIT_HEALTH_PERCENT":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 2
+		"EndMarkerPosition": 1
 	},
 	"UNIT_SPELLCAST_IS_ACTIVE":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 2
+		"EndMarkerPosition": 1
 	}
 }
