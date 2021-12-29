@@ -86,8 +86,19 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			{
 				foreach(KeyValuePair<object, object> keyValuePair in table)
 				{
-					timestampDatas.AddRange(ConvertTableToSubTypeNameTimestampPairs(
-							(string)keyValuePair.Key,
+					string subTypeName;
+
+					try
+					{
+						subTypeName = (string)keyValuePair.Key;
+					}
+					catch(System.InvalidCastException)
+					{
+						var subTypeNameLong = (long)keyValuePair.Key;
+						subTypeName = subTypeNameLong.ToString();
+					}
+
+					timestampDatas.AddRange(ConvertTableToSubTypeNameTimestampPairs(subTypeName,
 							keyValuePair.Value as Dictionary<object, object>, dataPointSetting));
 				}
 			}
@@ -113,8 +124,19 @@ namespace TheEye.Tether.Utilities.Hypotheses
 
 			foreach(KeyValuePair<object, object> keyValuePair in timestamps)
 			{
-				timestampDatas.Add(new TimestampData(subTypeName, endMarkerSubTypeName,
-						(double)keyValuePair.Value));
+				double timestamp;
+				
+				try
+				{
+					timestamp = (double)keyValuePair.Value;
+				}
+				catch(System.InvalidCastException)
+				{
+					var timestampLong = (long)keyValuePair.Value;
+					timestamp = (double)timestampLong;
+				}
+
+				timestampDatas.Add(new TimestampData(subTypeName, endMarkerSubTypeName, timestamp));
 			}
 
 			return timestampDatas;
