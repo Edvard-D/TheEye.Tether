@@ -76,7 +76,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			var timestampDatas = new List<TimestampData>();
 
 			/// Value is a timestamp
-			if(table.ContainsKey(1))
+			if(table.ContainsKey(1L))
 			{
 				timestampDatas.AddRange(ConvertTableToSubTypeNameTimestampPairs(null, table,
 						dataPointSetting));
