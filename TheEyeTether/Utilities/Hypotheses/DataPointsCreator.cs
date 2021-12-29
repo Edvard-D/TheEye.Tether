@@ -104,7 +104,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 		{
 			var timestampDatas = new List<TimestampData>();
 			string endMarkerSubTypeName = null;
-			if(subTypeName != null && dataPointSetting.EndMarker != null)
+			if(subTypeName != null && dataPointSetting.EndMarker != string.Empty)
 			{
 				var splitSubTypeName = subTypeName.Split("_");
 				splitSubTypeName[dataPointSetting.EndMarkerPosition] = dataPointSetting.EndMarker;
