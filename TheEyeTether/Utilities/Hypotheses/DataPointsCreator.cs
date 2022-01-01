@@ -114,13 +114,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 				DataPointSetting dataPointSetting)
 		{
 			var timestampDatas = new List<TimestampData>();
-			string endMarkerSubTypeName = null;
-			if(subTypeName != null && dataPointSetting.EndMarker != string.Empty)
-			{
-				var splitSubTypeName = subTypeName.Split("_");
-				splitSubTypeName[dataPointSetting.EndMarkerPosition] = dataPointSetting.EndMarker;
-				endMarkerSubTypeName = string.Join("_", splitSubTypeName);
-			}
+			var endMarkerSubTypeName = GetEndMarkerSubTypeName(subTypeName, dataPointSetting);
 
 			foreach(KeyValuePair<object, object> keyValuePair in timestamps)
 			{
@@ -140,6 +134,22 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			}
 
 			return timestampDatas;
+		}
+
+		private static string GetEndMarkerSubTypeName(
+				string subTypeName,
+				DataPointSetting dataPointSetting)
+		{
+			string endMarkerSubTypeName = null;
+
+			if(subTypeName != null && dataPointSetting.EndMarker != string.Empty)
+			{
+				var splitSubTypeName = subTypeName.Split("_");
+				splitSubTypeName[dataPointSetting.EndMarkerPosition] = dataPointSetting.EndMarker;
+				endMarkerSubTypeName = string.Join("_", splitSubTypeName);
+			}
+
+			return endMarkerSubTypeName;
 		}
 
 		private static double GetEndTimestamp(
