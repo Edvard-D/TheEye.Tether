@@ -461,8 +461,54 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 
 			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
-			Assert.Equal(false1Timestamp, result[tableName][0].TimestampRange.End);
-			Assert.Equal(false2Timestamp, result[tableName][1].TimestampRange.End);
+			var matchingDataPoint1 = result[tableName]
+					.Where(dp => dp.TimestampRange.Start == true1Timestamp)
+					.First();
+			var matchingDataPoint2 = result[tableName]
+					.Where(dp => dp.TimestampRange.Start == true2Timestamp)
+					.First();
+			Assert.Equal(false1Timestamp, matchingDataPoint1.TimestampRange.End);
+			Assert.Equal(false2Timestamp, matchingDataPoint2.TimestampRange.End);
+		}
+		
+		[Fact]
+		public void Create_AssignsTimestampsInAscendingOrder_WhenTheyAreNotInAscendingOrderToStart()
+		{
+			var true1Timestamp = 1d;
+			var true2Timestamp = 3d;
+			var false1Timestamp = 2d;
+			var false2Timestamp = 4d;
+			var subTables = new Dictionary<object, object>()
+			{
+				{ "test_true", new Dictionary<object, object>() {
+					{ 1L, true1Timestamp },
+					{ 2L, true2Timestamp }
+				} },
+				{ "test_false", new Dictionary<object, object>() {
+					{ 1L, false2Timestamp },
+					{ 2L, false1Timestamp }
+				} },
+			};
+			var tableName = "test";
+			var luaTable = new Dictionary<object, object>()
+			{
+				{ tableName, subTables }
+			};
+			var dataPointSettings = new Dictionary<string, DataPointSetting>()
+			{
+				{ tableName, new DataPointSetting("false", 1, new int[] { 0 }) }
+			};
+
+			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
+
+			var matchingDataPoint1 = result[tableName]
+					.Where(dp => dp.TimestampRange.Start == true1Timestamp)
+					.First();
+			var matchingDataPoint2 = result[tableName]
+					.Where(dp => dp.TimestampRange.Start == true2Timestamp)
+					.First();
+			Assert.Equal(false1Timestamp, matchingDataPoint1.TimestampRange.End);
+			Assert.Equal(false2Timestamp, matchingDataPoint2.TimestampRange.End);
 		}
 	}
 }
