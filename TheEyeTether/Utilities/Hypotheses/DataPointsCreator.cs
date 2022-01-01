@@ -78,7 +78,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			/// Value is a timestamp
 			if(table.ContainsKey(1L))
 			{
-				timestampDatas.AddRange(ConvertTableToSubTypeNameTimestampPairs(null, table,
+				timestampDatas.AddRange(ConvertTableToTimestampDatas(null, table,
 						dataPointSetting));
 			}
 			/// Value is a table
@@ -98,7 +98,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 						subTypeName = subTypeNameLong.ToString();
 					}
 
-					timestampDatas.AddRange(ConvertTableToSubTypeNameTimestampPairs(subTypeName,
+					timestampDatas.AddRange(ConvertTableToTimestampDatas(subTypeName,
 							keyValuePair.Value as Dictionary<object, object>, dataPointSetting));
 				}
 			}
@@ -108,7 +108,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			return timestampDatas;
 		}
 
-		private static List<TimestampData> ConvertTableToSubTypeNameTimestampPairs(
+		private static List<TimestampData> ConvertTableToTimestampDatas(
 				string subTypeName,
 				Dictionary<object, object> timestamps,
 				DataPointSetting dataPointSetting)
