@@ -286,7 +286,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var subTableTimestamps = new Dictionary<object, object>();
 			for(int i = 0; i < timestamps.Length; i++)
 			{
-				subTableTimestamps[i + 1] = timestamps[i];
+				subTableTimestamps[(long)i + 1L] = timestamps[i];
 			}
 			var luaTable = new Dictionary<object, object>()
 			{
