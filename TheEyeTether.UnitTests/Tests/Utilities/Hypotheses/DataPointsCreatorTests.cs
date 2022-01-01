@@ -300,14 +300,14 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		public void Create_AssignsMatchingFalseTimestampAsDataPointTimestampRangeEnd_WhenValidMatchingSubTableExistsAndDataPointSettingsHasFalseAssigned()
 		{
 			var true1Timestamp = 1d;
-			var true2Timestamp = 2d;
-			var false1Timestamp = 4d;
-			var false2Timestamp = 3d;
+			var true2Timestamp = 3d;
+			var false1Timestamp = 2d;
+			var false2Timestamp = 4d;
 			var subTables = new Dictionary<object, object>()
 			{
 				{ "test1_true", new Dictionary<object, object>() { { 1L, true1Timestamp } } },
-				{ "test2_true", new Dictionary<object, object>() { { 1L, true2Timestamp } } },
 				{ "test1_false", new Dictionary<object, object>() { { 1L, false1Timestamp } } },
+				{ "test2_true", new Dictionary<object, object>() { { 1L, true2Timestamp } } },
 				{ "test2_false", new Dictionary<object, object>() { { 1L, false2Timestamp } } }
 			};
 			var tableName = "test";
