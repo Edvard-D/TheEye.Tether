@@ -17,6 +17,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		private const string AccountName = "VARTIB";
 		private const string CharacterName = "Alaror";
 		private const string CategorySettingName = "PLAYER_SPECIALIZATION";
+		private const string CurrentDomainBaseDirectory = @"C:\TheEyeTether\";
 		private const string DataPointSubTypeName = "true";
 		private const string DataPointTypeName = "PLAYER_HAS_TARGET";
 		private const string DateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
@@ -26,6 +27,8 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 				+ "[\""+SnapshotSettingName+"\"] = { [\""+SnapshotSubTypeName+"\"] = { 10000.001 } }, "
 				+ "[\""+DataPointTypeName+"\"] = { [\""+DataPointSubTypeName+"\"] = { 10000.001 } } "
 				+ "}";
+		private const string MainDirectory = @"C:\World of Warcraft\_retail_\";
+		private const string ProgramPath = MainDirectory + "Wow.exe";
 		private const string ServerName = "Moonguard";
 		private const string SnapshotSettingName = "PLAYER_SPELLCAST_START";
 		private const string SnapshotSubTypeName = "1000";
@@ -35,24 +38,22 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		[Fact]
 		public void Convert_CreatesFiles_WhenThereIsPendingData()
 		{
-			var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-			var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+			var pendingDataFilePath = string.Format(MainDirectory + @"WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
 					AccountName, ServerName, CharacterName);
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>()
 			{
 				{ pendingDataFilePath, LuaFileText}
 			});
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
 			{
-				{ programPath, new MockFileData(string.Empty) },
+				{ ProgramPath, new MockFileData(string.Empty) },
 				{ pendingDataFilePath, LuaFileText },
-				{ currentDomainBaseDirectory, new MockFileData(string.Empty) }
+				{ CurrentDomainBaseDirectory, new MockFileData(string.Empty) }
 			});
 			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>()
 			{
 				{ CategorySettingName, new CategorySetting(CategorySettingName,
@@ -83,13 +84,12 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		[Fact]
 		public void Convert_DoesNotThrowError_WhenProgramCannotBeFound()
 		{
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>());
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>());
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>() {});
 			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>();
 			var dataPointSettings = new Dictionary<string, DataPointSetting>();
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
@@ -103,24 +103,22 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		[Fact]
 		public void Convert_RemovesFileEndingFromProgramName_WhenCalledOnWindows()
 		{
-			var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-			var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+			var pendingDataFilePath = string.Format(MainDirectory + @"WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
 					AccountName, ServerName, CharacterName);
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>()
 			{
 				{ pendingDataFilePath, LuaFileText}
 			});
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
 			{
-				{ programPath, new MockFileData(string.Empty) },
+				{ ProgramPath, new MockFileData(string.Empty) },
 				{ pendingDataFilePath, LuaFileText },
-				{ currentDomainBaseDirectory, new MockFileData(string.Empty) }
+				{ CurrentDomainBaseDirectory, new MockFileData(string.Empty) }
 			});
 			var stubDivesGetter = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>()
 			{
 				{ CategorySettingName, new CategorySetting(CategorySettingName,
@@ -150,24 +148,22 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		[Fact]
 		public void Convert_RemovesFileEndingFromProgramName_WhenCalledOnMacOS()
 		{
-			var programPath = @"C:\Applications\WorldOfWarcraft\_retail_\Wow.app";
-			var pendingDataFilePath = string.Format(@"C:\Applications\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+			var pendingDataFilePath = string.Format(MainDirectory + @"WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
 					AccountName, ServerName, CharacterName);
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>()
 			{
 				{ pendingDataFilePath, LuaFileText}
 			});
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
 			{
-				{ programPath, new MockFileData(string.Empty) },
+				{ ProgramPath, new MockFileData(string.Empty) },
 				{ pendingDataFilePath, LuaFileText },
-				{ currentDomainBaseDirectory, new MockFileData(string.Empty) }
+				{ CurrentDomainBaseDirectory, new MockFileData(string.Empty) }
 			});
 			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.OSX);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>()
 			{
 				{ CategorySettingName, new CategorySetting(CategorySettingName,
@@ -197,24 +193,22 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		[Fact]
 		public void Convert_CreatesNewFileWithCurrentDomainBaseDirectoryInPath_WhenThereIsPendingData()
 		{
-			var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-			var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+			var pendingDataFilePath = string.Format(MainDirectory + @"WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
 					AccountName, ServerName, CharacterName);
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>()
 			{
 				{ pendingDataFilePath, LuaFileText}
 			});
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
 			{
-				{ programPath, new MockFileData(string.Empty) },
+				{ ProgramPath, new MockFileData(string.Empty) },
 				{ pendingDataFilePath, LuaFileText },
-				{ currentDomainBaseDirectory, new MockFileData(string.Empty) },
+				{ CurrentDomainBaseDirectory, new MockFileData(string.Empty) },
 			});
 			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>()
 			{
 				{ CategorySettingName, new CategorySetting(CategorySettingName,
@@ -240,9 +234,9 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 
 			var files = mockFileSystem.AllFiles as string[];
 			var createdFilePath = files.ToList()
-					.Where(f => f != programPath && f != pendingDataFilePath && f != currentDomainBaseDirectory)
+					.Where(f => f != ProgramPath && f != pendingDataFilePath && f != CurrentDomainBaseDirectory)
 					.First();
-			Assert.Contains(currentDomainBaseDirectory, createdFilePath);
+			Assert.Contains(CurrentDomainBaseDirectory, createdFilePath);
 		}
 
 		[Theory]
@@ -256,24 +250,22 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		[InlineData(FileSaveDateTime)]
 		public void Convert_CreatesNewFileInCorrectDirectories_WhenThereIsPendingData(string requiredValue)
 		{
-			var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-			var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+			var pendingDataFilePath = string.Format(MainDirectory + @"WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
 					AccountName, ServerName, CharacterName);
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>()
 			{
 				{ pendingDataFilePath, LuaFileText }
 			});
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
 			{
-				{ programPath, new MockFileData(string.Empty) },
+				{ ProgramPath, new MockFileData(string.Empty) },
 				{ pendingDataFilePath, LuaFileText },
-				{ currentDomainBaseDirectory, new MockFileData(string.Empty) },
+				{ CurrentDomainBaseDirectory, new MockFileData(string.Empty) },
 			});
 			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>()
 			{
 				{ CategorySettingName, new CategorySetting(CategorySettingName,
@@ -299,7 +291,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			
 			var files = mockFileSystem.AllFiles as string[];
 			var createdFilePath = files.ToList()
-					.Where(f => f != programPath && f != pendingDataFilePath)
+					.Where(f => f != ProgramPath && f != pendingDataFilePath)
 					.First();
 			Assert.Contains(requiredValue, createdFilePath);
 		}
@@ -316,24 +308,22 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 				SnapshotSettingName+@"\"+SnapshotSubTypeName)]
 		public void Convert_CreatesNecessaryDirectories_WhenThereIsPendingData(string requiredValue)
 		{
-			var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-			var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+			var pendingDataFilePath = string.Format(MainDirectory + @"WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
 					AccountName, ServerName, CharacterName);
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>()
 			{
 				{ pendingDataFilePath, LuaFileText}
 			});
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
 			{
-				{ programPath, new MockFileData(string.Empty) },
+				{ ProgramPath, new MockFileData(string.Empty) },
 				{ pendingDataFilePath, LuaFileText },
-				{ currentDomainBaseDirectory, new MockFileData(string.Empty) },
+				{ CurrentDomainBaseDirectory, new MockFileData(string.Empty) },
 			});
 			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>()
 			{
 				{ CategorySettingName, new CategorySetting(CategorySettingName,
@@ -364,24 +354,22 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		[Fact]
 		public void Convert_FormatsDataAsJson_WhenThereIsPendingData()
 		{
-			var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-			var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+			var pendingDataFilePath = string.Format(MainDirectory + @"WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
 					AccountName, ServerName, CharacterName);
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>()
 			{
 				{ pendingDataFilePath, LuaFileText}
 			});
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
 			{
-				{ programPath, new MockFileData(string.Empty) },
+				{ ProgramPath, new MockFileData(string.Empty) },
 				{ pendingDataFilePath, LuaFileText },
-				{ currentDomainBaseDirectory, new MockFileData(string.Empty) },
+				{ CurrentDomainBaseDirectory, new MockFileData(string.Empty) },
 			});
 			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>()
 			{
 				{ CategorySettingName, new CategorySetting(CategorySettingName,
@@ -416,24 +404,22 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		[Fact]
 		public void Convert_DeletesConvertedPendingData_WhenCalled()
 		{
-			var programPath = @"C:\WorldOfWarcraft\_retail_\Wow.exe";
-			var pendingDataFilePath = string.Format(@"C:\WorldOfWarcraft\_retail_\WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
+			var pendingDataFilePath = string.Format(MainDirectory + @"WTF\Account\{0}\{1}\{2}\SavedVariables\TheEyeRecorder.lua",
 					AccountName, ServerName, CharacterName);
-			var currentDomainBaseDirectory = @"C:\TheEyeTether\";
-			var mockLua = new StubLua(currentDomainBaseDirectory, new Dictionary<string, string>()
+			var mockLua = new StubLua(CurrentDomainBaseDirectory, new Dictionary<string, string>()
 			{
 				{ pendingDataFilePath, LuaFileText}
 			});
 			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
 			{
-				{ programPath, new MockFileData(string.Empty) },
+				{ ProgramPath, new MockFileData(string.Empty) },
 				{ pendingDataFilePath, LuaFileText },
-				{ currentDomainBaseDirectory, new MockFileData(string.Empty) },
+				{ CurrentDomainBaseDirectory, new MockFileData(string.Empty) },
 			});
 			var stubDrivesProvider = new StubDrivesProvider(new List<string>() { @"C:\" });
 			var stubOSPlatformChecker = new StubOSPlatformChecker(OSPlatform.Windows);
 			var stubCurrentDomainBaseDirectoryProvider = new StubCurrentDomainBaseDirectoryProvider(
-					currentDomainBaseDirectory);
+					CurrentDomainBaseDirectory);
 			var categorySettings = new Dictionary<string, CategorySetting>()
 			{
 				{ CategorySettingName, new CategorySetting(CategorySettingName,
