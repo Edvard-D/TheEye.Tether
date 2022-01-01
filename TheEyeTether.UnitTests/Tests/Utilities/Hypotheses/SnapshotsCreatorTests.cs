@@ -16,8 +16,8 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var dataPointTypeName = "test3";
 			var luaTable = new Dictionary<object, object>()
 			{
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } },
-				{ dataPointTypeName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } },
+				{ dataPointTypeName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
 			{
@@ -48,10 +48,10 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ categorySettingName, new Dictionary<object, object>()
 					{
-						{ "test3", new Dictionary<object, object>() { { 1, 1d } } }
+						{ "test3", new Dictionary<object, object>() { { 1L, 1d } } }
 					}
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
 			{
@@ -91,10 +91,10 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ categorySettingName, new Dictionary<object, object>()
 					{
-						{ "testSubTable", new Dictionary<object, object>() { { 1, 1d } } }
+						{ "testSubTable", new Dictionary<object, object>() { { 1L, 1d } } }
 					}
 				},
-				{ dataPointTypeName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ dataPointTypeName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>();
 			var categorySettings = new Dictionary<string, CategorySetting>()
@@ -108,7 +108,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			};
 			for(int i = 0; i < snapshotSettingNames.Length; i++)
 			{
-				var subTable = new Dictionary<object, object>() { { 1, 1d } };
+				var subTable = new Dictionary<object, object>() { { 1L, 1d } };
 				luaTable[snapshotSettingNames[i]] = subTable;
 				snapshotSettings[snapshotSettingNames[i]] = new SnapshotSetting(snapshotSettingNames[i],
 						new string[1] { dataPointTypeName });
@@ -129,7 +129,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ categorySettingName, new Dictionary<object, object>()
 					{
-						{ "test3", new Dictionary<object, object>() { { 1, 1d } } }
+						{ "test3", new Dictionary<object, object>() { { 1L, 1d } } }
 					}
 				}
 			};
@@ -160,10 +160,10 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ categorySettingName, new Dictionary<object, object>()
 					{
-						{ "test3", new Dictionary<object, object>() { { 1, 1d } } }
+						{ "test3", new Dictionary<object, object>() { { 1L, 1d } } }
 					}
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
 			{
@@ -195,11 +195,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } },
-				{ dataPointTypeName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } },
+				{ dataPointTypeName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSetting =  new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
@@ -242,11 +242,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } },
-				{ dataPointTypeName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } },
+				{ dataPointTypeName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSetting =  new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
@@ -291,11 +291,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
 				{ snapshotSettingName, subTableTimestamps },
-				{ dataPointTypeName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ dataPointTypeName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
@@ -348,11 +348,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
 				{ snapshotSettingName, subTables },
-				{ dataPointTypeName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ dataPointTypeName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
@@ -389,11 +389,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } },
-				{ dataPointTypeName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } },
+				{ dataPointTypeName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
@@ -429,14 +429,14 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var snapshotSettingName = "test3";
 			var dataPointTypeName = "test4";
 			var categorySubTableTimestamp = 1d;
-			var subTable = new Dictionary<object, object>() { { 1, 1d } };
+			var subTable = new Dictionary<object, object>() { { 1L, 1d } };
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } },
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } },
 				{ dataPointTypeName, new Dictionary<object, object>() { { "test", subTable } } }
 			};
 			var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
@@ -476,10 +476,10 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } },
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } },
 			};
 			var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
 			var snapshotSettings = new Dictionary<string, SnapshotSetting>
@@ -527,10 +527,10 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, snapshotTimeStamp } } },
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, snapshotTimeStamp } } },
 				{ dataPointTypeName, subTable }
 			};
 			var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
@@ -582,16 +582,16 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var snapshotSettingName = "test3";
 			var dataPointTypeName = "test4";
 			var categorySubTableTimestamp = 1d;
-			var trueSubTable = new Dictionary<object, object>() { { 1, 1d } };
-			var falseSubTable = new Dictionary<object, object>() { { 1, 3d } };
+			var trueSubTable = new Dictionary<object, object>() { { 1L, 1d } };
+			var falseSubTable = new Dictionary<object, object>() { { 1L, 3d } };
 			var snapshotTimeStamp = 2d;
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, snapshotTimeStamp } } },
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, snapshotTimeStamp } } },
 				{
 					dataPointTypeName, new Dictionary<object, object>()
 					{
@@ -646,10 +646,10 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							categorySubTableTimestamp } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, snapshotTimeStamp } } },
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, snapshotTimeStamp } } },
 				{ dataPointTypeName, new Dictionary<object, object>() { { "test", subTable } } }
 			};
 			var snapshotSetting = new SnapshotSetting(snapshotSettingName, new string[] { dataPointTypeName });
@@ -685,14 +685,14 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ categorySettingName, new Dictionary<object, object>()
-					{ { categorySubTableName, new Dictionary<object, object>() { { 1,
+					{ { categorySubTableName, new Dictionary<object, object>() { { 1L,
 							1d } } } }
 				},
-				{ snapshotSettingName, new Dictionary<object, object>() { { 1, 1d } } },
+				{ snapshotSettingName, new Dictionary<object, object>() { { 1L, 1d } } },
 				{ dataPointTypeName, new Dictionary<object, object>()
 					{
 						{
-							dataPointSubTypeName, new Dictionary<object, object>() { { 1, 1d } }
+							dataPointSubTypeName, new Dictionary<object, object>() { { 1L, 1d } }
 						}
 					}
 				}
