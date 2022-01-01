@@ -408,5 +408,31 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 
 			Assert.Empty(result[tableName]);
 		}
+
+		[Fact]
+		public void Create_AssignsMaxValueTimeStamp_WhenMultipleStartTimeStampsAreTheSameWithNoEndTimestamps()
+		{
+			var true1Timestamp = 1d;
+			var true2Timestamp = 1d;
+			var subTables = new Dictionary<object, object>()
+			{
+				{ "test1_true", new Dictionary<object, object>() { { 1L, true1Timestamp } } },
+				{ "test2_true", new Dictionary<object, object>() { { 1L, true2Timestamp } } }
+			};
+			var tableName = "test";
+			var luaTable = new Dictionary<object, object>()
+			{
+				{ tableName, subTables }
+			};
+			var dataPointSettings = new Dictionary<string, DataPointSetting>()
+			{
+				{ tableName, new DataPointSetting("false", 1, new int[] { 0 }) }
+			};
+
+			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
+
+			Assert.Equal(double.MaxValue, result[tableName][0].TimestampRange.End);
+			Assert.Equal(double.MaxValue, result[tableName][1].TimestampRange.End);
+		}
 	}
 }
