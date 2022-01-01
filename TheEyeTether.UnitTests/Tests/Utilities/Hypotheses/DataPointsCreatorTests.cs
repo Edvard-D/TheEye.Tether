@@ -14,7 +14,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var tableName = "test";
 			var luaTable = new Dictionary<object, object>()
 			{
-				{ tableName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ tableName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
@@ -37,7 +37,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var dataPointSettings = new Dictionary<string, DataPointSetting>();
 			foreach(string tableName in tableNames)
 			{
-				luaTable[tableName] = new Dictionary<object, object>() { { 1, 1d } };
+				luaTable[tableName] = new Dictionary<object, object>() { { 1L, 1d } };
 				dataPointSettings[tableName] = new DataPointSetting();
 			}
 
@@ -52,7 +52,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var tableName = "test";
 			var luaTable = new Dictionary<object, object>()
 			{
-				{ tableName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ tableName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
@@ -74,7 +74,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var subTable = new Dictionary<object, object>();
 			for(int i = 0; i < timestamps.Length; i++)
 			{
-				subTable[i + 1] = timestamps[i];
+				subTable[(long)i + 1L] = timestamps[i];
 			}
 			var tableName = "test";
 			var luaTable = new Dictionary<object, object>()
@@ -101,7 +101,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var subTable = new Dictionary<object, object>();
 			for(int i = 0; i < timestamps.Length; i++)
 			{
-				subTable[i + 1] = timestamps[i];
+				subTable[(long)i + 1L] = timestamps[i];
 			}
 			var tableName = "test1";
 			var subTableName = "test2";
@@ -125,7 +125,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var tableName = "test";
 			var luaTable = new Dictionary<object, object>()
 			{
-				{ tableName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ tableName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
@@ -143,7 +143,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var tableName = "test";
 			var luaTable = new Dictionary<object, object>()
 			{
-				{ tableName, new Dictionary<object, object>() { { 1, 1d } } }
+				{ tableName, new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
@@ -160,7 +160,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		{
 			var tableName = "test1";
 			var subTableName = "test2";
-			var subTable = new Dictionary<object, object>() { { 1, 1d } };
+			var subTable = new Dictionary<object, object>() { { 1L, 1d } };
 			var luaTable = new Dictionary<object, object>()
 			{
 				{ tableName, new Dictionary<object, object>() { { subTableName, subTable } } }
@@ -182,7 +182,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var timestamp = 1d;
 			var luaTable = new Dictionary<object, object>()
 			{
-				{ tableName, new Dictionary<object, object>() { { 1, timestamp } } }
+				{ tableName, new Dictionary<object, object>() { { 1L, timestamp } } }
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
@@ -205,7 +205,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var subTable = new Dictionary<object, object>();
 			for(int i = 0; i < timestamps.Length; i++)
 			{
-				subTable[i + 1] = timestamps[i];
+				subTable[(long)i + 1L] = timestamps[i];
 			}
 			var luaTable = new Dictionary<object, object>()
 			{
@@ -240,7 +240,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var subTable = new Dictionary<object, object>();
 			for(int i = 0; i < timestamps.Length; i++)
 			{
-				subTable[i + 1] = timestamps[i];
+				subTable[(long)i + 1L] = timestamps[i];
 			}
 			var luaTable = new Dictionary<object, object>()
 			{
@@ -276,7 +276,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var subTable = new Dictionary<object, object>();
 			for(int i = 0; i < timestamps.Length; i++)
 			{
-				subTable[i + 1] = timestamps[i];
+				subTable[(long)i + 1L] = timestamps[i];
 			}
 			var luaTable = new Dictionary<object, object>()
 			{
@@ -305,10 +305,10 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var false2Timestamp = 3d;
 			var subTables = new Dictionary<object, object>()
 			{
-				{ "test1_true", new Dictionary<object, object>() { { 1, true1Timestamp } } },
-				{ "test2_true", new Dictionary<object, object>() { { 1, true2Timestamp } } },
-				{ "test1_false", new Dictionary<object, object>() { { 1, false1Timestamp } } },
-				{ "test2_false", new Dictionary<object, object>() { { 1, false2Timestamp } } }
+				{ "test1_true", new Dictionary<object, object>() { { 1L, true1Timestamp } } },
+				{ "test2_true", new Dictionary<object, object>() { { 1L, true2Timestamp } } },
+				{ "test1_false", new Dictionary<object, object>() { { 1L, false1Timestamp } } },
+				{ "test2_false", new Dictionary<object, object>() { { 1L, false2Timestamp } } }
 			};
 			var tableName = "test";
 			var luaTable = new Dictionary<object, object>()
@@ -334,7 +334,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var timestamp = 1d;
 			var subTable = new Dictionary<object, object>()
 			{
-				{ "test_true", new Dictionary<object, object>() { { 1, timestamp } } }
+				{ "test_true", new Dictionary<object, object>() { { 1L, timestamp } } }
 			};
 			var tableName = "test";
 			var luaTable = new Dictionary<object, object>()
@@ -360,7 +360,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var timestamp = 1d;
 			var subTable = new Dictionary<object, object>()
 			{
-				{ "test_true", new Dictionary<object, object>() { { 1, timestamp } } }
+				{ "test_true", new Dictionary<object, object>() { { 1L, timestamp } } }
 			};
 			var tableName = "test1";
 			var categorySettingName = "test2";
@@ -392,7 +392,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		{
 			var subTable = new Dictionary<object, object>()
 			{
-				{ "test_false", new Dictionary<object, object>() { { 1, 1d } } }
+				{ "test_false", new Dictionary<object, object>() { { 1L, 1d } } }
 			};
 			var tableName = "test";
 			var luaTable = new Dictionary<object, object>()
