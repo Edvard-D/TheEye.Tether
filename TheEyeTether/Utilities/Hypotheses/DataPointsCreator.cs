@@ -61,8 +61,9 @@ namespace TheEye.Tether.Utilities.Hypotheses
 					continue;
 				}
 
-				var timestampRange = new TimestampRange(timestampData.Timestamp,
-						GetEndTimestamp(timestampData, timestampDatas, dataPointSetting, isSnapshotType));
+				var endTimeStamp = GetEndTimestamp(timestampData, timestampDatas, dataPointSetting,
+						isSnapshotType);
+				var timestampRange = new TimestampRange(timestampData.Timestamp, endTimeStamp);
 				dataPoints.Add(new DataPoint(typeName, timestampData.SubTypeName, timestampRange));
 			}
 
@@ -196,6 +197,8 @@ namespace TheEye.Tether.Utilities.Hypotheses
 				return timestampDatas[0].Timestamp;
 			}
 			
+			if(dataPointSetting.)
+
 			var wasTimestampSame = false;
 			for(int i = 0; i < timestampDatas.Count; i++)
 			{
