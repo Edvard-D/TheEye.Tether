@@ -434,5 +434,35 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			Assert.Equal(double.MaxValue, result[tableName][0].TimestampRange.End);
 			Assert.Equal(double.MaxValue, result[tableName][1].TimestampRange.End);
 		}
+
+		[Fact]
+		public void Create_AssignsCorrectEndTimeStamp_WhenThereAreMultipleSubTypeCategories()
+		{
+			var true1Timestamp = 1d;
+			var true2Timestamp = 2d;
+			var false1Timestamp = 3d;
+			var false2Timestamp = 4d;
+			var subTables = new Dictionary<object, object>()
+			{
+				{ "test1_true", new Dictionary<object, object>() { { 1L, true1Timestamp } } },
+				{ "test2_true", new Dictionary<object, object>() { { 1L, true2Timestamp } } },
+				{ "test1_false", new Dictionary<object, object>() { { 1L, false1Timestamp } } },
+				{ "test2_false", new Dictionary<object, object>() { { 1L, false2Timestamp } } }
+			};
+			var tableName = "test";
+			var luaTable = new Dictionary<object, object>()
+			{
+				{ tableName, subTables }
+			};
+			var dataPointSettings = new Dictionary<string, DataPointSetting>()
+			{
+				{ tableName, new DataPointSetting("false", 1, new int[] { 0 }) }
+			};
+
+			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
+
+			Assert.Equal(false1Timestamp, result[tableName][0].TimestampRange.End);
+			Assert.Equal(false2Timestamp, result[tableName][1].TimestampRange.End);
+		}
 	}
 }

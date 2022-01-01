@@ -114,6 +114,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 				DataPointSetting dataPointSetting)
 		{
 			var timestampDatas = new List<TimestampData>();
+			var subTypeCategory = GetSubTypeCategory(subTypeName, dataPointSetting);
 			var endMarkerSubTypeName = GetEndMarkerSubTypeName(subTypeName, dataPointSetting);
 
 			foreach(KeyValuePair<object, object> keyValuePair in timestamps)
@@ -130,10 +131,32 @@ namespace TheEye.Tether.Utilities.Hypotheses
 					timestamp = (double)timestampLong;
 				}
 
-				timestampDatas.Add(new TimestampData(subTypeName, endMarkerSubTypeName, timestamp));
+				timestampDatas.Add(new TimestampData(subTypeCategory, subTypeName, endMarkerSubTypeName,
+						timestamp));
 			}
 
 			return timestampDatas;
+		}
+
+		private static string GetSubTypeCategory(
+				string subTypeName,
+				DataPointSetting dataPointSetting)
+		{
+			if(subTypeName == null || dataPointSetting.SubTypeCategoryPositions.Length == 0)
+			{
+				return null;
+			}
+			
+			var splitSubTypeName = subTypeName.Split("_").ToList();
+			for(int i = splitSubTypeName.Count - 1; i >= 0; i--)
+			{
+				if(!dataPointSetting.SubTypeCategoryPositions.Contains(i))
+				{
+					splitSubTypeName.RemoveAt(i);
+				}
+			}
+
+			return string.Join("_", splitSubTypeName);
 		}
 
 		private static string GetEndMarkerSubTypeName(
@@ -183,7 +206,8 @@ namespace TheEye.Tether.Utilities.Hypotheses
 					wasTimestampSame = true;
 				}
 
-				if(timestampData.Timestamp != comparisonTimestampData.Timestamp)
+				if(timestampData.Timestamp != comparisonTimestampData.Timestamp
+						&& timestampData.SubTypeCategory == comparisonTimestampData.SubTypeCategory)
 				{
 					if(timestampData.SubTypeName == comparisonTimestampData.EndMarkerSubTypeName
 							&& timestampData.Timestamp >= comparisonTimestampData.Timestamp
@@ -203,12 +227,18 @@ namespace TheEye.Tether.Utilities.Hypotheses
 		private record TimestampData
 		{
 			public string EndMarkerSubTypeName;
+			public string SubTypeCategory;
 			public string SubTypeName;
 			public double Timestamp;
 
 
-			public TimestampData(string subTypeName, string endMarkerSubTypeName, double timestamp) => 
-				(EndMarkerSubTypeName, SubTypeName, Timestamp) = (endMarkerSubTypeName, subTypeName, timestamp);
+			public TimestampData(
+					string subTypeCategory,
+					string subTypeName,
+					string endMarkerSubTypeName,
+					double timestamp) => 
+					(EndMarkerSubTypeName, SubTypeCategory, SubTypeName, Timestamp) =
+							(endMarkerSubTypeName, subTypeCategory, subTypeName, timestamp);
 		}
 	}
 }
