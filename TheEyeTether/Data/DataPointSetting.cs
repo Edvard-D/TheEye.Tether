@@ -12,6 +12,6 @@ namespace TheEye.Tether.Data
 						(endMarker, endMarkerPosition, subTypeCategoryPositions);
 
 		public DataPointSetting() =>
-				(EndMarker, EndMarkerPosition, SubTypeCategoryPositions) = (null, -1, new int[0]);
+				(EndMarker, EndMarkerPosition, SubTypeCategoryPositions) = (string.Empty, -1, new int[0]);
 	}
 }
