@@ -18,7 +18,6 @@ namespace TheEye.Tether.Utilities.Hypotheses
 		private const int CategoryAppearanceCountMin = 5;
 		private const int CategoryIdIndexOffset = 3;
 		private const int CategoryTypeIndexOffset = 4;
-		private const float DataPointStringAppearanceThreshold = 0.1f;
 		private const int MinRequiredSnapshots = 100;
 		private const int SnapshotIdIndexOffset = 1;
 		private const int SnapshotKeepLookbackDays = 7;
@@ -46,8 +45,11 @@ namespace TheEye.Tether.Utilities.Hypotheses
 					continue;
 				}
 
+				// This is intentionally empty. Should be removed if call to FilterDataPointStringsByTrueCounts
+				// is added again.
+				var filteredDataPointStrings = new List<string>();
+
 				var trueCounts = CountNumberOfTruesForEachDataPointString(snapshots);
-				var filteredDataPointStrings = FilterDataPointStringsByTrueCounts(snapshots, trueCounts);
 				var snapshotHashSets = ConvertSnapshotsToHashSets(snapshots);
 				var dataPoints = CreateDataPoints(snapshotHashSets, filteredDataPointStrings);
 				var clusteringResult = GetClusteringResult(dataPoints);
@@ -119,7 +121,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			return appearanceCounts;
 		}
 
-		private static List<string> FilterDataPointStringsByTrueCounts(
+		/*private static List<string> FilterDataPointStringsByTrueCounts(
 				List<List<string>> snapshots,
 				Dictionary<string, int> trueCounts)
 		{
@@ -137,7 +139,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			}
 
 			return filteredDataPointStrings;
-		}
+		}*/
 		
 		private static List<HashSet<string>> ConvertSnapshotsToHashSets(List<List<string>> snapshots)
 		{
