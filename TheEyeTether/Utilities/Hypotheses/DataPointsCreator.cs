@@ -192,13 +192,6 @@ namespace TheEye.Tether.Utilities.Hypotheses
 				return double.MaxValue;
 			}
 
-			if(dataPointSetting.EndMarker == null || dataPointSetting.EndMarker == string.Empty)
-			{
-				return timestampDatas[0].Timestamp;
-			}
-			
-			if(dataPointSetting.)
-
 			var wasTimestampSame = false;
 			for(int i = 0; i < timestampDatas.Count; i++)
 			{

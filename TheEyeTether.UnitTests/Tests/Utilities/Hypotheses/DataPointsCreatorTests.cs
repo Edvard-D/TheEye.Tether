@@ -449,26 +449,37 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 				{ "test1_false", new Dictionary<object, object>() { { 1L, false1Timestamp } } },
 				{ "test2_false", new Dictionary<object, object>() { { 1L, false2Timestamp } } }
 			};
-			var tableName = "test";
+			var typeName1 = "test1";
+			var typeName2 = "test2";
 			var luaTable = new Dictionary<object, object>()
 			{
-				{ tableName, subTables }
+				{ typeName1, subTables },
+				{ typeName2, subTables }
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
-				{ tableName, new DataPointSetting("false", 1, new int[] { 0 }) }
+				{ typeName1, new DataPointSetting("false", 1, new int[] { 0 }) },
+				{ typeName2, new DataPointSetting(string.Empty, -1, new int[] { 0 }) }
 			};
 
 			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
 
-			var matchingDataPoint1 = result[tableName]
+			var matchingDataPoint1 = result[typeName1]
 					.Where(dp => dp.TimestampRange.Start == true1Timestamp)
 					.First();
-			var matchingDataPoint2 = result[tableName]
+			var matchingDataPoint2 = result[typeName1]
+					.Where(dp => dp.TimestampRange.Start == true2Timestamp)
+					.First();
+			var matchingDataPoint3 = result[typeName2]
+					.Where(dp => dp.TimestampRange.Start == true1Timestamp)
+					.First();
+			var matchingDataPoint4 = result[typeName2]
 					.Where(dp => dp.TimestampRange.Start == true2Timestamp)
 					.First();
 			Assert.Equal(false1Timestamp, matchingDataPoint1.TimestampRange.End);
 			Assert.Equal(false2Timestamp, matchingDataPoint2.TimestampRange.End);
+			Assert.Equal(false1Timestamp, matchingDataPoint3.TimestampRange.End);
+			Assert.Equal(false2Timestamp, matchingDataPoint4.TimestampRange.End);
 		}
 		
 		[Fact]
