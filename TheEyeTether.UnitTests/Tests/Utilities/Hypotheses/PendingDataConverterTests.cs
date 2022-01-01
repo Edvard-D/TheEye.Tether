@@ -67,7 +67,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ CategorySettingName, new DataPointSetting() },
 				{ SnapshotSettingName, new DataPointSetting() },
-				{ DataPointTypeName, new DataPointSetting("false", 0) }
+				{ DataPointTypeName, new DataPointSetting("false", 0, new int[0]) }
 			};
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
 					null));
@@ -135,7 +135,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ CategorySettingName, new DataPointSetting() },
 				{ SnapshotSettingName, new DataPointSetting() },
-				{ DataPointTypeName, new DataPointSetting("false", 0) }
+				{ DataPointTypeName, new DataPointSetting("false", 0, new int[0]) }
 			};
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
 					null));
@@ -182,7 +182,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ CategorySettingName, new DataPointSetting() },
 				{ SnapshotSettingName, new DataPointSetting() },
-				{ DataPointTypeName, new DataPointSetting("false", 0) }
+				{ DataPointTypeName, new DataPointSetting("false", 0, new int[0]) }
 			};
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
 					null));
@@ -229,7 +229,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ CategorySettingName, new DataPointSetting() },
 				{ SnapshotSettingName, new DataPointSetting() },
-				{ DataPointTypeName, new DataPointSetting("false", 0) }
+				{ DataPointTypeName, new DataPointSetting("false", 0, new int[0]) }
 			};
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
 					null));
@@ -288,7 +288,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ CategorySettingName, new DataPointSetting() },
 				{ SnapshotSettingName, new DataPointSetting() },
-				{ DataPointTypeName, new DataPointSetting("false", 0) }
+				{ DataPointTypeName, new DataPointSetting("false", 0, new int[0]) }
 			};
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
 					null));
@@ -348,7 +348,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ CategorySettingName, new DataPointSetting() },
 				{ SnapshotSettingName, new DataPointSetting() },
-				{ DataPointTypeName, new DataPointSetting("false", 0) }
+				{ DataPointTypeName, new DataPointSetting("false", 0, new int[0]) }
 			};
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
 					null));
@@ -396,7 +396,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ CategorySettingName, new DataPointSetting() },
 				{ SnapshotSettingName, new DataPointSetting() },
-				{ DataPointTypeName, new DataPointSetting("false", 0) }
+				{ DataPointTypeName, new DataPointSetting("false", 0, new int[0]) }
 			};
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
 					null));
@@ -448,7 +448,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ CategorySettingName, new DataPointSetting() },
 				{ SnapshotSettingName, new DataPointSetting() },
-				{ DataPointTypeName, new DataPointSetting("false", 0) }
+				{ DataPointTypeName, new DataPointSetting("false", 0, new int[0]) }
 			};
 			var stubClock = new StubClock(System.DateTime.ParseExact(FileSaveDateTime, DateTimeFormat,
 					null));

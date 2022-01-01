@@ -617,7 +617,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				{ categorySettingName, new DataPointSetting() },
 				{ snapshotSettingName, new DataPointSetting() },
-				{ dataPointTypeName, new DataPointSetting("false", 1) }
+				{ dataPointTypeName, new DataPointSetting("false", 1, new int[] { 0 }) }
 			};
 
 			var result = SnapshotsCreator.Create(luaTable, categorySettings, dataPointSettings);

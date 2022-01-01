@@ -2,136 +2,163 @@
 	"PLAYER_EQUIPMENT":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"PLAYER_HAS_TARGET":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 0
+		"EndMarkerPosition": 0,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_INSTANCE":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_IS_IN_COMBAT":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_IS_MOVING":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 0
+		"EndMarkerPosition": 0,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_IS_TANKING":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 0
+		"EndMarkerPosition": 0,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_JUMPED":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_LEVEL":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_PVP_TALENT":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"PLAYER_SPECIALIZATION":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_SPELL_CHARGE":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"PLAYER_SPELL_COOLDOWN":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"PLAYER_SPELL_IS_KNOWN":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"PLAYER_SPELLCAST_START":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_SPELLCAST_SUCCEEDED":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": []
 	},
 	"PLAYER_SUMMONED_ACTIVE_ELAPSED_TIME":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"PLAYER_TALENT":
 	{
 		"EndMarker": "false",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"PLAYER_TOTEM_DURATION":
 	{
 		"EndMarker": "0",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"TARGET_IS_HOSTILE":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": []
 	},
 	"TARGET_SPELLCAST_IS_INTERRUPTIBLE":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 0
+		"EndMarkerPosition": 0,
+		"SubTypeCategoryPositions": []
 	},
 	"TARGET_TIME_UNTIL_DEATH":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 0
+		"EndMarkerPosition": 0,
+		"SubTypeCategoryPositions": []
 	},
 	"UNIT_AURA_ACTIVE":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": [0, 1]
 	},
 	"UNIT_AURA_DURATION":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": [0, 1]
 	},
 	"UNIT_AURA_STACK_COUNT":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": [0, 1]
 	},
 	"UNIT_COUNT_CLOSE_TO_TARGET":
 	{
 		"EndMarker": "",
-		"EndMarkerPosition": -1
+		"EndMarkerPosition": -1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"UNIT_HEALTH_PERCENT":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 1,
+		"SubTypeCategoryPositions": [0]
 	},
 	"UNIT_SPELLCAST_IS_ACTIVE":
 	{
 		"EndMarker": "nil",
-		"EndMarkerPosition": 1
+		"EndMarkerPosition": 1,
+		"SubTypeCategoryPositions": [0]
 	}
 }

@@ -248,7 +248,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
-				{ tableName, new DataPointSetting(string.Empty, -1) }
+				{ tableName, new DataPointSetting(string.Empty, -1, new int[0]) }
 			};
 
 			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
@@ -317,7 +317,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
-				{ tableName, new DataPointSetting("false", 1) }
+				{ tableName, new DataPointSetting("false", 1, new int[] { 0 }) }
 			};
 
 			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
@@ -343,7 +343,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
-				{ tableName, new DataPointSetting("false", 1) }
+				{ tableName, new DataPointSetting("false", 1, new int[] { 0 }) }
 			};
 
 			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
@@ -401,7 +401,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			};
 			var dataPointSettings = new Dictionary<string, DataPointSetting>()
 			{
-				{ tableName, new DataPointSetting("false", 1) }
+				{ tableName, new DataPointSetting("false", 1, new int[] { 0 }) }
 			};
 
 			var result = DataPointsCreator.Create(luaTable, dataPointSettings);
