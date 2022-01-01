@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
-using System.Text.Json;
+using Newtonsoft.Json;
 using TheEye.Tether.Data;
 using TheEye.Tether.Interfaces;
 using TheEye.Tether.Utilities.General;
@@ -67,7 +67,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 								outputData.Add(snapshot.DataPointsIds);
 							}
 
-							var outputJson = JsonSerializer.Serialize(outputData);
+							var outputJson = JsonConvert.SerializeObject(outputData);
 							fileSystem.File.WriteAllText(outputFilePath, outputJson);
 						}
 					}
