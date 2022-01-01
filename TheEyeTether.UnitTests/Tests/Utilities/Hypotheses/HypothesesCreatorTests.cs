@@ -15,6 +15,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		private const string CategoryType = "CategoryType";
 		private const string CurrentDomainBaseDirectory = @"C:\TheEyeTether\";
 		private const string DateTimeFormat = "yyyy_MM_dd__HH_mm_ss";
+		private const int MinRequiredSnapshots = 20;
 		private const string NowDateTimeString = "2021_09_23__12_00_00";
 		private const string SnapshotId = "SnapshotId";
 		private const string SnapshotType = "SnapshotType";
@@ -92,13 +93,13 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		}
 
 		[Fact]
-		public void Create_CreatesHypothesis_WhenGreaterThanEqualTo100SnapshotsExistForTypeAndSubType()
+		public void Create_CreatesHypothesis_WhenGreaterThanEqualTo20SnapshotsExistForTypeAndSubType()
 		{
 			var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
 					.ToUniversalTime();
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { "test" });
 			}
@@ -119,13 +120,13 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 		}
 		
 		[Fact]
-		public void Create_DoesNotCreateHypothesis_WhenLessThan100SnapshotsExistForTypeAndSubType()
+		public void Create_DoesNotCreateHypothesis_WhenLessThan20SnapshotsExistForTypeAndSubType()
 		{
 			var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
 					.ToUniversalTime();
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 99; i++)
+			for(int i = 0; i < MinRequiredSnapshots - 1; i++)
 			{
 				snapshots.Add(new List<string>() { "test" });
 			}
@@ -153,11 +154,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var testDataPointString = "testDataPointString";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { "baseDataPointString" });
 			}
-			for(int i = 0; i < 10; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.1f); i++)
 			{
 				snapshots[i].Add(testDataPointString);
 			}
@@ -185,11 +186,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var invalidDataPointString = "invalidDataPointString";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { "baseDataPointString" });
 			}
-			for(int i = 0; i < 9; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.09f); i++)
 			{
 				snapshots[i].Add(invalidDataPointString);
 			}
@@ -218,11 +219,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var testDataPointString1 = "testDataPointString1";
 			var testDataPointString2 = "testDataPointString2";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { testDataPointString1 });
 			}
-			for(int i = 0; i < 75; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.75); i++)
 			{
 				snapshots[i].Add(testDataPointString2);
 			}
@@ -257,15 +258,15 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var testDataPointString2 = "testDataPointString2";
 			var testDataPointString3 = "testDataPointString3";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { testDataPointString1 });
 			}
-			for(int i = 0; i < 95; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.95f); i++)
 			{
 				snapshots[i].Add(testDataPointString2);
 			}
-			for(int i = 0; i < 85; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.85f); i++)
 			{
 				snapshots[i].Add(testDataPointString3);
 			}
@@ -301,15 +302,15 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var testDataPointString2 = "testDataPointString2";
 			var testDataPointString3 = "testDataPointString3";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { testDataPointString1 });
 			}
-			for(int i = 0; i < 95; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots* 0.95f); i++)
 			{
 				snapshots[i].Add(testDataPointString2);
 			}
-			for(int i = 0; i < 85; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.85f); i++)
 			{
 				snapshots[i].Add(testDataPointString3);
 			}
@@ -344,15 +345,15 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var testDataPointString2 = "testDataPointString2";
 			var testDataPointString3 = "testDataPointString3";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { testDataPointString1 });
 			}
-			for(int i = 0; i < 95; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.95f); i++)
 			{
 				snapshots[i].Add(testDataPointString2);
 			}
-			for(int i = 0; i < 90; i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.9f); i++)
 			{
 				snapshots[i].Add(testDataPointString3);
 			}
@@ -388,7 +389,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var testDataPointString2 = "testDataPointString2";
 			var snapshots1 = new List<List<string>>();
 			var snapshots2 = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots1.Add(new List<string>() { testDataPointString1 });
 				snapshots2.Add(new List<string>() { testDataPointString2 });
@@ -422,7 +423,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var testDataPointString = "testDataPointString";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { testDataPointString });
 			}
@@ -450,7 +451,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var testDataPointString = "testDataPointString";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { testDataPointString });
 			}
@@ -478,7 +479,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var testDataPointString = "testDataPointString";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { testDataPointString });
 			}
@@ -506,7 +507,7 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var testDataPointString = "testDataPointString";
 			var snapshots = new List<List<string>>();
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
 				snapshots.Add(new List<string>() { testDataPointString });
 			}
