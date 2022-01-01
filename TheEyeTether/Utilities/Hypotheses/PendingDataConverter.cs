@@ -73,7 +73,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 					}
 				}
 
-				//fileSystem.File.Delete(filePath);
+				fileSystem.File.Delete(filePath);
 			}
 		}
 
