@@ -45,11 +45,9 @@ namespace TheEye.Tether.Utilities.Hypotheses
 					continue;
 				}
 
-				// This is intentionally empty. Should be removed if call to FilterDataPointStringsByTrueCounts
-				// is added again.
-				var filteredDataPointStrings = new List<string>();
-
 				var trueCounts = CountNumberOfTruesForEachDataPointString(snapshots);
+				// GetAllDataPointStrings can be removed if a call to FilterDataPointStringsByTrueCounts is added again.
+				var filteredDataPointStrings = GetAllDataPointStrings(trueCounts);
 				var snapshotHashSets = ConvertSnapshotsToHashSets(snapshots);
 				var dataPoints = CreateDataPoints(snapshotHashSets, filteredDataPointStrings);
 				var clusteringResult = GetClusteringResult(dataPoints);
@@ -121,6 +119,18 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			return appearanceCounts;
 		}
 
+		private static List<string> GetAllDataPointStrings(Dictionary<string, int> trueCounts)
+		{
+			var dataPointStrings = new List<string>();
+
+			foreach(var keyValuePair in trueCounts)
+			{
+				dataPointStrings.Add(keyValuePair.Key);
+			}
+
+			return dataPointStrings;
+		}
+		
 		/*private static List<string> FilterDataPointStringsByTrueCounts(
 				List<List<string>> snapshots,
 				Dictionary<string, int> trueCounts)
