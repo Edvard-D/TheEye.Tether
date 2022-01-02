@@ -208,14 +208,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 				ClusteringResult<DataPoint> clusteringResult,
 				Dictionary<string, int> trueCounts)
 		{
-			var hypotheses = new List<Hypothesis>();
-
-			for(int i = 0; i < clusteringResult.Count; i++)
-			{
-				hypotheses.AddUniques(ConvertClusterSetToHypotheses(directoryPath, clusteringResult[i]));
-			}
-
-			return hypotheses;
+			return ConvertClusterSetToHypotheses(directoryPath, GetBestClusterSet(clusteringResult));
 		}
 
 		private static ClusterSet<DataPoint> GetBestClusterSet(

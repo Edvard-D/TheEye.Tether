@@ -154,14 +154,15 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
 			var testDataPointString1 = "testDataPointString1";
 			var testDataPointString2 = "testDataPointString2";
+			var testDataPointString3 = "testDataPointString3";
 			var snapshots = new List<List<string>>();
 			for(int i = 0; i < MinRequiredSnapshots; i++)
 			{
-				snapshots.Add(new List<string>() { testDataPointString1 });
+				snapshots.Add(new List<string>() { testDataPointString1, testDataPointString2 });
 			}
-			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.75); i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.75f); i++)
 			{
-				snapshots[i].Add(testDataPointString2);
+				snapshots[i].Add(testDataPointString3);
 			}
 			var fileDataJson = JsonSerializer.Serialize(snapshots);
 			var mockFileData = new MockFileData(fileDataJson);
@@ -182,50 +183,6 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 				testDataPointString2
 			};
 			Assert.Contains(result, h => h.DataPointStrings.SetEquals(dataPointStrings));
-		}
-
-		[Fact]
-		public void Create_CreatesMultipleHypotheses_WhenMultipleHighlyCorrelatedDataPointStringsExist()
-		{
-			var nowDateTime = System.DateTime.ParseExact(NowDateTimeString, DateTimeFormat, null)
-					.ToUniversalTime();
-			var fileName = nowDateTime.ToString(DateTimeFormat) + ".json";
-			var testDataPointString1 = "testDataPointString1";
-			var testDataPointString2 = "testDataPointString2";
-			var testDataPointString3 = "testDataPointString3";
-			var snapshots = new List<List<string>>();
-			for(int i = 0; i < MinRequiredSnapshots; i++)
-			{
-				snapshots.Add(new List<string>() { testDataPointString1 });
-			}
-			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.95f); i++)
-			{
-				snapshots[i].Add(testDataPointString2);
-			}
-			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.85f); i++)
-			{
-				snapshots[i].Add(testDataPointString3);
-			}
-			var fileDataJson = JsonSerializer.Serialize(snapshots);
-			var mockFileData = new MockFileData(fileDataJson);
-			mockFileData.CreationTime = nowDateTime;
-			var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
-			{
-				{ CreateDirectoryPath() + fileName, mockFileData }
-			});
-			var stubClock = new StubClock(nowDateTime);
-			var stubCurrentDomainBaseGetter = new StubCurrentDomainBaseDirectoryProvider(
-					CurrentDomainBaseDirectory);
-
-			var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
-
-			var hashSet1 = new HashSet<string>() { testDataPointString1 };
-			var hashSet2 = new HashSet<string>() { testDataPointString1, testDataPointString2 };
-			var hashSet3 = new HashSet<string>() { testDataPointString1, testDataPointString2,
-					testDataPointString3 };
-			Assert.Contains(result, h => h.DataPointStrings.SetEquals(hashSet1));
-			Assert.Contains(result, h => h.DataPointStrings.SetEquals(hashSet2));
-			Assert.Contains(result, h => h.DataPointStrings.SetEquals(hashSet3));
 		}
 
 		[Fact]
