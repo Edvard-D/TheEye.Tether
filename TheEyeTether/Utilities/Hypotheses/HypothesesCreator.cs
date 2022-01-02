@@ -283,7 +283,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 
 				for(int j = 0; j < snapshotHashSets.Count; j++)
 				{
-					if(snapshotHashSets[j].All(s => hypothesis.DataPointStrings.Contains(s)))
+					if(hypothesis.DataPointStrings.All(dps => snapshotHashSets[j].Contains(dps)))
 					{
 						break;
 					}

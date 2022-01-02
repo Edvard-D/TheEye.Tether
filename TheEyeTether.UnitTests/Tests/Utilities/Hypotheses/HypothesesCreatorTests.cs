@@ -242,11 +242,11 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 			{
 				snapshots.Add(new List<string>() { testDataPointString1 });
 			}
-			for(int i = 0; i < (int)(MinRequiredSnapshots* 0.95f); i++)
+			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.5f); i++)
 			{
 				snapshots[i].Add(testDataPointString2);
 			}
-			for(int i = 0; i < (int)(MinRequiredSnapshots * 0.85f); i++)
+			for(int i = 0; i < (int)((MinRequiredSnapshots * 0.5f) + MinRequiredSnapshots * 0.5f); i++)
 			{
 				snapshots[i].Add(testDataPointString3);
 			}
@@ -263,12 +263,8 @@ namespace TheEye.Tether.UnitTests.Tests.Utilities.Hypotheses
 
 			var result = HypothesesCreator.Create(mockFileSystem, stubClock, stubCurrentDomainBaseGetter);
 			
-			var invalidHashSet1 = new HashSet<string>() { testDataPointString2 };
-			var invalidHashSet2 = new HashSet<string>() { testDataPointString3 };
-			var invalidHashSet3 = new HashSet<string>() { testDataPointString1, testDataPointString3 };
-			Assert.DoesNotContain(result, h => h.DataPointStrings.SetEquals(invalidHashSet1));
-			Assert.DoesNotContain(result, h => h.DataPointStrings.SetEquals(invalidHashSet2));
-			Assert.DoesNotContain(result, h => h.DataPointStrings.SetEquals(invalidHashSet3));
+			var invalidHashSet = new HashSet<string>() { testDataPointString2, testDataPointString3 };
+			Assert.DoesNotContain(result, h => h.DataPointStrings.SetEquals(invalidHashSet));
 		}
 
 		[Fact]
