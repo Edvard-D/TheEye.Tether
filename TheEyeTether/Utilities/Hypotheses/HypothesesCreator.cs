@@ -217,8 +217,8 @@ namespace TheEye.Tether.Utilities.Hypotheses
 
 			return hypotheses;
 		}
-
-		private static ClusterSet<DataPoint> GetBestClusterSet(
+		
+		/*private static ClusterSet<DataPoint> GetBestClusterSet(
 				ClusteringResult<DataPoint> clusteringResult)
 		{
 			var dissimilarityMetric = new JaccardDissimilarityMetric();
@@ -239,7 +239,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			}
 
 			return bestClusterSet;
-		}
+		}*/
 
 		private static List<Hypothesis> ConvertClusterSetToHypotheses(
 				string directoryPath,
