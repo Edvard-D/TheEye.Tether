@@ -7,6 +7,7 @@ using Aglomera;
 using Aglomera.Evaluation.Internal;
 using Aglomera.Linkage;
 using TheEye.Tether.Data;
+using TheEye.Tether.Extensions;
 using TheEye.Tether.Interfaces;
 using TheEye.Tether.Utilities.General;
 
