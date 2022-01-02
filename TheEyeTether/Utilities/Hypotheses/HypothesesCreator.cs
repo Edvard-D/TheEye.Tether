@@ -18,7 +18,7 @@ namespace TheEye.Tether.Utilities.Hypotheses
 		private const int CategoryAppearanceCountMin = 5;
 		private const int CategoryIdIndexOffset = 3;
 		private const int CategoryTypeIndexOffset = 4;
-		private const int MinRequiredSnapshots = 100;
+		private const int MinRequiredSnapshots = 20;
 		private const int SnapshotIdIndexOffset = 1;
 		private const int SnapshotKeepLookbackDays = 7;
 		private const int SnapshotTypeIndexOffset = 2;
