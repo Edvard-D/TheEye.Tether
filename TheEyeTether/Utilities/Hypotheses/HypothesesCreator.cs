@@ -51,9 +51,8 @@ namespace TheEye.Tether.Utilities.Hypotheses
 				var snapshotHashSets = ConvertSnapshotsToHashSets(snapshots);
 				var dataPoints = CreateDataPoints(snapshotHashSets, filteredDataPointStrings);
 				var clusteringResult = GetClusteringResult(dataPoints);
-				var hypotheses = CreateHypotheses(directoryPath, snapshots, clusteringResult, trueCounts);
-				hypotheses = FilterHypothesesByExistence(hypotheses, snapshotHashSets,
-						filteredDataPointStrings);
+				var hypotheses = CreateHypothesesRecursively(directoryPath, clusteringResult);
+				hypotheses = FilterHypothesesByExistence(hypotheses, snapshotHashSets);
 
 				aggregateHypotheses.AddRange(hypotheses);
 				aggregateFilteredDataPointStrings[directoryPath] = filteredDataPointStrings;
@@ -202,13 +201,15 @@ namespace TheEye.Tether.Utilities.Hypotheses
 			return clusteringResult;
 		}
 
-		private static List<Hypothesis> CreateHypotheses(
+		private static List<Hypothesis> CreateHypothesesRecursively(
 				string directoryPath,
-				List<List<string>> snapshots,
 				ClusteringResult<DataPoint> clusteringResult,
-				Dictionary<string, int> trueCounts)
+				List<Hypothesis> hypotheses = null)
 		{
-			var hypotheses = new List<Hypothesis>();
+			if(hypotheses == null)
+			{
+				hypotheses = new List<Hypothesis>();
+			}
 
 			for(int i = 0; i < clusteringResult.Count; i++)
 			{
@@ -271,23 +272,18 @@ namespace TheEye.Tether.Utilities.Hypotheses
 		/// The hypotheses that get passed to this function may include combinations of DataPointStrings
 		/// that never showed up in any of the snapshots being evaluated. In order to not be removed,
 		/// there needs to be at least one snapshot that contains all of the DataPointStrings in the
-		/// hypothesis, and none of the DataPointStrings that are in filteredDataPointStrings but not in
-		/// the hypothesis.
+		/// hypothesis.
 		private static List<Hypothesis> FilterHypothesesByExistence(
 				List<Hypothesis> hypotheses,
-				List<HashSet<string>> snapshotHashSets,
-				List<string> filteredDataPointStrings)
+				List<HashSet<string>> snapshotHashSets)
 		{
 			for(int i = hypotheses.Count - 1; i >= 0; i--)
 			{
 				var hypothesis = hypotheses[i];
-				var excluded = new List<string>(filteredDataPointStrings);
-				excluded.RemoveAll(s => hypothesis.DataPointStrings.Contains(s));
 
 				for(int j = 0; j < snapshotHashSets.Count; j++)
 				{
-					if(snapshotHashSets[j].All(s => hypothesis.DataPointStrings.Contains(s))
-							&& !snapshotHashSets[j].Any(s => excluded.Contains(s)))
+					if(snapshotHashSets[j].All(s => hypothesis.DataPointStrings.Contains(s)))
 					{
 						break;
 					}
